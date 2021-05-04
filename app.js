@@ -30,34 +30,38 @@ const pageSchema = {
 app.get("/",function(req,res){
   res.render("signup",);
 })
-app.get("/profile",function(req,res){
-  res.render("profile-page",);
-});
 
 
 
-app.get("/competitions",function(req,res){
+
+app.post("/competitions",function(req,res){
   res.render("competitions",);
 });
-app.get("/compexams",function(req,res){
+app.post("/compexams",function(req,res){
   res.render("compexams",);
 });
-app.get("/certifications",function(req,res){
+app.post("/certifications",function(req,res){
   res.render("certifications",);
 });
-app.get("/courses",function(req,res){
+app.post("/courses",function(req,res){
   res.render("courses",);
 });
-app.get("/scholarship",function(req,res){
+app.post("/scholarship",function(req,res){
   res.render("scholarship",);
 });
-app.get("/future",function(req,res){
-  res.render("future",);
-});
-app.get("/trends",function(req,res){
+
+app.post("/trends",function(req,res){
   res.render("trends",);
 });
 
+// linked
+app.post("/profile", function(req,res){
+res.render("profile-page",);
+});
+
+app.post("/future",function(req,res){
+  res.render("future",);
+});
 
 app.post("/home",function(req,res){
 const user1 = new User({

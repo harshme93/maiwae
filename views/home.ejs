@@ -46,12 +46,9 @@
 <p>
           <img class="user-pic" src="profile.jpeg" width="92" height="92" style="" alt="user-pic">
 </p>
-<button type="button" class="btn btn-lg " id="futureyou" name="button">Profile</button>
-<script type="text/javascript">
-  document.getElementById("futureyou").onclick=function(){
-    location.href="http://localhost:3000/future";
-  }
-</script>
+<form class="" action="/future" method="post">
+  <button type="submit" class="btn btn-lg " id="futureyou" name="button">Profile</button>
+</form>
           <p>Profile Astronaut</p>
           <p>Requirement 1</p>
           <p>Requirement 2</p>
@@ -72,13 +69,9 @@
           </div>
           <div class="card-body">
 
-            <form action="" method="post">
-              <button class="btn btn-lg optbut" style="border-radius:100%" type="button" id="compet">+</button>
-              <script type="text/javascript">
-                document.getElementById("compet").onclick = function() {
-                  location.href = "http://localhost:3000/competitions";
-                }
-              </script>
+            <form action="/competitions" method="post">
+              <button class="btn btn-lg optbut" style="border-radius:100%" type="submit" id="compet">+</button>
+
             </form>
           </div>
         </div>
@@ -90,14 +83,10 @@
             <h3>Competitive Exams</h3>
           </div>
           <div class="card-body">
-            <form action="" method="post">
+            <form action="/compexams" method="post">
             <h5> <%=compName%> </h5> <h5> <%=compScore%> </h5>
-              <button id="compex" type="button" style="border-radius:100%" class="btn btn-lg optbut">+</button>
-              <script type="text/javascript">
-                document.getElementById("compex").onclick = function() {
-                  location.href = "http://localhost:3000/compexams";
-                }
-              </script>
+              <button id="compex" type="submit" style="border-radius:100%" class="btn btn-lg optbut">+</button>
+
             </form>
           </div>
         </div>
@@ -110,13 +99,9 @@
           </div>
           <div class="card-body">
             <h5>  </h5>
-            <form action="" method="post">
-              <button class="btn btn-lg  optbut" style="border-radius:100%" type="button" id="certifi">+</button>
-              <script type="text/javascript">
-                document.getElementById("certifi").onclick = function() {
-                  location.href = "http://localhost:3000/certifications";
-                }
-              </script>
+            <form action="/certifications" method="post">
+              <button class="btn btn-lg  optbut" style="border-radius:100%" type="submit" id="certifi">+</button>
+
             </form>
           </div>
         </div>
@@ -128,12 +113,11 @@
             <h3>Courses</h3>
           </div>
           <div class="card-body">
-            <button class="btn btn-lg  optbut" style="border-radius:100%" type="button" id="course">+</button>
-<script type="text/javascript">
-  document.getElementById("course").onclick=function(){
-    location.href="http://localhost:3000/courses";
-  }
-</script>
+<form class="" action="/courses" method="post">
+    <button class="btn btn-lg  optbut" style="border-radius:100%" type="submit" id="course">+</button>
+</form>
+
+
           </div>
         </div>
       </div>
@@ -144,12 +128,11 @@
             <h3>New Trends</h3>
           </div>
           <div class="card-body">
-            <button class="btn btn-lg  optbut" style="border-radius:100%" type="button" id="trends">+</button>
-    <script type="text/javascript">
-    document.getElementById("trends").onclick=function(){
-    location.href="http://localhost:3000/trends";
-    }
-    </script>
+<form class="" action="/trends" method="post">
+  <button class="btn btn-lg  optbut" style="border-radius:100%" type="submit" id="trends">+</button>
+</form>
+
+
           </div>
         </div>
       </div>
@@ -161,12 +144,11 @@
             <h3>Scholarships</h3>
           </div>
           <div class="card-body">
-            <button class="btn btn-lg  optbut" style="border-radius:100%" id="scholar" type="button">+</button>
-<script type="text/javascript">
-  document.getElementById("scholar").onclick=function(){
-    location.href="http://localhost:3000/scholarship";
-  }
-</script>
+<form class="" action="/scholarship" method="post">
+  <button class="btn btn-lg  optbut" style="border-radius:100%" id="scholar" type="submit">+</button>
+</form>
+
+
           </div>
         </div>
       </div>
