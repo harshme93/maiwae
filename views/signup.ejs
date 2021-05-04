@@ -37,8 +37,9 @@
 
       <button type="button" id="signupdetails" class="btn btn-lg btn-block btn-danger">Create an account</button>
 <script type="text/javascript">
-  document.getElementById("signupdetails").onclick=function(){
-    location.href="http://localhost:3000/profile";
+  document.getElementById("signupdetails").onclick=function(req,res){
+res.render("profile");
+    // location.href="http://localhost:3000/profile";
   }
 </script>
     </form>
