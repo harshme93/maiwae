@@ -1,0 +1,176 @@
+<%- include("header") -%>
+
+
+<section>
+  <div class=" row">
+<div class="col-lg-12 col-md-12">
+
+</div>
+<p>
+      <h5>  Hi,</h5>
+      <h5> <%=fName%> </h5>
+</p>
+  </div>
+</section >
+
+
+  <section id="user-timeline">
+    <div class="user-area">
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <h2>Present You</h2>
+          <ul class="timeline">
+
+            <li>
+              <h5>  <%= sName %>  </h5>
+              <h5> <%=sCourse %> </h5>
+            </li>
+            <li>
+              <h5>   <%= bDegree %>   </h5>
+              <h5>  <%= bMajor %> </h5>
+            </li>
+            <li>
+              <h5>   <%= mDegree %>   </h5>
+              <h5> <%= mMajor %> </h5>
+            </li>
+
+            <li>
+              <h5>  <%= certification %>  </h5>
+              <h5>  </h5>
+            </li>
+
+          </ul>
+        </div>
+        <div class="col-lg-6 col-md-6 future-you">
+          <h3>Future You</h3>
+<p>
+          <img class="user-pic" src="profile.jpeg" width="92" height="92" style="" alt="user-pic">
+</p>
+<button type="button" class="btn btn-lg " id="futureyou" name="button">Profile</button>
+<script type="text/javascript">
+  document.getElementById("futureyou").onclick=function(){
+    location.href="http://localhost:3000/future";
+  }
+</script>
+          <p>Profile Astronaut</p>
+          <p>Requirement 1</p>
+          <p>Requirement 2</p>
+          <p>Requirement 3</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="4cs">
+    <div class="row">
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card ">
+          <div class="card-header">
+            <h3>Competitions</h3>
+
+          </div>
+          <div class="card-body">
+
+            <form action="" method="post">
+              <button class="btn btn-lg optbut" style="border-radius:100%" type="button" id="compet">+</button>
+              <script type="text/javascript">
+                document.getElementById("compet").onclick = function() {
+                  location.href = "http://localhost:3000/competitions";
+                }
+              </script>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card ">
+          <div class="card-header">
+            <h3>Competitive Exams</h3>
+          </div>
+          <div class="card-body">
+            <form action="" method="post">
+            <h5> <%=compName%> </h5> <h5> <%=compScore%> </h5>
+              <button id="compex" type="button" style="border-radius:100%" class="btn btn-lg optbut">+</button>
+              <script type="text/javascript">
+                document.getElementById("compex").onclick = function() {
+                  location.href = "http://localhost:3000/compexams";
+                }
+              </script>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card ">
+          <div class="card-header">
+            <h3>Certifications</h3>
+          </div>
+          <div class="card-body">
+            <h5>  </h5>
+            <form action="" method="post">
+              <button class="btn btn-lg  optbut" style="border-radius:100%" type="button" id="certifi">+</button>
+              <script type="text/javascript">
+                document.getElementById("certifi").onclick = function() {
+                  location.href = "http://localhost:3000/certifications";
+                }
+              </script>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card ">
+          <div class="card-header">
+            <h3>Courses</h3>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-lg  optbut" style="border-radius:100%" type="button" id="course">+</button>
+<script type="text/javascript">
+  document.getElementById("course").onclick=function(){
+    location.href="http://localhost:3000/courses";
+  }
+</script>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card ">
+          <div class="card-header">
+            <h3>New Trends</h3>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-lg  optbut" style="border-radius:100%" type="button" id="trends">+</button>
+    <script type="text/javascript">
+    document.getElementById("trends").onclick=function(){
+    location.href="http://localhost:3000/trends";
+    }
+    </script>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="pricing-column col-lg-4 col-md-6">
+        <div class="card ">
+          <div class="card-header">
+            <h3>Scholarships</h3>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-lg  optbut" style="border-radius:100%" id="scholar" type="button">+</button>
+<script type="text/javascript">
+  document.getElementById("scholar").onclick=function(){
+    location.href="http://localhost:3000/scholarship";
+  }
+</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<%- include("footer") -%>
