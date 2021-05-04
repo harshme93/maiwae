@@ -91,6 +91,6 @@ res.render("home",{ fName:foundUser.fName , bDegree:foundUser.bDegree,bMajor:fou
 
 
 
-app.listen(process.env.PORT || 3000, function(){
+app.listen(process.env.PORT , function(){
   console.log("Server running at port 3000");
 });
