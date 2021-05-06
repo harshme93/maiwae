@@ -25,6 +25,14 @@ const pageSchema = {
   pageVar: [userInfoSchema]
 }
 
+// schema for tasks (certifications)
+const certSchema = {
+  name: String, cover:String
+};
+// model for it
+const Certification = mongoose.model("Certification",certSchema);
+
+
 // create page schema to link the pages with variables and send them
 
 app.get("/",function(req,res){
@@ -40,9 +48,26 @@ app.post("/competitions",function(req,res){
 app.post("/compexams",function(req,res){
   res.render("compexams",);
 });
+
 app.post("/certifications",function(req,res){
-  res.render("certifications",);
+  Certification.find({},function(err,foundCerts){
+    if (!err) {
+    res.render("certifications",{ certNames:foundCerts});
+    }
+  });
 });
+
+app.get("/certifications",function(req,res){
+
+
+});
+
+
+
+
+
+
+
 app.post("/courses",function(req,res){
   res.render("courses",);
 });
