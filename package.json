@@ -7,13 +7,13 @@
   },
   "author": "",
   "license": "ISC",
-"engines":{
-  "node":"14.16.0"
-},
-  
+  "engines": {
+    "node": "14.16.0"
+  },
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "md5": "^2.3.0",
     "mongoose": "^5.12.7",
     "sql": "^0.78.0"
   },

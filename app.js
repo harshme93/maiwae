@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const https = require('https');
 const mongoose = require('mongoose');
+const md5 = require('md5');
 const app = express();
 const ejs = require('ejs');
 
@@ -35,12 +36,47 @@ const Certification = mongoose.model("Certification",certSchema);
 
 // create page schema to link the pages with variables and send them
 
+app.post("/register",function(req,res){
+const newUser = new User({
+    email: req.body.uemail, password: md5(req.body.upass)
+    , fName: req.body.ufname, lName: req.body.ulname, sName:req.body.usclname,
+    sCourse: req.body.usclcours, bDegree:req.body.ubachdeg,bMajor: req.body.ubachmaj, compName:req.body.ucompex, compScore:req.body.ucompsc  ,mDegree:req.body.umasdeg,mMajor: req.body.umasmaj,certification: req.body.ucert, date: req.body.udobd,
+    month: req.body.udobm, year: req.body.udoby, city: req.body.ucity, state: req.body.ustat, zip: req.body.uzip
+  });
+  newUser.save(function(err){
+    if (!err) {
+      res.render("signup");
+    }
+  });
+});
+
+
 app.get("/",function(req,res){
-  res.render("signup",);
-})
+res.render("signup",);
+});
 
+app.post("/home",function(req,res){
 
+  const username = req.body.username;
+  const password = md5(req.body.password);
+  User.findOne({email:username}, function(err,foundUser){
+    if(err){
+      console.log(err);
+    }else {
+      if (foundUser) {
+        if (foundUser.password === password) {
 
+          res.render("home",
+          { fName:foundUser.fName , bDegree:foundUser.bDegree,bMajor:foundUser.bMajor,
+            compName:foundUser.compName, compScore:foundUser.compScore ,mDegree:foundUser.mDegree,
+            mMajor:foundUser.mMajor,certification:foundUser.certification,sName:foundUser.sName,
+            sCourse:foundUser.sCourse }
+          );
+        };
+      };
+    };
+  });
+});
 
 app.post("/competitions",function(req,res){
   res.render("competitions",);
@@ -58,8 +94,6 @@ app.post("/certifications",function(req,res){
 });
 
 app.get("/certifications",function(req,res){
-
-
 });
 
 
@@ -88,34 +122,9 @@ app.post("/future",function(req,res){
   res.render("future",);
 });
 
-app.post("/home",function(req,res){
-const user1 = new User({
-  email: req.body.uemail, password: req.body.upass, fName: req.body.ufname, lName: req.body.ulname, sName:req.body.usclname,
-    sCourse: req.body.usclcours, bDegree:req.body.ubachdeg,bMajor: req.body.ubachmaj, compName:req.body.ucompex, compScore:req.body.ucompsc  ,mDegree:req.body.umasdeg,mMajor: req.body.umasmaj,certification: req.body.ucert, date: req.body.udobd,
-    month: req.body.udobm, year: req.body.udoby, city: req.body.ucity, state: req.body.ustat, zip: req.body.uzip
-});
-user1.save();
-console.log("data this saved");
-res.redirect("/");
-});
 
 
-// using foreach function and rendering the user data on the page.
-app.get("/home",function(req,res){
-User.find({},function(err,foundUsers){
-  if (!err) {
-console.log("I get the data");
-foundUsers.forEach(function(foundUser){
-  console.log(foundUser.fName);
-res.render("home",{ fName:foundUser.fName , bDegree:foundUser.bDegree,bMajor:foundUser.bMajor,
-  compName:foundUser.compName, compScore:foundUser.compScore ,mDegree:foundUser.mDegree,
-  mMajor:foundUser.mMajor,certification:foundUser.certification,sName:foundUser.sName,
-  sCourse:foundUser.sCourse });
 
-});
-}
-});
-});
 
 
 
