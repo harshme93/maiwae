@@ -28,11 +28,23 @@ const pageSchema = {
 
 // schema for tasks (certifications)
 const certSchema = {
-  name: String, cover:String
+  name: String, cover:String, for:String
 };
-// model for it
-const Certification = mongoose.model("Certification",certSchema);
+const courseSchema = {
+  name: String, term:String, major:String
+};
+const profileSchema = {
+  name: String, req1:String, req2:String, req3:String
+};
 
+
+const Certification = mongoose.model("Certification",certSchema);
+const Competition = mongoose.model("Competition",certSchema);
+const Course = mongoose.model("Course",courseSchema);
+const Exam = mongoose.model("Exam",certSchema);
+const Fprofile = mongoose.model("Fprofile",profileSchema);
+const Scholarship = mongoose.model("Scholarship",certSchema);
+const Trend = mongoose.model("Trend",certSchema);
 
 // create page schema to link the pages with variables and send them
 
@@ -49,6 +61,7 @@ const newUser = new User({
     }
   });
 });
+
 
 
 app.get("/",function(req,res){
@@ -78,11 +91,22 @@ app.post("/home",function(req,res){
   });
 });
 
+
+
 app.post("/competitions",function(req,res){
-  res.render("competitions",);
+  Competition.find({},function(err,foundCerts){
+    if (!err) {
+    res.render("competitions",{ certNames:foundCerts});
+    }
+  });
 });
+
 app.post("/compexams",function(req,res){
-  res.render("compexams",);
+  Exam.find({},function(err,foundCerts){
+    if (!err) {
+    res.render("compexams",{ certNames:foundCerts});
+    }
+  });
 });
 
 app.post("/certifications",function(req,res){
@@ -93,24 +117,28 @@ app.post("/certifications",function(req,res){
   });
 });
 
-app.get("/certifications",function(req,res){
-});
-
-
-
-
-
-
-
 app.post("/courses",function(req,res){
-  res.render("courses",);
+  Course.find({},function(err,foundCerts){
+    if (!err) {
+    res.render("courses",{ certNames:foundCerts});
+    }
+  });
 });
+
 app.post("/scholarship",function(req,res){
-  res.render("scholarship",);
+  Scholarship.find({},function(err,foundCerts){
+    if (!err) {
+    res.render("scholarship",{ certNames:foundCerts});
+    }
+  });
 });
 
 app.post("/trends",function(req,res){
-  res.render("trends",);
+  Trend.find({},function(err,foundCerts){
+    if (!err) {
+    res.render("trends",{ certNames:foundCerts});
+    }
+  });
 });
 
 // linked
@@ -119,13 +147,12 @@ res.render("profile-page",);
 });
 
 app.post("/future",function(req,res){
-  res.render("future",);
+  Fprofile.find({},function(err,foundCerts){
+    if (!err) {
+    res.render("future",{ certNames:foundCerts});
+    }
+  });
 });
-
-
-
-
-
 
 
 

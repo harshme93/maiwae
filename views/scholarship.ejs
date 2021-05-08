@@ -9,23 +9,30 @@
               alt="" style="border-radius:100%;">
           </div>
 
-          <div class="col-lg-5 opt-box" style="background-color:red; border:1px solid;">
-            <div class="opt-head">
-              <h3>TATA Scholarship</h3>
-            </div>
-            <div class="opt-info">
-              <p>Description of what it is</p>
-              <p>Date if any</p>
-            </div>
-          </div>
-          <div class="col-lg-5 opt-why" style="background-color:yellow;  border:1px solid;">
-            <p>Why do this?</p>
-          </div>
-        </div>
-        <div class="opt-button">
-          <button type="button" class="btn btn-lg btn-block strbut"><a href="#"></a>Register and add to profile</button>
-        </div>
 
-      </section>
+          <% certNames.forEach(function(Certification){ %>
+                    <div class="col-lg-3 opt-box" style="background-color:red; border:1px solid;">
+          <ul>
+                      <div class="opt-head">
+                        <h3>  <%= Certification.name %>   </h3>
+                      </div>
+
+          </ul>
+                    </div>
+
+                    <div class="col-lg-5 opt-why" style="background-color:yellow;  border:1px solid;">
+                      <p><%= Certification.cover %></p>
+                    </div>
+                    <!-- <div class="opt-button">
+                      <button type="button" class="btn btn-lg btn-block strbut"><a href="#"></a>Register and add to profile</button>
+                    </div> -->
+
+                    <% }) %>
+                  </div>
+
+
+                </section>
+
+
 
 <%- include("footer") -%>
