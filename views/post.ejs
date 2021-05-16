@@ -1,0 +1,41 @@
+<%- include("header") -%>
+
+
+
+<section id="post" style="">
+  <div class="" style="margin-top:10px">
+    <form class="" action="/posts" method="post">
+      <input type="text" name="quesbtn" size="80" value="" placeholder="anyone pursuing CFA?" required>
+      <button type="submit" class="btn btn-danger" name="">Submit</button>
+    </form>
+  </div>
+</section>
+
+<section id="">
+
+  <form class="" action="/answer" method="post">
+
+      <% certNames.forEach(function(Question){ %>
+
+       <h3> <%= Question.ques %> </h3>
+
+<% for (var i = 0; i < Question.ans.length; i++) { %>
+  <p>  <%= Question.ans[i].answer %> </p>
+<% } %>
+
+      <input type="text" name="ansbtn" size="80" value="" placeholder="Enter your comment" >
+      <button type="submit" name="questionId" class="btn btn-sm" value="<%=Question._id %>" name="button">Reply</button>
+
+      <% }) %>
+
+  </form>
+
+</section>
+
+
+
+
+
+
+
+<%- include("footer") -%>
