@@ -12,24 +12,25 @@
 </section>
 
 <section id="">
+  <% certNames.forEach(function(Question){ %>
+
+   <h3> <%= Question.ques %> </h3>
 
   <form class="" action="/answer" method="post">
 
-      <% certNames.forEach(function(Question){ %>
 
-       <h3> <%= Question.ques %> </h3>
 
 <% for (var i = 0; i < Question.ans.length; i++) { %>
   <p>  <%= Question.ans[i].answer %> </p>
 <% } %>
 
-      <input type="text" name="ansbtn" size="80" value="" placeholder="Enter your comment" >
+      <input type="text" name="ansbtn" size="80" value="" placeholder="Enter your comment" required>
       <button type="submit" name="questionId" class="btn btn-sm" value="<%=Question._id %>" name="button">Reply</button>
 
-      <% }) %>
+
 
   </form>
-
+<% }) %>
 </section>
 
 

@@ -273,12 +273,14 @@ app.post("/posts", function(req, res) {
 app.post("/answer", function(req, res) {
 
 const reply = new Answer({answer: req.body.ansbtn});
+
 const questionId = req.body.questionId;
 
-  console.log("reply sibmitted "+reply.answer);
+  console.log("reply sibmitted "+reply);
   console.log("question ID "+questionId);
 Question.findOne({_id:questionId},function(err,foundQ){
   if (!err) {
+
     foundQ.ans.push(reply);
     foundQ.save();
       }
