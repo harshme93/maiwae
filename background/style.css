@@ -2,11 +2,9 @@
 body {
   font-family: sans-serif;
   text-align: center;
+  background-color: black;
+  margin: 0% 2% 2% 2%;
 }
-
-
-
-
 
 
 .section-heading {
@@ -39,35 +37,32 @@ body {
   margin: 5% 3% 5% 0;
 }
 
-/* Title Section */
-
-/* #title {
-  background-color: grey;
-  color: black;
-  text-align: left;
-} */
 
 .toptions{
-background-color: #ede7e3;;
+background-color: black;
 font-family: sans-serif;
 font-weight: bold;
 
-
 }
+
 
 .nav-link{
   color: #51adcf;
   font-weight: bold;
+margin-right:20% ;
 
+}
+.nav-link:hover{
+  color:#0a81ab;
 }
 
 .navbar-brand{
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   color: #51adcf;
 
 }
 .navbar-brand:hover{
-  color:#087e8b;
+  color: #0a81ab;
 }
 
 .navbar-toggler{
@@ -159,12 +154,31 @@ color: white;
 .optbut{
   background-color: #51adcf;
   color:White;
+  border-radius: 5px;
+
 }
-
-
 .optbut:hover{
-  background-color: #0278ae;
+  background-color: #0a81ab;
+  -webkit-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    box-shadow:0 0 5px rgba(0,0,0,0.8);
 }
+
+.optbut-task{
+margin-top:1% 1% 1% 1%;
+background-color: black;
+  color:White;
+  border-radius: 5px;
+  border: 1px solid #a20a0a;
+}
+.optbut-task:hover{
+
+  -webkit-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    box-shadow:0 0 5px rgba(0,0,0,0.8);
+  background-color: #a20a0a;
+}
+
 
 /* CTA Section */
 
@@ -202,10 +216,6 @@ color: white;
 
 }
 
-/* .subbtn{
-  background-color: #041c84;
-} */
-
 
 /* home */
 
@@ -213,14 +223,44 @@ color: white;
   border-radius: 100%;
 padding-bottom: 10px;
 }
+.user-details{
+text-align: justify;
+  color: #f4f9f4;
+}
+
 .user-area{
-  padding: 5% 1% 5% 1%;
+  /* padding: 2% 2% 1% 1%; */
   background-color: black;
-  color:white;
+  color:Black;
+  border-radius: 5px;
+
+}
+.present-you{
+  padding: 2% 2% 1% 1%;
+  border: 1px solid #51adcf;
+  border-radius: 5px;
+  background-color: #f4f9f4;
+  padding-bottom: 10%;
+  -webkit-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    box-shadow:0 0 5px rgba(0,0,0,0.8);
 }
 
 .future-you{
-  background-color: red;
+padding: 1% 2% 1% 1%;
+
+  background-color: #a20a0a ;
+/* border: 2px solid #a20a0a; */
+  border-radius: 5px;
+  color: white;
+  -webkit-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    box-shadow:0 0 5px rgba(0,0,0,0.8);
+  }
+
+/* cards */
+.card{
+  background-color: #f4f9f4;
 }
 
 /* timeline */
@@ -231,7 +271,7 @@ ul.timeline {
 }
 ul.timeline:before {
     content: ' ';
-    background: #d4d9df;
+    background: black;
     display: inline-block;
     position: absolute;
     left: 29px;
@@ -245,11 +285,11 @@ ul.timeline > li {
 }
 ul.timeline > li:before {
     content: ' ';
-    background: white;
+    background: #f4f9f4;
     display: inline-block;
     position: absolute;
     border-radius: 50%;
-    border: 3px solid #22c0e8;
+    border: 3px solid #a20a0a ;
     left: 20px;
     width: 20px;
     height: 20px;
@@ -260,8 +300,23 @@ ul.timeline > li:before {
 
 
 /* competitions */
+.opt-box{
+  border-radius: 5px;
+  background-color: #f8ede3;
+  margin: 1% 1% 1% 1%;
+  padding-top: 1%;
+
+}
+.opt-why{
+  border-radius: 5px;
+  background-color: #faf1e6;
+  margin: 1% 1% 1% 1%;
+padding-top: 1%;
+}
+
 .opt-total{
-  padding: 2% 4% 2% 4%;
+  padding: 1% 1% 1% 1%;
+
 }
 
 .opt-button{

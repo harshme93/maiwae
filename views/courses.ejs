@@ -1,36 +1,43 @@
 <%- include("header") -%>
+<section>
+  <form class="" action="/courses" method="post">
+    <input type="text" name="srchInput" size="70" value="" style="border: 1px #a20a0a solid;border-radius:5px ;background-color:black" placeholder="search">
+    <button type="submit" name="" style="background-color: #a20a0a" class="btn btn-sm"><i class="fas fa-search"></i></button>
+  </form>
 
-      <section id="certi">
+</section>
 
-        <div class="row opt-total">
-          <div class="opt-img col-lg-2">
-            <img
-              src="https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/s150x150/55726586_395510704606682_5123988317334929408_n.jpg?tp=1&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_ohc=lLvVoGqIoKcAX-D-GHL&oh=08531b24760ee5d53eb00282dae4bf16&oe=606CC633"
-              alt="" style="border-radius:100%;">
-          </div>
+<section id="certi">
+
+<div class="row opt-total">
+
+    <% certNames.forEach(function(Certification){ %>
+
+    <div class="col-lg-3 opt-box" >
+      <ul>
+        <!-- <div class="opt-head"> -->
+          <h5> <%= Certification.degNam %> </h5>
+
+        <!-- </div> -->
+
+      </ul>
+    </div>
+
+    <div class="col-lg-6 opt-why" >
+      <h5><p><%= Certification.degMjr %></p></h5>
+    </div>
+
+    <div class="col-lg-2">
+      <form class="" action="" method="post">
+        <button type="submit" class="btn optbut-task" name="button">Add</button>
+      </form>
+    </div>
+
+    <% }) %>
+  </div>
 
 
-          <% certNames.forEach(function(Certification){ %>
-                    <div class="col-lg-12 opt-box" style="background-color:grey; border:1px solid;">
-          <ul>
-                      <div class="opt-head">
-                        <h3>  <%= Certification.degNam %>   </h3>
-
-                      </div>
-
-          </ul>
-                    </div>
-
-                    <div class="col-lg-12 opt-why" style="background-color:yellow;  border:1px solid;">
-                      <p><%= Certification.degMjr %></p>
-                    </div>
-                  
-
-                    <% }) %>
-                  </div>
-
-
-                </section>
+</section>
 
 
 

@@ -2,7 +2,7 @@
 body {
   font-family: sans-serif;
   text-align: center;
-}
+  }
 
 
 
@@ -39,16 +39,9 @@ body {
   margin: 5% 3% 5% 0;
 }
 
-/* Title Section */
-
-/* #title {
-  background-color: grey;
-  color: black;
-  text-align: left;
-} */
 
 .toptions{
-background-color: #ede7e3;;
+background-color: red;
 font-family: sans-serif;
 font-weight: bold;
 
@@ -63,11 +56,11 @@ font-weight: bold;
 
 .navbar-brand{
   font-size: 3.5rem;
-  color: #51adcf;
+  color: #e6e6e6;
 
 }
 .navbar-brand:hover{
-  color:#087e8b;
+  color:red;
 }
 
 .navbar-toggler{
@@ -157,7 +150,7 @@ color: white;
 }
 
 .optbut{
-  background-color: #51adcf;
+  background-color: #16a596;
   color:White;
   border-radius: 100%;
 
@@ -204,10 +197,6 @@ color: white;
   padding: 10% 20% 10% 20%;
 
 }
-
-/* .subbtn{
-  background-color: #041c84;
-} */
 
 
 /* home */

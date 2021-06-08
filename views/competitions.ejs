@@ -1,16 +1,22 @@
 <%- include("header") -%>
 
+<section >
+<form class="" action="/competitions" method="post">
+  <input type="text" name="srchInput" size="60" value="" placeholder="search">
+<button type="submit" name="" class="btn btn-sm"><i class="fas fa-search"></i></button>
+</form>
+
+</section>
+
+
+
   <section id="compet">
 
     <div class="row opt-total">
-      <div class="opt-img col-lg-2">
-        <img
-          src="https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/s150x150/55726586_395510704606682_5123988317334929408_n.jpg?tp=1&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_ohc=lLvVoGqIoKcAX-D-GHL&oh=08531b24760ee5d53eb00282dae4bf16&oe=606CC633"
-          alt="" style="border-radius:100%;">
-      </div>
+
 
       <% certNames.forEach(function(Certification){ %>
-                <div class="col-lg-3 opt-box" style="background-color:red; border:1px solid;">
+                <div class="col-lg-6 opt-box" style="background-color:red; border:1px solid;">
       <ul>
                   <div class="opt-head">
                     <h3>  <%= Certification.name %>   </h3>
@@ -19,7 +25,7 @@
       </ul>
                 </div>
 
-                <div class="col-lg-5 opt-why" style="background-color:yellow;  border:1px solid;">
+                <div class="col-lg-6 opt-why" style="background-color:yellow;  border:1px solid;">
                   <p><%= Certification.cover %></p>
                 </div>
                 <!-- <div class="opt-button">
