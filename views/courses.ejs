@@ -28,7 +28,9 @@
     </div>
 
     <div class="col-lg-2">
-      <form class="" action="" method="post">
+      <form class="" action="/courhome" method="post">
+<input type="hidden" name="ftDeg" value="<%= Certification.degNam %> ">
+<input type="hidden" name="ftMajor" value="<%= Certification.degMjr %> ">
         <button type="submit" class="btn optbut-task" name="button">Add</button>
       </form>
     </div>

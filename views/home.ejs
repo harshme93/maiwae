@@ -50,10 +50,7 @@
 <form class="" action="/future" method="post">
   <button type="submit" class="btn btn-lg optbut" id="futureyou" style="background-color: #f8ede3; color:#a20a0a" name="button">Profile</button>
 </form>
-          <p>Profile <%= futProfile %>  </p>
-          <p>Req <%= fReq1 %> </p>
-          <p>Req <%= fReq2 %> </p>
-          <p>Req <%= fReq3 %> </p>
+<%= futProfile %>  <br>  <%= fReq1 %> <br> <%= fReq2 %> <br> <%= fReq3 %> <br>
         </div>
       </div>
     </div>
@@ -73,6 +70,7 @@
               <button class="btn btn-lg optbut" type="submit" id="compet">Competitions</button>
 
             </form>
+            <%= futComp %>
           </div>
         </div>
       </div>
@@ -88,37 +86,33 @@
               <button id="compex" type="submit" class="btn btn-lg optbut">Exams</button>
 
             </form>
-            <h5> <%=compName%>  <%=compScore%> </h5>
+            <%=compName%>  <%=compScore%> <br>  <%= futExam %>
+
           </div>
         </div>
       </div>
 
       <div class="pricing-column col-lg-4 col-md-6">
         <div class="card ">
-          <!-- <div class="card-header">
-            <h3>Certifications</h3>
-          </div> -->
+
           <div class="card-body">
             <h5>  </h5>
             <form action="/certifications" method="post">
               <button class="btn btn-lg  optbut" type="submit" id="certifi">Certifications</button>
-
             </form>
+            <%= futCerti %>
           </div>
         </div>
       </div>
 
       <div class="pricing-column col-lg-4 col-md-6">
         <div class="card ">
-          <!-- <div class="card-header">
-            <h3>Courses</h3>
-          </div> -->
+
           <div class="card-body">
 <form class="" action="/courses" method="post">
-    <button class="btn btn-lg  optbut" type="submit" id="course">Courses</button>
+    <button class="btn btn-lg  optbut" type="submit" id="course"> Courses </button>
 </form>
-
-
+<%= futDeg %> <br> <%= futMajor %>
           </div>
         </div>
       </div>
@@ -148,7 +142,7 @@
 <form class="" action="/scholarship" method="post">
   <button class="btn btn-lg  optbut" id="scholar" type="submit">Fellowships</button>
 </form>
-
+<%= futFellow %>
 
           </div>
         </div>

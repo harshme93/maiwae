@@ -16,7 +16,7 @@
 
 
       <% certNames.forEach(function(Certification){ %>
-                <div class="col-lg-6 opt-box" style="background-color:red; border:1px solid;">
+                <div class="col-lg-3 opt-box" >
       <ul>
                   <div class="opt-head">
                     <h3>  <%= Certification.name %>   </h3>
@@ -25,12 +25,15 @@
       </ul>
                 </div>
 
-                <div class="col-lg-6 opt-why" style="background-color:yellow;  border:1px solid;">
+                <div class="col-lg-6 opt-why" >
                   <p><%= Certification.cover %></p>
                 </div>
-                <!-- <div class="opt-button">
-                  <button type="button" class="btn btn-lg btn-block strbut"><a href="#"></a>Register and add to profile</button>
-                </div> -->
+                <div class="col-lg-2">
+                  <form action="/comphome" method="post">
+                <input type="hidden" name="fComp" value="<%= Certification.name %>">
+              <button type="submit" class="btn optbut-task" name="button">Add</button>
+                  </form>
+                </div>
 
                 <% }) %>
               </div>

@@ -56,7 +56,13 @@ const userInfoSchema = new mongoose.Schema({
   futProfile: String,
   fReq1: String,
   fReq2: String,
-  fReq3: String
+  fReq3: String,
+  futFellow: String,
+  futCerti: String,
+  futDeg: String,
+  futMajor: String,
+  futComp: String,
+  futExam: String
 });
 
 userInfoSchema.plugin(passportLocalMongoose);
@@ -160,7 +166,13 @@ app.get("/home", function(req, res) {
         futProfile: foundUser.futProfile,
         fReq1: foundUser.fReq1,
         fReq2: foundUser.fReq2,
-        fReq3: foundUser.fReq3
+        fReq3: foundUser.fReq3,
+        futFellow: foundUser.futFellow,
+        futCerti: foundUser.futCerti,
+        futDeg: foundUser.futDeg ,
+        futMajor: foundUser.futMajor,
+        futComp: foundUser.futComp,
+        futExam: foundUser.futExam
       });
     })
   } else {
@@ -197,12 +209,12 @@ app.post("/login", function(req, res) {
       console.log(err);
     } else {
       passport.authenticate("local")(req, res, function() {
-      if (req.user.fName) {
+        if (req.user.fName) {
 
-        res.redirect("home");
-      } else {
-        res.redirect("/profile");
-      }
+          res.redirect("home");
+        } else {
+          res.redirect("/profile");
+        }
 
       })
     }
@@ -214,31 +226,7 @@ app.get("/profile", function(req, res) {
 });
 
 app.post("/profile", function(req, res) {
-
-  const fName = req.body.ufname;
-  const lName = req.body.ulname;
-  const sName = req.body.usclname;
-  const sCourse = req.body.usclcours;
-  const bDegree = req.body.ubachdeg;
-  const bMajor = req.body.ubachmaj;
-  const compName = req.body.ucompex;
-  const compScore = req.body.ucompsc;
-  const mDegree = req.body.umasdeg;
-  const mMajor = req.body.umasmaj;
-  const certification = req.body.ucert;
-  const date = req.body.udobd;
-  const month = req.body.udobm;
-  const year = req.body.udoby;
-  const city = req.body.ucity;
-  const state = req.body.ustat;
-  const zip = req.body.uzip;
-  const futProfile = req.body.futProfile;
-  const fReq1 = req.body.fReq1;
-  const fReq2 = req.body.fReq2;
-  const fReq3 = req.body.fReq3;
-
-
-  User.findById(req.user.id, function(err, foundUser) {
+User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -263,6 +251,13 @@ app.post("/profile", function(req, res) {
       foundUser.fReq1 = req.body.fReq1;
       foundUser.fReq2 = req.body.fReq2;
       foundUser.fReq3 = req.body.fReq3;
+      foundUser.futFellow = req.body.futFellow;
+      foundUser.futCerti = req.body.futCerti;
+      foundUser.futDeg = req.body.futDeg;
+      foundUser.futMajor = req.body.futMajor;
+      foundUser.futComp =  req.body.futComp;
+      foundUser.futExam = req.body.futExam;
+
       foundUser.save(function() {
         res.render("home", {
           fName: fName,
@@ -278,7 +273,13 @@ app.post("/profile", function(req, res) {
           futProfile: futProfile,
           fReq1: fReq1,
           fReq2: fReq2,
-          fReq3: fReq3
+          fReq3: fReq3,
+          futFellow: futFellow,
+          futCerti: futCerti,
+          futDeg: futDeg,
+          futMajor: futMajor,
+          futComp: futComp,
+          futExam: futExam
         });
       })
     }
@@ -363,24 +364,90 @@ app.post("/future", function(req, res) {
   });
 });
 
-app.post("/home",function(req,res){
-
-  User.findById(req.user.id, function(err, foundUser) {
+app.post("/futhome", function(req, res) {
+User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
       foundUser.futProfile = req.body.fprofile;
-      foundUser.fReq1  = req.body.freq1;
+      foundUser.fReq1 = req.body.freq1;
       foundUser.fReq2 = req.body.freq2;
       foundUser.fReq3 = req.body.freq3;
-    foundUser.save(function() {
-    res.redirect("home");
-    })
+      foundUser.save(function() {
+        res.redirect("home");
+      })
     }
-    })
-
-
+  })
 });
+
+app.post("/felhome", function(req, res) {
+User.findById(req.user.id, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundUser.futFellow = req.body.fFellow;
+      foundUser.save(function() {
+        res.redirect("home");
+      })
+    }
+  })
+});
+
+app.post("/certhome", function(req, res) {
+  User.findById(req.user.id, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundUser.futCerti = req.body.fCerti;
+      foundUser.save(function() {
+        res.redirect("home");
+      })
+    }
+  })
+});
+
+app.post("/courhome", function(req, res) {
+User.findById(req.user.id, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundUser.futDeg = req.body.ftDeg;
+      foundUser.futMajor = req.body.ftMajor;
+      foundUser.save(function() {
+        res.redirect("home");
+      })
+    }
+  })
+});
+
+app.post("/comphome", function(req, res) {
+User.findById(req.user.id, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundUser.futComp = req.body.fComp;
+      foundUser.save(function() {
+        res.redirect("home");
+      })
+    }
+  })
+});
+
+app.post("/examhome", function(req, res) {
+User.findById(req.user.id, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundUser.futExam = req.body.fExam;
+      foundUser.save(function() {
+        res.redirect("home");
+      })
+    }
+  })
+});
+
+
+
 
 app.get("/post", function(req, res) {
   Question.find({}, function(err, foundQues) {
