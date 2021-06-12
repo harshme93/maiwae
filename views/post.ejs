@@ -2,26 +2,36 @@
 
 
 
-<section id="post" style="">
+<section id="" style="">
   <div class="" style="margin-top:10px">
     <form class="" action="/posts" method="post">
-      <input type="text" name="quesbtn" size="80" value="" placeholder="Where can I find free study material fro CFA?" required>
-      <button type="submit" class="btn btn-danger" name="">Submit</button>
+      <input type="text" name="quesbtn" class="postBox" size="80" value="" placeholder="Where can I find free study material fro CFA?" required>
+      <button type="submit" class="btn btn-danger postQtnBox" name="">Submit</button>
     </form>
   </div>
 </section>
 
-<section id="">
+<section id="post">
   <% certNames.forEach(function(Question){ %>
-   <h3> <%= Question.ques %> </h3>
+
+   <h3 class="postQtn"> <%= Question.ques %> </h3>
   <form class="" action="/answer" method="post">
 <% for (var i = 0; i < Question.ans.length; i++) { %>
-  <p>  <%= Question.ans[i].answer %> </p>
+
+
+
+
+
+<h5 class="postAns">   <%= Question.ans[i].answer %> </h5>
 <% } %>
-      <input type="text" name="ansbtn" size="80" value="" placeholder="Enter your comment" required>
-      <button type="submit" name="questionId" class="btn btn-sm" value="<%=Question._id %>" name="button">Reply</button>
+      <input type="text" name="ansbtn" size="80" class="postBox" value="" placeholder="Enter your comment" required>
+      <button type="submit" name="questionId" class="btn btn-sm postAnsBox" value="<%=Question._id %>" name="button">Reply</button>
   </form>
+
+
+
 <% }) %>
+
 </section>
 
 

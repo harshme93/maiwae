@@ -62,7 +62,8 @@ const userInfoSchema = new mongoose.Schema({
   futDeg: String,
   futMajor: String,
   futComp: String,
-  futExam: String
+  futExam: String,
+  futTrend: String
 });
 
 userInfoSchema.plugin(passportLocalMongoose);
@@ -172,7 +173,8 @@ app.get("/home", function(req, res) {
         futDeg: foundUser.futDeg ,
         futMajor: foundUser.futMajor,
         futComp: foundUser.futComp,
-        futExam: foundUser.futExam
+        futExam: foundUser.futExam,
+        futTrend:foundUser.futTrend
       });
     })
   } else {
@@ -257,7 +259,7 @@ User.findById(req.user.id, function(err, foundUser) {
       foundUser.futMajor = req.body.futMajor;
       foundUser.futComp =  req.body.futComp;
       foundUser.futExam = req.body.futExam;
-
+      foundUser.futTrend = req.body.futTrend;
       foundUser.save(function() {
         res.render("home", {
           fName: fName,
@@ -279,7 +281,8 @@ User.findById(req.user.id, function(err, foundUser) {
           futDeg: futDeg,
           futMajor: futMajor,
           futComp: futComp,
-          futExam: futExam
+          futExam: futExam,
+          futTrend: futTrend
         });
       })
     }
@@ -446,6 +449,19 @@ User.findById(req.user.id, function(err, foundUser) {
   })
 });
 
+app.post("/trendhome", function(req, res) {
+
+User.findById(req.user.id, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundUser.futTrend = req.body.fTrend;
+      foundUser.save(function() {
+        res.redirect("home");
+      })
+    }
+  })
+});
 
 
 

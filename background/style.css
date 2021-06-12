@@ -327,3 +327,42 @@ padding-top: 1%;
   padding-right: 1%;
   text-align: center;
 }
+
+/* posts */
+.postQtn{
+  color: #faf1e6;
+text-align: center;
+}
+
+.postAns{
+  color: #faf1e6;
+text-align: center;
+}
+.postQtnBox{
+  border-radius: 5px;
+
+}
+.postQtnBox:hover{
+
+  -webkit-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    box-shadow:0 0 5px rgba(0,0,0,0.8);
+background-color: red;
+}
+.postAnsBox{
+  border-radius: 5px;
+}
+.postAnsBox:hover{
+
+  -webkit-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 5px rgba(0,0,0,0.8);
+    box-shadow:0 0 5px rgba(0,0,0,0.8);
+background-color: #a20a0a;
+color:#faf1e6;
+}
+.postBox{
+  border-radius: 5px;
+  border: 1px solid #faf1e6;
+  color:#faf1e6;
+  background-color: black;
+}
