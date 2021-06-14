@@ -1,11 +1,19 @@
 <%- include("header") -%>
 <section>
-  <form class="" action="/courses" method="post">
-    <input type="text" name="srchInput" size="70" value="" style="border: 1px #a20a0a solid;border-radius:5px ;background-color:black" placeholder="search">
-    <button type="submit" name="" style="background-color: #a20a0a" class="btn btn-sm"><i class="fas fa-search"></i></button>
+
+<form class="" action="/courses" method="post">
+<div class="searchSuggestBox" style="text-align: center;">
+<input type="text" name="srchInput" id="searchCourse"   size="70" value="" class="searchInp" placeholder="search">
+
+<button type="submit" name="" style="" class="btn btn-sm searchBtn"><i class="fas fa-search"></i></button>
+<ul> </ul>
+</div>
   </form>
 
+<script src="script.js"></script>
 </section>
+
+
 
 <section id="certi">
 
@@ -14,17 +22,17 @@
     <% certNames.forEach(function(Certification){ %>
 
     <div class="col-lg-3 opt-box" >
-      <ul>
+<ul id="myUL">
         <!-- <div class="opt-head"> -->
           <h5> <%= Certification.degNam %> </h5>
 
         <!-- </div> -->
+</ul>
 
-      </ul>
     </div>
 
     <div class="col-lg-6 opt-why" >
-      <h5><p><%= Certification.degMjr %></p></h5>
+    <h5>  <%= Certification.degMjr %> </h5>
     </div>
 
     <div class="col-lg-2">

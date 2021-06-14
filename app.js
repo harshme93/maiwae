@@ -170,11 +170,11 @@ app.get("/home", function(req, res) {
         fReq3: foundUser.fReq3,
         futFellow: foundUser.futFellow,
         futCerti: foundUser.futCerti,
-        futDeg: foundUser.futDeg ,
+        futDeg: foundUser.futDeg,
         futMajor: foundUser.futMajor,
         futComp: foundUser.futComp,
         futExam: foundUser.futExam,
-        futTrend:foundUser.futTrend
+        futTrend: foundUser.futTrend
       });
     })
   } else {
@@ -228,7 +228,7 @@ app.get("/profile", function(req, res) {
 });
 
 app.post("/profile", function(req, res) {
-User.findById(req.user.id, function(err, foundUser) {
+  User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -257,7 +257,7 @@ User.findById(req.user.id, function(err, foundUser) {
       foundUser.futCerti = req.body.futCerti;
       foundUser.futDeg = req.body.futDeg;
       foundUser.futMajor = req.body.futMajor;
-      foundUser.futComp =  req.body.futComp;
+      foundUser.futComp = req.body.futComp;
       foundUser.futExam = req.body.futExam;
       foundUser.futTrend = req.body.futTrend;
       foundUser.save(function() {
@@ -289,86 +289,211 @@ User.findById(req.user.id, function(err, foundUser) {
   })
 });
 
+var filteredComps = mongoose.model("filteredComps", compSchema);
 app.post("/competitions", function(req, res) {
-  // console.log(req.body.srchInput);
-  Competition.find({}, function(err, foundCerts) {
-    if (!err) {
-      res.render("competitions", {
-        certNames: foundCerts
-      });
-    }
-  });
+  filteredComps = [];
+  if (req.body.srchInput) {
+    const searchString = _.lowerCase([req.body.srchInput]);
+    Competition.find({}, function(err, foundCerts) {
+      if (!err) {
+        foundCerts.forEach(function(foundCert) {
+          if (_.lowerCase([foundCert.name]) === (searchString)) {
+            filteredComps.push(foundCert);
+          }
+        });
+        res.render("competitions", {
+          certNames: filteredComps
+        });
+      }
+    });
+  } else {
+    Competition.find({}, function(err, foundCerts) {
+      if (!err) {
+        res.render("competitions", {
+          certNames: foundCerts
+        });
+      }
+    });
+  }
 });
+
+var filteredExams = mongoose.model("filteredExams", examSchema);
 
 app.post("/compexams", function(req, res) {
-  // console.log(req.body.srchInput);
-  Exam.find({}, function(err, foundCerts) {
-    if (!err) {
-      res.render("compexams", {
-        certNames: foundCerts
-      });
-    }
-  });
+  filteredExams = [];
+  if (req.body.srchInput) {
+    const searchString = _.lowerCase([req.body.srchInput]);
+    Exam.find({}, function(err, foundCerts) {
+      if (!err) {
+        foundCerts.forEach(function(foundCert) {
+          if (_.lowerCase([foundCert.exNam]) === (searchString)) {
+            filteredExams.push(foundCert);
+          }
+        });
+        res.render("compexams", {
+          certNames: filteredExams
+        });
+      }
+    });
+  } else {
+    Exam.find({}, function(err, foundCerts) {
+      if (!err) {
+        res.render("compexams", {
+          certNames: foundCerts
+        });
+      }
+    });
+  }
 });
+
+var filteredCert = mongoose.model("filteredCert", certSchema);
 
 app.post("/certifications", function(req, res) {
-  // console.log(req.body.srchInput);
-  Certification.find({}, function(err, foundCerts) {
-    if (!err) {
-      res.render("certifications", {
-        certNames: foundCerts
-      });
-    }
-  });
+  filteredCert = [];
+  if (req.body.srchInput) {
+    const searchString = _.lowerCase([req.body.srchInput]);
+    Certification.find({}, function(err, foundCerts) {
+      if (!err) {
+        foundCerts.forEach(function(foundCert) {
+          if (_.lowerCase([foundCert.certNam]) === (searchString)) {
+            filteredCert.push(foundCert);
+          }
+        });
+        res.render("certifications", {
+          certNames: filteredCert
+        });
+      }
+    });
+  } else {
+    Certification.find({}, function(err, foundCerts) {
+      if (!err) {
+        res.render("certifications", {
+          certNames: foundCerts
+        });
+      }
+    });
+  }
 });
+
+var filteredCourse = mongoose.model("filteredCourse", courseSchema);
 
 app.post("/courses", function(req, res) {
-  // console.log(req.body.srchInput);
-  Course.find({}, function(err, foundCerts) {
-    if (!err) {
-      res.render("courses", {
-        certNames: foundCerts
-      });
-    }
-  });
+  filteredCourse = [];
+  if (req.body.srchInput) {
+    const searchString = _.lowerCase([req.body.srchInput]);
+    Course.find({}, function(err, foundCerts) {
+      if (!err) {
+        foundCerts.forEach(function(foundCert) {
+          if (_.lowerCase([foundCert.degMjr]) === (searchString)) {
+            filteredCourse.push(foundCert);
+          }
+        });
+        res.render("courses", {
+          certNames: filteredCourse
+        });
+      }
+    });
+  } else {
+    Course.find({}, function(err, foundCerts) {
+      if (!err) {
+        res.render("courses", {
+          certNames: foundCerts
+        });
+      }
+    });
+  }
 });
 
-// fellowships and internships
+
+var filteredSchol = mongoose.model("filteredSchol", scholSchema);
+
 app.post("/scholarship", function(req, res) {
-  // console.log(req.body.srchInput);
-  Scholarship.find({}, function(err, foundCerts) {
-    if (!err) {
-      res.render("scholarship", {
-        certNames: foundCerts
-      });
-    }
-  });
+  filteredSchol = [];
+  if (req.body.srchInput) {
+    const searchString = _.lowerCase([req.body.srchInput]);
+    Scholarship.find({}, function(err, foundCerts) {
+      if (!err) {
+        foundCerts.forEach(function(foundCert) {
+          if (_.lowerCase([foundCert.name]) === (searchString)) {
+            filteredSchol.push(foundCert);
+          }
+        });
+        res.render("scholarship", {
+          certNames: filteredSchol
+        });
+      }
+    });
+  } else {
+    Scholarship.find({}, function(err, foundCerts) {
+      if (!err) {
+        res.render("scholarship", {
+          certNames: foundCerts
+        });
+      }
+    });
+  }
 });
+
+var filteredTrends = mongoose.model("filteredTrends", trendSchema);
 
 app.post("/trends", function(req, res) {
-  // console.log(req.body.srchInput);
-  Trend.find({}, function(err, foundCerts) {
-    if (!err) {
-      res.render("trends", {
-        certNames: foundCerts
-      });
-    }
-  });
+  filteredTrends = [];
+  if (req.body.srchInput) {
+    const searchString = _.lowerCase([req.body.srchInput]);
+    Trend.find({}, function(err, foundCerts) {
+      if (!err) {
+        foundCerts.forEach(function(foundCert) {
+          if (_.lowerCase([foundCert.name]) === (searchString)) {
+            filteredTrends.push(foundCert);
+          }
+        });
+        res.render("trends", {
+          certNames: filteredTrends
+        });
+      }
+    });
+  } else {
+    Trend.find({}, function(err, foundCerts) {
+      if (!err) {
+        res.render("trends", {
+          certNames: foundCerts
+        });
+      }
+    });
+  }
 });
 
-app.post("/future", function(req, res) {
+var filteredFuture = mongoose.model("filteredFuture", profileSchema);
 
-  Fprofile.find({}, function(err, foundCerts) {
-    if (!err) {
-      res.render("future", {
-        certNames: foundCerts
-      });
-    }
-  });
+app.post("/future", function(req, res) {
+  filteredFuture = [];
+  if (req.body.srchInput) {
+    const searchString = _.lowerCase([req.body.srchInput]);
+    Fprofile.find({}, function(err, foundCerts) {
+      if (!err) {
+        foundCerts.forEach(function(foundCert) {
+          if (_.lowerCase([foundCert.name]) === (searchString)) {
+            filteredFuture.push(foundCert);
+          }
+        });
+        res.render("future", {
+          certNames: filteredFuture
+        });
+      }
+    });
+  } else {
+    Fprofile.find({}, function(err, foundCerts) {
+      if (!err) {
+        res.render("future", {
+          certNames: foundCerts
+        });
+      }
+    });
+  }
 });
 
 app.post("/futhome", function(req, res) {
-User.findById(req.user.id, function(err, foundUser) {
+  User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -384,7 +509,7 @@ User.findById(req.user.id, function(err, foundUser) {
 });
 
 app.post("/felhome", function(req, res) {
-User.findById(req.user.id, function(err, foundUser) {
+  User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -410,7 +535,7 @@ app.post("/certhome", function(req, res) {
 });
 
 app.post("/courhome", function(req, res) {
-User.findById(req.user.id, function(err, foundUser) {
+  User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -424,7 +549,7 @@ User.findById(req.user.id, function(err, foundUser) {
 });
 
 app.post("/comphome", function(req, res) {
-User.findById(req.user.id, function(err, foundUser) {
+  User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -437,7 +562,7 @@ User.findById(req.user.id, function(err, foundUser) {
 });
 
 app.post("/examhome", function(req, res) {
-User.findById(req.user.id, function(err, foundUser) {
+  User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -450,8 +575,7 @@ User.findById(req.user.id, function(err, foundUser) {
 });
 
 app.post("/trendhome", function(req, res) {
-
-User.findById(req.user.id, function(err, foundUser) {
+  User.findById(req.user.id, function(err, foundUser) {
     if (err) {
       console.log(err);
     } else {

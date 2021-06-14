@@ -7,6 +7,8 @@ body {
 }
 
 
+
+
 .section-heading {
   font-size: 3rem;
   line-height: 1.5;
@@ -244,6 +246,10 @@ text-align: justify;
   -webkit-box-shadow:0 0 5px rgba(0,0,0,0.8);
     -moz-box-shadow:0 0 5px rgba(0,0,0,0.8);
     box-shadow:0 0 5px rgba(0,0,0,0.8);
+    color: black;
+}
+.homeLi{
+  color: black;
 }
 
 .future-you{
@@ -365,4 +371,28 @@ color:#faf1e6;
   border: 1px solid #faf1e6;
   color:#faf1e6;
   background-color: black;
+}
+
+/* search options */
+.searchInp{
+  border: 1px #a20a0a solid;
+  border-radius:5px ;
+  background-color:black;
+  color:#faf1e6;
+}
+
+/* style="border: 1px #a20a0a solid;border-radius:5px ;background-color:black" */
+.searchBtn{
+  background-color: #a20a0a;
+}
+.searchSuggest{
+  list-style-type: none;
+  color:#faf1e6;
+}
+.searchSuggestBox{
+  text-align: center;
+}
+li{
+  list-style-type: none;
+  color:#faf1e6;
 }
