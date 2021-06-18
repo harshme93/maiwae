@@ -380,6 +380,43 @@ color:#faf1e6;
   background-color:black;
   color:#faf1e6;
 }
+ /* .wrapper {
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.15);
+  position: relative;
+  width: 450px;
+} */
+
+input:focus {
+  outline: none;
+}
+.results {
+  padding: 0px;
+}
+.results ul {margin: 0; padding: 0; }
+.results ul li {
+  list-style: none;
+  border-radius: 3px;
+  opacity: 0;
+  display: none;
+  padding: 8px 12px;
+  transition: all .5s linear;
+}
+
+.show .results ul li {
+  opacity: 1;
+  display: block;
+}
+
+.show .results {
+  padding: 10px;
+}
+
+.results ul li:hover {
+  background: #ececec
+} 
 
 /* style="border: 1px #a20a0a solid;border-radius:5px ;background-color:black" */
 .searchBtn{

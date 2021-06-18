@@ -1,16 +1,41 @@
-const fruits = ['Apple','Orange','Mango','Watermelon','Kiwi','Banana','Grapes'];
 
 
-document.getElementById('searchCourse').addEventListener('input', (e)=>{
-let fruitsArray = [];
-  if (e.target.value) {
-    fruitsArray = fruits.filter(fruit => fruit.toLowerCase().includes(e.target.value));
-    fruitsArray = fruitsArray.map(fruit =>`<li>${fruit}</li>`)
+let searchable = [
+  'Electronics and Communication',
+  'Computer Science',
+  'Engineering and Computational Mechanics',
+  'Biochemical Engineering and Biotechnology',
+  'Chemical Engineering',
+  'Electrical Engineering',
+  'Civil Engineering',
+];
+
+const searchInput = document.getElementById('searchCourse');
+const searchWrapper = document.querySelector('.wrapper');
+const resultsWrapper = document.querySelector('.results');
+
+searchInput.addEventListener('keyup', () => {
+  let results = [];
+  let input = searchInput.value;
+  if (input.length) {
+    results = searchable.filter((item) => {
+      return item.toLowerCase().includes(input.toLowerCase());
+    });
   }
-  showFruitsArray(fruitsArray);
+  renderResults(results);
 });
 
-function showFruitsArray(fruitsArray){
-  const html = !fruitsArray.length ? '' : fruitsArray.join('');
-  document.querySelector('ul').innerHTML = html;
+function renderResults(results) {
+  if (!results.length) {
+    return searchWrapper.classList.remove('show');
+  }
+
+  const content = results
+    .map((item) => {
+      return `<li>${item}</li>`;
+    })
+    .join('');
+
+  searchWrapper.classList.add('show');
+  resultsWrapper.innerHTML = `<ul>${content}</ul>`;
 }
