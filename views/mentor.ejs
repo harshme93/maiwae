@@ -1,0 +1,24 @@
+<%- include("header") -%>
+
+
+
+<section>
+<div class="row">
+  <% foundMentors.forEach(function(User){ %>
+  <div class="col-lg-3 opt-box mentorDetails">
+    <p><%= User.fName %> <%= User.lName %></p>
+
+<ul class="mentorDetails" >
+<div class="">
+    <li style="color:black"><%= User.bDegree %> <%= User.bMajor %></li>
+    <li style="color:black"><%= User.mDegree %> <%= User.mMajor %></li>
+    <li style="color:black"><%= User.futProfile %> <%= User.bMajor %></li>
+    </div>
+    </ul>
+  </div>
+<% }) %>
+</div>
+</section>
+
+
+<%- include("footer") -%>

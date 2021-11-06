@@ -321,3 +321,8 @@ body {
 .uinfo{
   text-align: left;
 }
+
+
+.mentorDetails{
+  text-transform: capitalize;
+}
