@@ -2,7 +2,7 @@
 
 
 
-<section id="" style="">
+<section id="">
   <div class="" style="margin-top:10px">
     <form class="" action="/posts" method="post">
       <input type="text" name="quesbtn" class="postBox" size="80" value="" placeholder="Where can I find free study material fro CFA?" required>
@@ -18,26 +18,13 @@
   <form class="" action="/answer" method="post">
 <% for (var i = 0; i < Question.ans.length; i++) { %>
 
-
-
-
-
 <h5 class="postAns">   <%= Question.ans[i].answer %> </h5>
 <% } %>
       <input type="text" name="ansbtn" size="80" class="postBox" value="" placeholder="Enter your comment" required>
       <button type="submit" name="questionId" class="btn btn-sm postAnsBox" value="<%=Question._id %>" name="button">Reply</button>
   </form>
 
-
-
 <% }) %>
-
 </section>
-
-
-
-
-
-
 
 <%- include("footer") -%>

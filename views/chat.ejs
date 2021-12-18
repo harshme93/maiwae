@@ -1,0 +1,99 @@
+<%- include("header") -%>
+<div class="col-10 col-sm-10 col-md-8 pl-0" id="side-2" style="background-color: aliceblue;">
+         <!--below display:none; -->
+    <div id="chatPanel" class="card ">
+      
+      <div class="card-header">
+        <div class="row" >
+          <div class="col-1 col-sm-1 col-md-1 col-lg-1 mt-2">
+           
+        </div>
+             <!--above line onclick="showChatList()" -->
+          <div class="col-2 col-sm-2 col-md-2 col-lg-1" >
+            <img src="profile.jpeg" alt="image is camera shy" class="profile-pic">
+            
+          </div>
+          <div class="col-5 col-sm-5 col-lg-7 col-md-5">
+            
+            <div class="d-none d-md-block mentor">
+              
+            </div>    
+
+            <div class="d-none d-md-block mentor"> <%=mentorReq %> <%= mentorName %> </div>
+          </div>
+          <div class="col-4 col-sm-4 col-lg-3 col-md-4 icon">
+            <i class="fas fa-search" style="cursor:pointer;"></i>
+            <i class="fas fa-paperclip ml-4" style="cursor:pointer;"></i>
+            <i class="fas fa-ellipsis-v ml-4" style="cursor:pointer;"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-body " id="messages" style="height: 70vh;">
+        <div class="row">
+          <div class="col-2 col-sm-1 col-md-1">
+            <img src="profile.jpeg" class="chat-pic" alt="camera shy">
+          </div>
+          <div class="col-6 col-sm-7 col-md-7">
+            <p class="receive">this is a text that you are sending and you can write a song also
+            <span class="time float-right">1:28 PM</span></p>
+          </div>
+        </div>
+        <div class="row justify-content-end">
+          <div class="col-6 col-sm-7 col-md-7 ">
+            <p class="sent float-right">this is a text that you are sending and you can write a song also
+            <span class="time float-right">1:28 PM</span></p>
+          </div>
+          <div class="col-2 col-sm-1 col-md-1">
+            <img src="profile.jpeg" class="chat-pic" alt="camera shy">
+          </div>
+        </div>
+        
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-2 col-md-1 ">
+            <i class="fas fa-grin fa-2x"></i>
+          </div>
+          <div class="col-8 col-md-10" onclick="OnKeyDown()">
+            
+            <input  type="text" name="" id="txtMessage" value="" class="form-control form-rounded" placeholder="type here">
+          </div>
+          <div class="col-2 col-md-1">
+            <i class="fas fa-microphone" style="font-size:30px"></i>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+ </div>
+ <script>
+    function OnKeyDown(){
+      document.addEventListener("keydown", function(key){
+  if(key.which == 13){
+  SendMessage();
+  }
+      });
+    }
+  </script> 
+  <script>
+    function SendMessage(){
+      var message = ` <div class="row justify-content-end">
+                  <div class="col-6 col-sm-7 col-md-7 ">
+                    <p class="sent float-right"> ${document.getElementById('txtMessage').value}
+                    <span class="time float-right">1:28 PM</span></p>
+                  </div>
+                  <div class="col-2 col-sm-1 col-md-1">
+                    <img src="profile.jpeg" class="chat-pic" alt="camera shy">
+                  </div>
+                </div>`;
+      document.getElementById('messages').innerHTML += message;
+      document.getElementById('txtMessage').value = '';
+      document.getElementById('txtMessage').focus();
+      document.getElementById('messages').scrollTo(0, document.getElementById('messages').clientHeight);
+  
+    }
+  </script>
+  
+
+<%- include("footer") -%>

@@ -1,12 +1,28 @@
 
-body {
-  font-family: sans-serif;
-  text-align: center;
-  background-color: black;
+/* body,html {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
   margin: 0% 2% 2% 2%;
+}  */
+body{
+  /* overflow: hidden; */
+  margin: 0% 2% 2% 2%;
+  font-family: 'Segoe UI', Helvetica, sans-serif, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif ;
+  text-align: center;
+  /* background-image: linear-gradient(250deg, #dddbd1, #d2dbdc); */
+  background-color: black;
 }
 
-
+.top{
+  /* height:130px;
+  width:100%; */
+  /* background-color: #009688; */
+  position: fixed;
+  z-index:-1;
+}
 
 
 .section-heading {
@@ -265,7 +281,7 @@ padding: 1% 2% 1% 1%;
   }
 
 /* cards */
-.card{
+.cardcol{
   background-color: #f4f9f4;
 }
 
@@ -416,7 +432,7 @@ input:focus {
 
 .results ul li:hover {
   background: #ececec
-} 
+}
 
 /* style="border: 1px #a20a0a solid;border-radius:5px ;background-color:black" */
 .searchBtn{
@@ -432,4 +448,77 @@ input:focus {
 li{
   list-style-type: none;
   color:#faf1e6;
+}
+
+.mentor{
+text-transform: capitalize;
+/* text-align: left; */
+}
+.profile-pic{
+  height:40px;
+  width:40px;
+  border-radius: 1rem;
+  margin-left: -10px;
+  
+}
+.mentor-pic{
+  height:50px;
+  width:50px;
+  border-radius: 5rem;
+  margin-left: -10px;
+}
+.chat-pic{
+  height:30px;
+  width:30px;
+  border-radius: 1rem;
+}
+
+.chatbox{
+  height: calc(100%-40px);
+  width: 95%;
+  margin-top: 20px;
+}
+
+.form-rounded{
+  border-radius:1rem;
+}
+.name{
+  font-weight: 400;
+  color:black;
+}
+.under-name{
+  font-size:12px;
+  line-height:15px;
+  max-height:100px;
+  color:black;
+}
+.receive{
+  background-color: lightgreen;
+  border-radius:1rem;
+  padding:3px 5px ;
+  display:inline-block;
+}
+.time{
+  font-size:8px;
+  color:gray;
+  margin-top: 3%;
+  margin-left: 1%;
+}
+.sent{
+  background-color: lightblue;
+  border-radius:1rem;
+  padding:3px 5px ;
+  display:inline-block;
+}
+
+#mentorNames{
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#messages{
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.dropdown-toggle::before{
+display: none !important;
 }

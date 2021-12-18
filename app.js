@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.static("background"));
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
   extended: false
 }));
 
@@ -33,13 +33,17 @@ mongoose.connect("mongodb+srv://admin-harsh:Workpass1993@cluster0.uxnku.mongodb.
 });
 mongoose.set("useCreateIndex", true);
 
+const mentorSchema = {MentName:String , MentId:String};
+// , UserName:String, UserId:String
+const Mentor = mongoose.model("Mentor",mentorSchema);  
+
 // added mongoose schema
 const userInfoSchema = new mongoose.Schema({
   username: String,password: String,fName: String,lName: String,sName: String,sCourse: String,bDegree: String,bMajor: String,
   compName: String,compScore: Number,mDegree: String,mMajor: String,certification: String,date: Number,month: String,year: Number,
   city: String,state: String,zip: Number,futProfile: String,fReq1: String,fReq2: String,fReq3: String,futFellow: String,
   futCerti: String,futDeg: String,futMajor: String,futComp: String,futExam: String,futTrend: String,courseRecA: String,courseRecB: String,
-  courseRecC: String,courseRecD: String,courseRecE: String});
+  courseRecC: String,courseRecD: String,courseRecE: String,Ment:[mentorSchema] ,Mentor_Name:String,Mentor_Bachelor:String,Mentor_Master:String,Mentor_FutProfile:String});
 
 userInfoSchema.plugin(passportLocalMongoose);
 
@@ -66,12 +70,18 @@ const Scholarship = mongoose.model("Scholarship", scholSchema);
 const Trend = mongoose.model("Trend", trendSchema);
 
 const ansSchema = {answer: String};
-
 const Answer = mongoose.model("Answer", ansSchema);
+
 const ans1 = new Answer({answer: "this is the test answer"});
 
 const quesSchema = {ques: String,ans: [ansSchema]};
 const Question = mongoose.model("Question", quesSchema);
+
+// const messageSchema = {message: String};
+// const Message = mongoose.model("Message",messageSchema);
+
+// const chatSchema = {user_ID:String,chat:[messageSchema]};
+// const User_1 = mongoose.model()
 
 app.get("/", function(req, res) {
   res.render("signup", );
@@ -81,7 +91,7 @@ app.get("/home", function(req, res) {
 
   if (req.isAuthenticated()) {
     User.findById(req.user.id, function(err, foundUser) {
-
+      
       res.render("home", {
         fName: foundUser.fName,lName: foundUser.lName,sName: foundUser.sName,sCourse: foundUser.sCourse,bDegree: foundUser.bDegree,
         bMajor: foundUser.bMajor,compName: foundUser.compName,compScore: foundUser.compScore,mDegree: foundUser.mDegree,
@@ -89,7 +99,7 @@ app.get("/home", function(req, res) {
         year: foundUser.year,city: foundUser.city,state: foundUser.state,zip: foundUser.zip,futProfile: foundUser.futProfile,
         fReq1: foundUser.fReq1,fReq2: foundUser.fReq2,fReq3: foundUser.fReq3,futFellow: foundUser.futFellow,futCerti: foundUser.futCerti,
         futDeg: foundUser.futDeg,futMajor: foundUser.futMajor,futComp: foundUser.futComp,futExam: foundUser.futExam,
-        futTrend: foundUser.futTrend});})
+        futTrend: foundUser.futTrend, Mentors: foundUser.Ment });})
   } else {
     res.redirect("/");
   }});
@@ -147,13 +157,21 @@ app.post("/profile", function(req, res) {
       foundUser.futCerti = req.body.futCerti; foundUser.futDeg = req.body.futDeg;
       foundUser.futMajor = req.body.futMajor; foundUser.futComp = req.body.futComp;
       foundUser.futExam = req.body.futExam; foundUser.futTrend = req.body.futTrend;
+      foundUser.Mentor_Name = req.body.MentorName ;foundUser.Mentor_Bachelor = req.body.MentorBach;
+      foundUser.Mentor_Master = req.body.MentorMaster; foundUser.Mentor_FutProfile= req.body.MentorFProfile
+      
+    };
+      
       foundUser.save(function() {
-        res.render("home", {
-          fName: fName, bDegree: bDegree,bMajor: bMajor,compName: compName,compScore: compScore, mDegree: mDegree,
-          mMajor: mMajor, certification: certification,sName: sName, sCourse: sCourse,futProfile: futProfile, fReq1: fReq1,
-          fReq2: fReq2, fReq3: fReq3,futFellow: futFellow, futCerti: futCerti,futDeg: futDeg, futMajor: futMajor,
-          futComp: futComp, futExam: futExam,futTrend: futTrend });})}})});
+          res.render("home", {
+          fName: req.body.ufname, bDegree: req.body.ubachdeg,bMajor: req.body.ubachmaj,compName: req.body.ucompex,compScore: req.body.ucompsc, mDegree: req.body.umasdeg,
+          mMajor: req.body.umasmaj, certification: req.body.ucert,sName: req.body.usclname, sCourse: req.body.usclcours,futProfile: req.body.futProfile, fReq1: req.body.fReq1,
+          fReq2: req.body.fReq2, fReq3: req.body.fReq3,futFellow: req.body.futFellow, futCerti: req.body.futCerti,futDeg: req.body.futDeg, futMajor: req.body.futMajor,
+          futComp: req.body.futComp, futExam: req.body.futExam,futTrend: req.body.futTrend,Mentor_Name: req.body.MentorName,Mentor_Bachelor:req.body.MentorBach,
+          Mentor_Master: req.body.MentorMaster,Mentor_FutProfile: req.body.MentorFProfile });})})});
 
+          
+                    
 var filteredComps = mongoose.model("filteredComps", compSchema);
 app.post("/competitions", function(req, res) {
   filteredComps = [];
@@ -299,9 +317,11 @@ app.post("/future", function(req, res) {
 
 
 app.post("/mentors",function(req,res){
-User.find({},function(err,foundMentors){
-res.render("mentor",{foundMentors:foundMentors})
-})});
+User.findById(req.user.id,function(err,foundUser){
+  User.find({},function(err,foundMentors){
+    res.render("mentor",{foundMentors:foundMentors, currentUser:req.user.id})})
+})
+});
 
 
 app.post("/futhome", function(req, res) {
@@ -367,7 +387,7 @@ app.post("/comphome", function(req, res) {
     } else {
       foundUser.futComp = req.body.fComp;
       foundUser.save(function() {
-        res.redirect("home");})}})});
+        res.redirect("home");})}}) });
 
 app.post("/examhome", function(req, res) {
   User.findById(req.user.id, function(err, foundUser) {
@@ -388,6 +408,56 @@ app.post("/trendhome", function(req, res) {
         res.redirect("home");})}})});
 
 
+
+app.post("/mentorRequest", function(req, res){
+  
+  User.findById(req.user.id, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      User.findById ( req.body.mentorRequested, function(err, foundUserMentor) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("---------------------");
+        
+       User.findById(req.body.mentorRequested, function(err, MentorFound) {
+          if (err) {
+            console.log(err);
+          } else {
+             var test = new Mentor ({MentName:MentorFound.fName, MentId:req.body.mentorRequested });
+            
+            foundUser.Ment.push(test);
+            foundUser.save();
+            // console.log(`First Mentor: ${foundUser.Ment[0].MentName}`);
+            
+           }})
+          // res.render("chat",{mentorReq:foundUserMentor})
+          
+           }} ); }});
+});
+
+app.post("/MentorChat", function(req,res){
+var MentId =  req.body.MentId.split(" ").join(""); 
+User.findById(req.user.id, function(err, foundUser) {
+  if (err) {
+    console.log(err);
+  } else {
+    for (let i = 0; i < foundUser.Ment.length; i++) {
+     if (foundUser.Ment[i].MentId == MentId) {
+        console.log(`at the start: ${MentId}`);
+           
+      res.render("chat",{mentorReq:foundUser.fName , mentorName: foundUser.Ment[i].MentName});
+      } else {};
+    }
+  }
+});
+});
+
+app.post("/MentorRemove", function(req,res){
+MentId = req.body.MentId; 
+console.log(`let's delete them ${MentId}`);
+});
 
 app.get("/post", function(req, res) {
   Question.find({}, function(err, foundQues) {
@@ -434,8 +504,6 @@ app.post("/answer", function(req, res) {
 app.post("/post", function(req, res) {
   res.redirect("post");
 })
-
-
 
 app.get("/logout", function(req, res) {
   req.logout();
