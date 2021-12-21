@@ -159,16 +159,23 @@ app.post("/profile", function(req, res) {
       foundUser.futExam = req.body.futExam; foundUser.futTrend = req.body.futTrend;
       foundUser.Mentor_Name = req.body.MentorName ;foundUser.Mentor_Bachelor = req.body.MentorBach;
       foundUser.Mentor_Master = req.body.MentorMaster; foundUser.Mentor_FutProfile= req.body.MentorFProfile
+      // ,foundUser.Ment[0].MentName= req.body.MentName, foundUser.Ment[0].MentId = req.body.MentId
+     
       
     };
-      
+    // test mentor pushed
+    // var test = new Mentor ({MentName:req.body.MentName, MentId:req.body.MentId });
+    // foundUser.Ment.push(test);
+
       foundUser.save(function() {
           res.render("home", {
           fName: req.body.ufname, bDegree: req.body.ubachdeg,bMajor: req.body.ubachmaj,compName: req.body.ucompex,compScore: req.body.ucompsc, mDegree: req.body.umasdeg,
           mMajor: req.body.umasmaj, certification: req.body.ucert,sName: req.body.usclname, sCourse: req.body.usclcours,futProfile: req.body.futProfile, fReq1: req.body.fReq1,
           fReq2: req.body.fReq2, fReq3: req.body.fReq3,futFellow: req.body.futFellow, futCerti: req.body.futCerti,futDeg: req.body.futDeg, futMajor: req.body.futMajor,
           futComp: req.body.futComp, futExam: req.body.futExam,futTrend: req.body.futTrend,Mentor_Name: req.body.MentorName,Mentor_Bachelor:req.body.MentorBach,
-          Mentor_Master: req.body.MentorMaster,Mentor_FutProfile: req.body.MentorFProfile });})})});
+          Mentor_Master: req.body.MentorMaster,Mentor_FutProfile: req.body.MentorFProfile
+          // ,Mentors: foundUser.Ment 
+        });})})});
 
           
                     
