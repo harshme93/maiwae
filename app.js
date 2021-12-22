@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const https = require('https');
@@ -27,7 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // connect with tha mongooseDB
-mongoose.connect("mongodb+srv://admin-harsh:Workpass1993@cluster0.uxnku.mongodb.net/maiwaeDB", {
+mongoose.connect(process.env.DB_LINK , {
   useUnifiedTopology: true,
   useNewUrlParser: true
 });
