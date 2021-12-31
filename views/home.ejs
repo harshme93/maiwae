@@ -1,14 +1,16 @@
 <%- include("header") -%>
 
 
-<section>
-  <div class=" row">
-<div class="col-lg-12 col-md-12 user-details">
-<h5> <%=fName%> </h5>
-</div>
+  <section>
+    <div class=" row">
+      <div class="col-lg-12 col-md-12 user-details">
+        <h5>
+          <%=fName%>
+        </h5>
+      </div>
 
-  </div>
-</section >
+    </div>
+  </section>
 
 
   <section id="user-timeline">
@@ -16,67 +18,89 @@
       <div class="row">
 
         <div class="col-lg-6 col-md-6">
-<div class="present-you">
-          <h2>Present You</h2>
-          <ul class="timeline">
+          <div class="present-you">
+            <h2>Present You</h2>
+            <ul class="timeline">
 
-            <li class="homeLi">
-              <h5>  <%= sName %>  </h5>
-              <h5> <%=sCourse %> </h5>
-            </li>
-            <li class="homeLi">
-              <h5>   <%= bDegree %>   </h5>
-              <h5>  <%= bMajor %> </h5>
-            </li>
-            <li class="homeLi">
-              <h5>   <%= mDegree %>   </h5>
-              <h5> <%= mMajor %> </h5>
-            </li>
+              <li class="homeLi">
+                <h5>
+                  <%= sName %>
+                </h5>
+                <h5>
+                  <%=sCourse %>
+                </h5>
+              </li>
+              <li class="homeLi">
+                <h5>
+                  <%= bDegree %>
+                </h5>
+                <h5>
+                  <%= bMajor %>
+                </h5>
+              </li>
+              <li class="homeLi">
+                <h5>
+                  <%= mDegree %>
+                </h5>
+                <h5>
+                  <%= mMajor %>
+                </h5>
+              </li>
 
-            <li class="homeLi">
-              <h5>  <%= certification %>  </h5>
-              <h5>  </h5>
-            </li>
+              <li class="homeLi">
+                <h5>
+                  <%= certification %>
+                </h5>
+                <h5> </h5>
+              </li>
 
-          </ul>
-</div>
+            </ul>
+          </div>
         </div>
 
         <div class="col-lg-6 col-md-6 future-you">
           <h3>Future You</h3>
-<p>
-          <img class="user-pic" src="profile.jpeg" width="92" height="92"  alt="user-pic">
-</p>
-<form class="" action="/future" method="post">
-  <button type="submit" class="btn btn-lg optbut" id="futureyou" style="background-color: #f8ede3; color:#a20a0a" name="button">Profile</button>
-</form>
-<%= futProfile %>  <br>  <%= fReq1 %> <br> <%= fReq2 %> <br> <%= fReq3 %> <br>
+          <p>
+            <img class="user-pic" src="profile.jpeg" width="92" height="92" alt="user-pic">
+          </p>
+          <form class="" action="/future" method="post">
+            <button type="submit" class="btn btn-lg optbut" id="futureyou"
+              style="background-color: #f8ede3; color:#a20a0a" name="button">Profile</button>
+          </form>
+          <%= futProfile %> <br>
+            <%= fReq1 %> <br>
+              <%= fReq2 %> <br>
+                <%= fReq3 %> <br>
         </div>
       </div>
     </div>
   </section>
   <!-- show that you are mentoring so and so people -->
-<section class="mt-4">
-  <div class="card">
-    My Mentors
-    <div class="row card-header">
-    <% if(typeof Mentors != 'undefined'){ %>
-       <div class="col ">
-        <% if(typeof Mentors[0] != 'undefined'){ %>
+  <section class="mt-4">
+    <div class="card">
+      My Mentors
+      <div class="row card-header">
+        <% if(typeof Mentors !='undefined' ){ %>
+          <div class="col ">
+            <% if(typeof Mentors[0] !='undefined' ){ %>
 
-          <%= Mentors[0].MentName %>
-       
-       <div class="col">
-        <div class=""><!-- chat button -->
-          <form action="/MentorChat" method="post">
-            <input type="hidden" name="MentId" value= "<%=Mentors[0].MentId %> " >
-            <button>+</button>
-          </form></div>
-        <div class=""><!-- remove button -->
-          <form action="/MentorRemove" method="post">
-            <input type="hidden" name="MentId" value="<%=Mentors[0].MentId %>">
-            <button>-</button>
-          </form></div>
+              <%= Mentors[0].MentName %>
+
+                <div class="col">
+                  <div class="">
+                    <!-- chat button -->
+                    <form action="/MentorChat" method="post">
+                      <input type="hidden" name="MentId" value="<%=Mentors[0].MentId %> ">
+                      <button>+</button>
+                    </form>
+                  </div>
+                  <div class="">
+                    <!-- remove button -->
+                    <form action="/MentorRemove" method="post">
+                      <input type="hidden" name="MentId" value="<%=Mentors[0].MentId %>">
+                      <button>-</button>
+                    </form>
+                  </div>
                 </div>
                 <% } else{ %>
                   <div class="col ">
@@ -85,66 +109,70 @@
                     </form>
                   </div>
                   <% } %>
-    </div>
+          </div>
 
-      <div class="col ">
-        <% if(typeof Mentors[1] != 'undefined'){ %>
-        <%=Mentors[1].MentName %> 
-        <div class="col">
-          <div class="">
-            <form action="/MentorChat" method="post">
-              <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
-              <button>+</button>
-            </form></div>
-          <div class="">
-            <form action="/MentorRemove" method="post">
-              <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
-              <button>-</button>
-            </form></div>
+          <div class="col ">
+            <% if(typeof Mentors[1] !='undefined' ){ %>
+              <%=Mentors[1].MentName %>
+                <div class="col">
+                  <div class="">
+                    <form action="/MentorChat" method="post">
+                      <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
+                      <button>+</button>
+                    </form>
                   </div>
-                  <% } else{ %>
-                    <div class="col ">
-                      <form class="" action="/mentors" method="post">
-                        <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
-                      </form>
-                    </div>
-                    <% } %>    
-      </div>
-      <div class="col ">
-        <% if(typeof Mentors[2] != 'undefined'){ %>
-        <%=Mentors[2].MentName %>
-        <div class="col">
-          <div class="">
-            <form action="/MentorChat" method="post">
-              <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
-              <button>+</button>
-            </form></div>
-          <div class="">
-            <form action="/MentorRemove" method="post">
-              <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
-              <button>-</button>
-            </form></div>
+                  <div class="">
+                    <form action="/MentorRemove" method="post">
+                      <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
+                      <button>-</button>
+                    </form>
                   </div>
-                  <% } else{ %>
-                    <div class="col ">
-                      <form class="" action="/mentors" method="post">
-                        <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
-                      </form>
-                    </div>
-                    <% } %>
+                </div>
+                <% } else{ %>
+                  <div class="col ">
+                    <form class="" action="/mentors" method="post">
+                      <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
+                    </form>
+                  </div>
+                  <% } %>
+          </div>
+          <div class="col ">
+            <% if(typeof Mentors[2] !='undefined' ){ %>
+              <%=Mentors[2].MentName %>
+                <div class="col">
+                  <div class="">
+                    <form action="/MentorChat" method="post">
+                      <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
+                      <button>+</button>
+                    </form>
+                  </div>
+                  <div class="">
+                    <form action="/MentorRemove" method="post">
+                      <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
+                      <button>-</button>
+                    </form>
+                  </div>
+                </div>
+                <% } else{ %>
+                  <div class="col ">
+                    <form class="" action="/mentors" method="post">
+                      <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
+                    </form>
+                  </div>
+                  <% } %>
+          </div>
+
+          <% } else{ %>
+            <div class="col ">
+              <form class="" action="/mentors" method="post">
+                <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
+              </form>
+            </div>
+            <% } %>
+
       </div>
-    
-      <% } else{ %>
-        <div class="col ">
-          <form class="" action="/mentors" method="post">
-            <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
-          </form>
-        </div>
-        <% } %>
-     
     </div>
-  </div>
-</section>
+  </section>
 
 
 
@@ -178,7 +206,9 @@
               <button id="compex" type="submit" class="btn btn-lg optbut">Exams</button>
 
             </form>
-            <%=compName%>  <%=compScore%> <br>  <%= futExam %>
+            <%=compName%>
+              <%=compScore%> <br>
+                <%= futExam %>
 
           </div>
         </div>
@@ -188,7 +218,7 @@
         <div class="card cardcol">
 
           <div class="card-body">
-            <h5>  </h5>
+            <h5> </h5>
             <form action="/certifications" method="post">
               <button class="btn btn-lg  optbut" type="submit" id="certifi">Certifications</button>
             </form>
@@ -201,10 +231,11 @@
         <div class="card cardcol">
 
           <div class="card-body">
-<form class="" action="/courses" method="post">
-    <button class="btn btn-lg  optbut" type="submit" id="course"> Courses </button>
-</form>
-<%= futDeg %> <br> <%= futMajor %>
+            <form class="" action="/courses" method="post">
+              <button class="btn btn-lg  optbut" type="submit" id="course"> Courses </button>
+            </form>
+            <%= futDeg %> <br>
+              <%= futMajor %>
           </div>
         </div>
       </div>
@@ -215,10 +246,10 @@
             <h3>New Trends</h3>
           </div> -->
           <div class="card-body">
-<form class="" action="/trends" method="post">
-  <button class="btn btn-lg  optbut" type="submit" id="trends">New Trends</button>
-</form>
-<%= futTrend %>
+            <form class="" action="/trends" method="post">
+              <button class="btn btn-lg  optbut" type="submit" id="trends">New Trends</button>
+            </form>
+            <%= futTrend %>
 
           </div>
         </div>
@@ -231,37 +262,37 @@
             <h3>Fellowships</h3>
           </div> -->
           <div class="card-body">
-<form class="" action="/scholarship" method="post">
-  <button class="btn btn-lg  optbut" id="scholar" type="submit">Fellowships</button>
-</form>
-<%= futFellow %>
+            <form class="" action="/scholarship" method="post">
+              <button class="btn btn-lg  optbut" id="scholar" type="submit">Fellowships</button>
+            </form>
+            <%= futFellow %>
 
           </div>
         </div>
       </div>
     </div>
   </section>
-<section>
-<div id="SelectedMentors">
+  <section>
+    <div id="SelectedMentors">
 
-</div>
-
-</section>
-
-
-
-    <div class="">
-<form class="" action="/post" method="post">
-      <button type="submit" class="btn btn-lg optbut" name="button">Ask a question</button>
-</form>
     </div>
-<p>
+
+  </section>
+
+
+
+  <div class="">
+    <form class="" action="/post" method="post">
+      <button type="submit" class="btn btn-lg optbut" name="button">Ask a question</button>
+    </form>
+  </div>
+  <p>
 
   </p>
-<div class="">
-  <form class="" action="/mentors" method="post">
-    <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
-  </form>
-</div>
+  <div class="">
+    <form class="" action="/mentors" method="post">
+      <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
+    </form>
+  </div>
 
-<%- include("footer") -%>
+  <%- include("footer") -%>
