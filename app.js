@@ -43,7 +43,8 @@ const userInfoSchema = new mongoose.Schema({
   compName: String, compScore: Number, mDegree: String, mMajor: String, certification: String, date: Number, month: String, year: Number,
   city: String, state: String, zip: Number, futProfile: String, fReq1: String, fReq2: String, fReq3: String, futFellow: String,
   futCerti: String, futDeg: String, futMajor: String, futComp: String, futExam: String, futTrend: String, courseRecA: String, courseRecB: String,
-  courseRecC: String, courseRecD: String, courseRecE: String, Ment: [mentorSchema], Mentor_Name: String, Mentor_Bachelor: String, Mentor_Master: String, Mentor_FutProfile: String
+  courseRecC: String, courseRecD: String, courseRecE: String, courseCertA: String, courseCertB: String, courseCertC: String, courseCertD: String,
+  courseCertE: String, Ment: [mentorSchema], Mentor_Name: String, Mentor_Bachelor: String, Mentor_Master: String, Mentor_FutProfile: String
 });
 
 userInfoSchema.plugin(passportLocalMongoose);
@@ -254,31 +255,60 @@ app.post("/compexams", function (req, res) {
 var filteredCert = mongoose.model("filteredCert", certSchema);
 
 app.post("/certifications", function (req, res) {
-  filteredCert = [];
-  if (req.body.srchInput) {
-    const searchString = _.lowerCase([req.body.srchInput]);
-    Certification.find({}, function (err, foundCerts) {
-      if (!err) {
-        foundCerts.forEach(function (foundCert) {
-          if (_.lowerCase([foundCert.certNam]) === (searchString)) {
-            filteredCert.push(foundCert);
-          }
-        });
-        res.render("certifications", {
-          certNames: filteredCert
-        });
+  User.findById(req.user.id, function (err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser.futProfile) {
+               
+        filteredCert = [];
+        if (req.body.srchInput) {
+          const searchString = _.lowerCase([req.body.srchInput]);
+          Certification.find({}, function (err, foundCerts) {
+            if (!err) {
+              foundCerts.forEach(function (foundCert) { if (_.lowerCase([foundCert.certNam]) === (searchString)) { filteredCert.push(foundCert); } });
+              res.render("certifications", {
+                certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE
+              });
+            }
+          });
+        }
+        else {
+          Certification.find({}, function (err, foundCerts) {
+            if (!err) {
+              res.render("certifications", {
+                certNames: foundCerts, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE
+              });
+            }
+          });
+        }
+        
       }
-    });
-  }
-  else {
-    Certification.find({}, function (err, foundCerts) {
-      if (!err) {
-        res.render("certifications", {
-          certNames: foundCerts
-        });
+      else {
+        filteredCert = [];
+
+        if (req.body.srchInput) {
+          const searchString = _.lowerCase([req.body.srchInput]);
+          Certification.find({}, function (err, foundCerts) {
+            if (!err) {
+              foundCerts.forEach(function (foundCert) {
+                if (_.lowerCase([foundCert.certNam]) === (searchString)) {
+                  filteredCert.push(foundCert);
+                }
+              });
+              res.render("certifications", { certNames: filteredCert });
+            }
+          });
+        }
+
+        else {
+          Certification.find({}, function (err, foundCerts) { if (!err) { res.render("certifications", { certNames: foundCerts }); } });
+        }
       }
-    });
-  }
+    }
+
+  });
+
 });
 
 var filteredCourse = mongoose.model("filteredCourse", courseSchema);
@@ -422,17 +452,13 @@ app.post("/futhome", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(`selected profile: ${req.body.fprofile}`);
       var dataToSend;
+      // console.log( `-----1----fut profile before course rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const python = spawn('python', ['recommend.py', req.body.fprofile]);
       python.stdout.on('data', function (data) {
-        console.log(`printing data as it is\n ${data}`)
+        // console.log(`printing data as it is ----2----\n ${data}`)
         // data coming from python looks like a string
         dataToSend = data.toString();
-      });
-      python.on('close', (code) => {
-        console.log(`child process close all stdio with code ${code}`);
-        // res.send(dataToSend)
         foundUser.futProfile = req.body.fprofile;
         foundUser.fReq1 = req.body.freq1;
         foundUser.fReq2 = req.body.freq2;
@@ -442,13 +468,51 @@ app.post("/futhome", function (req, res) {
         foundUser.courseRecC = dataToSend.split("|")[2];
         foundUser.courseRecD = dataToSend.split("|")[3];
         foundUser.courseRecE = dataToSend.split("|")[4];
+        // console.log(`-----3----- future profile after python run: ${foundUser.futProfile}`);
+      });
+      python.on('close', (code) => {
+        console.log(`child process close all stdio with code ${code}`);
+       
         foundUser.save(function () {
+          // console.log(`----4----after save ${foundUser.futProfile}`);
           res.redirect("home");
         })
       });
+
+
+      var dataToSendCert; 
+      // console.log( `--------------------fut profile before certificate rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
+      const pythonCert = spawn('python', ['recommendcert.py', req.body.fprofile]);
+      pythonCert.stdout.on('data', function (data) {
+        // console.log(`printing data as it is -----1-----\n ${data}`)
+        // data coming from python looks like a string
+        dataToSendCert = data.toString();
+        foundUser.futProfile = req.body.fprofile;
+        foundUser.courseCertA = dataToSendCert.split("|")[0];
+        foundUser.courseCertB = dataToSendCert.split("|")[1];
+        foundUser.courseCertC = dataToSendCert.split("|")[2];
+        foundUser.courseCertD = dataToSendCert.split("|")[3];
+        foundUser.courseCertE = dataToSendCert.split("|")[4];
+      });
+      pythonCert.on('close', (code) => {
+        console.log(`child process close all stdio with code from Certrec ${code}`);
+        
+        foundUser.save(function () {
+          // console.log(`certificate save function here`);
+        })
+      })
+
+      
+
+
     }
   })
 });
+
+
+
+
+
 
 app.post("/felhome", function (req, res) {
   User.findById(req.user.id, function (err, foundUser) {

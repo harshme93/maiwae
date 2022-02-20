@@ -4,20 +4,20 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-df = pd.read_csv("C:/Users/harsh/Desktop/Study Material/Web Development/maiwae/background/maiwaeset.csv")
-# print(sys.argv[1])
-df['degree'] = df['degree'].str.lower()
+df = pd.read_csv("C:/Users/harsh/Desktop/Study Material/Web Development/maiwae/background/maiwaesetcert.csv")
+print(sys.argv[1])
+# df['degree'] = df['degree'].str.lower()
 df['title'] = df['title'].str.lower()
 df['simpletags'] = df['simpletags'].str.lower()
 df['deepertags'] = df['deepertags'].str.lower()
-df['Future_Profile'] = df['Future_Profile'].str.lower()
+# df['Future_Profile'] = df['Future_Profile'].str.lower()
 # print(df['keywords'])
-features = ['degree','title','simpletags','deepertags']
+features = ['title','simpletags','deepertags']
 for feature in features:
     df[feature]=df[feature].fillna('')
 
 def combine_features(row):
-    return row['degree']+" "+row['title']+" "+row['simpletags']+" "+row['deepertags']
+    return row['title']+" "+row['simpletags']+" "+row['deepertags']
 df["combined_features"]=df.apply(combine_features,axis=1)
 cv = CountVectorizer()
 count_matrix = cv.fit_transform(df["combined_features"])
@@ -53,8 +53,7 @@ for name in coursedat:
     else:
         course_rec.append(name)
 
-# print("outside loop"+name)
-# course_rec=(coursedat[:5])
+
 print(f"{course_rec[0].title()}|")
 print(f"{course_rec[1].title()}|")
 print(f"{course_rec[2].title()}|")
