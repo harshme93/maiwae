@@ -36,6 +36,8 @@ mongoose.set("useCreateIndex", true);
 
 const mentorSchema = { MentName: String, MentId: String };
 const Mentor = mongoose.model("Mentor", mentorSchema);
+const Mentee = mongoose.model("Mentee", mentorSchema);
+const MenteeReq = mongoose.model("MenteeReq", mentorSchema);
 
 // added mongoose schema
 const userInfoSchema = new mongoose.Schema({
@@ -44,7 +46,7 @@ const userInfoSchema = new mongoose.Schema({
   city: String, state: String, zip: Number, futProfile: String, fReq1: String, fReq2: String, fReq3: String, futFellow: String,
   futCerti: String, futDeg: String, futMajor: String, futComp: String, futExam: String, futTrend: String, courseRecA: String, courseRecB: String,
   courseRecC: String, courseRecD: String, courseRecE: String, courseCertA: String, courseCertB: String, courseCertC: String, courseCertD: String,
-  courseCertE: String, Ment: [mentorSchema], Mentor_Name: String, Mentor_Bachelor: String, Mentor_Master: String, Mentor_FutProfile: String
+  courseCertE: String, Ment: [mentorSchema], Menti: [mentorSchema], MentiReq: [mentorSchema], Mentor_Name: String, Mentor_Bachelor: String, Mentor_Master: String, Mentor_FutProfile: String
 });
 
 userInfoSchema.plugin(passportLocalMongoose);
@@ -101,7 +103,8 @@ app.get("/home", function (req, res) {
         year: foundUser.year, city: foundUser.city, state: foundUser.state, zip: foundUser.zip, futProfile: foundUser.futProfile,
         fReq1: foundUser.fReq1, fReq2: foundUser.fReq2, fReq3: foundUser.fReq3, futFellow: foundUser.futFellow, futCerti: foundUser.futCerti,
         futDeg: foundUser.futDeg, futMajor: foundUser.futMajor, futComp: foundUser.futComp, futExam: foundUser.futExam,
-        futTrend: foundUser.futTrend, Mentors: foundUser.Ment
+        futTrend: foundUser.futTrend, Mentors: foundUser.Ment, Mentlen: foundUser.Ment.length, Mentees: foundUser.Menti, Mentilen: foundUser.Menti.length,
+        MenteeReqs: foundUser.MentiReq
       });
     })
   } else {
@@ -136,7 +139,6 @@ app.post("/login", function (req, res) {
     } else {
       passport.authenticate("local")(req, res, function () {
         if (req.user.fName) {
-
           res.redirect("home");
         } else {
           res.redirect("/profile");
@@ -260,7 +262,7 @@ app.post("/certifications", function (req, res) {
       console.log(err);
     } else {
       if (foundUser.futProfile) {
-               
+
         filteredCert = [];
         if (req.body.srchInput) {
           const searchString = _.lowerCase([req.body.srchInput]);
@@ -282,7 +284,7 @@ app.post("/certifications", function (req, res) {
             }
           });
         }
-        
+
       }
       else {
         filteredCert = [];
@@ -436,7 +438,25 @@ app.post("/future", function (req, res) {
     });
   }
 });
+// chat button from mentors will land them up here which should be visible at the home page
+app.get("/notification", function (req, res) {
+  console.log("notification working from get");
 
+});
+
+app.post("/mentee", function (req, res) {
+  // userRequested is the one who is logged in and mentor is the one I selected
+  User.findById(req.body.mentorRequested, function (err, foundMenti) {
+    User.findById(req.body.userRequested, function (err, foundUser) {
+      if (!err) {
+        var test = new MenteeReq({ MentName: foundUser.fName, MentId: req.body.userRequested });
+        foundMenti.MentiReq.push(test);
+        foundMenti.save();
+        res.redirect("home");
+      }
+    });
+  });
+});
 
 app.post("/mentors", function (req, res) {
   User.findById(req.user.id, function (err, foundUser) {
@@ -472,7 +492,7 @@ app.post("/futhome", function (req, res) {
       });
       python.on('close', (code) => {
         console.log(`child process close all stdio with code ${code}`);
-       
+
         foundUser.save(function () {
           // console.log(`----4----after save ${foundUser.futProfile}`);
           res.redirect("home");
@@ -480,7 +500,7 @@ app.post("/futhome", function (req, res) {
       });
 
 
-      var dataToSendCert; 
+      var dataToSendCert;
       // console.log( `--------------------fut profile before certificate rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const pythonCert = spawn('python', ['recommendcert.py', req.body.fprofile]);
       pythonCert.stdout.on('data', function (data) {
@@ -496,21 +516,18 @@ app.post("/futhome", function (req, res) {
       });
       pythonCert.on('close', (code) => {
         console.log(`child process close all stdio with code from Certrec ${code}`);
-        
+
         foundUser.save(function () {
           // console.log(`certificate save function here`);
         })
       })
 
-      
+
 
 
     }
   })
 });
-
-
-
 
 
 
@@ -593,44 +610,103 @@ app.post("/trendhome", function (req, res) {
 
 
 
-app.post("/mentorRequest", function (req, res) {
+// app.post("/mentorRequest", function (req, res) {
+
+//   User.findById(req.user.id, function (err, foundUser) {
+//     if (err) { console.log(err); }
+//     else {
+
+//       if (foundUser.Ment.length+1 < 4) {
+//         User.findById(req.body.mentorRequested, function (err, foundUserMentor) {
+//           if (err) { console.log(err); }
+//           else {
+//             console.log("---------------------");
+//             User.findById(req.body.mentorRequested, function (err, MentorFound) {
+//               if (err) { console.log(err); }
+
+//               else {
+//                 var SameCount = 0;
+//                 for (var i = 0; i < foundUser.Ment.length; i++) {
+//                   if (foundUser.Ment[i].MentId == req.body.mentorRequested.split(" ").join("")) {
+//                     SameCount += 1;
+//                     console.log(`Count: ${SameCount} match found, cannot be added`)
+//                   }
+//                 }
+
+//                 if (SameCount == 0) {
+//                   console.log(`Count: ${SameCount} match not found, mentor added`)
+
+//                   var test = new Mentor({ MentName: MentorFound.fName, MentId: req.body.mentorRequested });
+//                   foundUser.Ment.push(test);
+//                   foundUser.save();
+//                   res.redirect("home");
+//                 }
+
+//               }
+//             })
+//           }
+//         })
+//       }
+
+//      else{
+//       res.redirect("home");
+//      } 
+
+//  }
+//   });
+// })
+
+app.post("/menteeAdd", function (req, res) {
 
   User.findById(req.user.id, function (err, foundUser) {
     if (err) { console.log(err); }
     else {
-      User.findById(req.body.mentorRequested, function (err, foundUserMentor) {
-        if (err) { console.log(err); }
-        else {
-          console.log("---------------------");
-          User.findById(req.body.mentorRequested, function (err, MentorFound) {
-            if (err) { console.log(err); }
-
-            else {
-              var SameCount = 0;
-              for (var i = 0; i < foundUser.Ment.length; i++) {
-                if (foundUser.Ment[i].MentId == req.body.mentorRequested.split(" ").join("")) {
-                  SameCount += 1;
-                  console.log(`Count: ${SameCount} match found, cannot be added`)
-                }
+      if (foundUser.MentiReq.length + 1 < 4) {
+        console.log("---------------------");
+        var newMentee = req.body.MentId.split(" ").join("")
+        User.findById(newMentee, function (err, MentorFound) {
+          if (err) { console.log(err); }
+          else {
+            var SameCount = 0;
+            for (var i = 0; i < foundUser.MentiReq.length; i++) {
+              if (foundUser.MentiReq[i].MentId == newMentee) {
+                SameCount += 1;
+                console.log(`Count: ${SameCount} match found, cannot be added`)
               }
-
-              if (SameCount == 0) {
-                console.log(`Count: ${SameCount} match not found, mentor added`)
-
-                var test = new Mentor({ MentName: MentorFound.fName, MentId: req.body.mentorRequested });
-                foundUser.Ment.push(test);
-                foundUser.save();
-                res.redirect("home");
-              }
-
             }
-          })
-        }
-      })
+            if (SameCount == 1) {
+              console.log(`Count: ${SameCount} match not found, mentee added`)
+              var test = new Mentee({ MentName: MentorFound.fName, MentId: newMentee });
+              foundUser.Menti.push(test);
+              console.log(`logging the test varibale here ${test}`)
+              var adment = new Mentor({ MentName: foundUser.fName, MentId: foundUser._id });
+              MentorFound.Ment.push(adment);
+              console.log(`logging info from this point ${adment}`)
+              foundUser.save();
+              MentorFound.save();
+            }
+          }
+        })
+      }
+      else {
+        res.redirect("home");
+      }
+    }
+
+    // remove request
+    for (let i = 0; i < foundUser.MentiReq.length; i++) {
+      var MentIdRemove = req.body.MentId.split(" ").join("")
+      if (foundUser.MentiReq[i].MentId == MentIdRemove) {
+        User.findOneAndUpdate({ _id: foundUser._id }, { $pull: { MentiReq: { MentId: MentIdRemove } } }, function (err, foundList) {
+          if (!err) {
+            console.log("deleted from mentee req list");
+            res.redirect("home");
+          }
+        });
+      }
     }
   });
 })
-
 
 
 app.post("/MentorChat", function (req, res) {
@@ -653,15 +729,42 @@ app.post("/MentorChat", function (req, res) {
               if (ChatCount == 1) {
                 res.render("chat", { mentorReq: foundUser, mentorName: foundUser.Ment[i], ChatMessage: ChatMessage });
               } else {
-
                 res.render("chat", { mentorReq: foundUser, mentorName: foundUser.Ment[i] });
               }
             } else { console.log(err); }
           })
         } else { };
       }
+    }
+  });
+});
 
-
+app.post("/MenteeChat", function (req, res) {
+  var MentId = req.body.MentId.split(" ").join("");
+  User.findById(req.user.id, function (err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      for (let i = 0; i < foundUser.Menti.length; i++) {
+        if (foundUser.Menti[i].MentId == MentId) {
+          Chat.find({}, function (err, foundChat) {
+            if (!err) {
+              var ChatCount = 0;
+              for (let y = 0; y < foundChat.length; y++) {
+                if ((foundChat[y].userOneId == foundUser._id && foundChat[y].userTwoId == MentId) || (foundChat[y].userTwoId == foundUser._id && foundChat[y].userOneId == MentId)) {
+                  var ChatMessage = foundChat[y].mess;
+                  ChatCount += 1;
+                } else { }
+              }
+              if (ChatCount == 1) {
+                res.render("chat", { mentorReq: foundUser, mentorName: foundUser.Menti[i], ChatMessage: ChatMessage });
+              } else {
+                res.render("chat", { mentorReq: foundUser, mentorName: foundUser.Menti[i] });
+              }
+            } else { console.log(err); }
+          })
+        } else { };
+      }
     }
   });
 });
@@ -680,13 +783,42 @@ app.post("/MentorRemove", function (req, res) {
               res.redirect("home");
             }
           });
-
         }
       }
     }
   });
 });
 
+// add: remove yourself from your mentee's contact
+app.post("/MenteeRemove", function (req, res) {
+  var MentIdRemove = req.body.MentId.split(" ").join("");
+  User.findById(req.user.id, function (err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      for (let i = 0; i < foundUser.Menti.length; i++) {
+        if (foundUser.Menti[i].MentId == MentIdRemove) {
+          User.findOneAndUpdate({ _id: foundUser._id }, { $pull: { Menti: { MentId: MentIdRemove } } }, function (err, foundList) {
+            if (!err) {
+              console.log("deleted from other lists");
+              res.redirect("home");
+            }
+          });
+        }
+      }
+      for (let i = 0; i < foundUser.MentiReq.length; i++) {
+        if (foundUser.MentiReq[i].MentId == MentIdRemove) {
+          User.findOneAndUpdate({ _id: foundUser._id }, { $pull: { MentiReq: { MentId: MentIdRemove } } }, function (err, foundList) {
+            if (!err) {
+              console.log("deleted from other lists");
+              res.redirect("home");
+            }
+          });
+        }
+      }
+    }
+  });
+});
 
 app.post("/MessageSent", function (req, res) {
   var MentId = req.body.mentorId.split(" ").join("");
@@ -696,14 +828,11 @@ app.post("/MessageSent", function (req, res) {
     } else {
       for (let i = 0; i < foundUser.Ment.length; i++) {
         if (foundUser.Ment[i].MentId == MentId) {
-
           Chat.find({}, function (err, foundChat) {
             if (!err) {
-
               var MessCount = 0;
               var AllMess = "";
               foundChat.forEach(element => {
-
                 if ((element.userOneId == req.body.currentUserId && element.userTwoId == req.body.mentorId) || (element.userTwoId == req.body.currentUserId && element.userOneId == req.body.mentorId)) {
                   var NewMess = new Message({ message: req.body.mess, writer: req.body.currentUserId });
                   element.mess.push(NewMess);
@@ -727,9 +856,42 @@ app.post("/MessageSent", function (req, res) {
           })
         }
       }
+
+      for (let i = 0; i < foundUser.Menti.length; i++) {
+        if (foundUser.Menti[i].MentId == MentId) {
+          Chat.find({}, function (err, foundChat) {
+            if (!err) {
+              var MessCount = 0;
+              var AllMess = "";
+              foundChat.forEach(element => {
+                if ((element.userOneId == req.body.currentUserId && element.userTwoId == req.body.mentorId) || (element.userTwoId == req.body.currentUserId && element.userOneId == req.body.mentorId)) {
+                  var NewMess = new Message({ message: req.body.mess, writer: req.body.currentUserId });
+                  element.mess.push(NewMess);
+                  element.save();
+                  AllMess = element.mess;
+                  MessCount += 1;
+                } else {
+                }
+              });
+              if (MessCount == 1) {
+                res.render("chat", { mentorReq: foundUser, mentorName: foundUser.Menti[i], ChatMessage: AllMess });
+                console.log(`When present-------------: ${AllMess}`);
+              } else {
+                var mess = new Message({ message: req.body.mess, writer: req.body.currentUserId });
+                var newChat = new Chat({ userOneId: req.body.currentUserId, userTwoId: req.body.mentorId, mess: mess });
+                newChat.save();
+                res.render("chat", { mentorReq: foundUser, mentorName: foundUser.Menti[i], ChatMessage: newChat.mess });
+                console.log(`when not present---------${newChat.mess}`);
+              }
+            }
+          })
+        }
+      }
     }
   });
 });
+
+
 
 app.get("/post", function (req, res) {
   Question.find({}, function (err, foundQues) {

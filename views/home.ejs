@@ -78,9 +78,13 @@
   <!-- show that you are mentoring so and so people -->
   <section class="mt-4">
     <div class="card">
-      My Mentors
+      My Mentors 
+      <% if(typeof Mentlen !='undefined' ){ %>
+      <%= Mentlen %>/3
+      <% } %>
       <div class="row card-header">
         <% if(typeof Mentors !='undefined' ){ %>
+                   
           <div class="col ">
             <% if(typeof Mentors[0] !='undefined' ){ %>
 
@@ -173,8 +177,91 @@
       </div>
     </div>
   </section>
+<!-- Below are the mentee -->
+  <section class="mt-4">
+    <div class="card">
+      
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          My Mentee
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+           <% if(typeof MenteeReqs !='undefined'){ %>
+            <!-- pull name, current profile, future profile, if accepted then it will go to mentor request -->
+            <% if(typeof MenteeReqs[0] != 'undefined' ){ %>
+              <a class="dropdown-item" href="#"> 
+                <%= MenteeReqs[0].MentName %></a>
+              <div class="col">
+                <div class="">
+                  <!-- chat button -->
+                  <form action="/menteeAdd" method="post">
+                    <input type="hidden" name="MentId" value="<%=MenteeReqs[0].MentId %> ">
+                    <button>Add</button>
+                  </form>
+                </div>
+                <div class="">
+                  <!-- remove button -->
+                  <form action="/menteeRemove" method="post">
+                    <input type="hidden" name="MentId" value="<%=MenteeReqs[0].MentId %>">
+                    <button>-</button>
+                  </form>
+                </div>
+              </div>
+            <% } %>
+            
+           
+           <% } else{ %>
+
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          <% } %> 
+          
 
 
+        </div>
+      </div>
+      <% if(typeof Mentilen !='undefined' ){ %>
+        <%= Mentilen %>/3
+        <% } %>
+      
+      
+      <div class="row card-header">
+        <% if(typeof Mentees !='undefined' ){ %>
+          
+          
+          <div class="col ">
+            <% if(typeof Mentees[0] !='undefined' ){ %>
+
+              <%= Mentees[0].MentName %>
+
+                <div class="col">
+                  <div class="">
+                    <!-- chat button -->
+                    <form action="/MenteeChat" method="post">
+                      <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %> ">
+                      <button>+</button>
+                    </form>
+                  </div>
+                  <div class="">
+                    <!-- remove button -->
+                    <form action="/MenteeRemove" method="post">
+                      <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %>">
+                      <button>-</button>
+                    </form>
+                  </div>
+                </div>
+
+                <% } %>
+                  
+          </div>
+
+          <% }  %>
+           
+            
+
+      </div>
+    </div>
+  </section>
 
   <section id="4cs">
     <div class="row">

@@ -70,9 +70,11 @@
                         </div>
                         <div class="" id="MentorFutProDetails">
                           <%= User.futProfile %>
+                          <%=User.Ment.length %>/3
                           
                           <div class="mt-2">
-                          <form action="/mentorRequest" method="post"> 
+                          <!-- <form action="/mentorRequest" method="post">  -->
+                            <form action="/mentee" method="post">
                             <input type="hidden" name="mentorRequested"  value= <%=User._id%>>
                             <input type="hidden" name="userRequested" value= <%=currentUser%> > 
                             <button class="btn btn-primary" id="<%=User._id%>" >Chat</button>
