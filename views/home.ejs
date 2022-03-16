@@ -207,14 +207,31 @@
                   </form>
                 </div>
               </div>
-            <% } %>
+            <% } else { %> <a class="dropdown-item">No Notifications</a>  <% } %>
+
+            <% if(typeof MenteeReqs[1] != 'undefined' ){ %>
+              <a class="dropdown-item" href="#"> 
+                <%= MenteeReqs[1].MentName %></a>
+              <div class="col">
+                <div class="">
+                  <!-- chat button -->
+                  <form action="/menteeAdd" method="post">
+                    <input type="hidden" name="MentId" value="<%=MenteeReqs[0].MentId %> ">
+                    <button>Add</button>
+                  </form>
+                </div>
+                <div class="">
+                  <!-- remove button -->
+                  <form action="/menteeRemove" method="post">
+                    <input type="hidden" name="MentId" value="<%=MenteeReqs[0].MentId %>">
+                    <button>-</button>
+                  </form>
+                </div>
+              </div>
+            <% } %>  
             
            
-           <% } else{ %>
-
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          <% } %> 
+           <% } else{ %>  <% } %> 
           
 
 
@@ -252,10 +269,58 @@
                 </div>
 
                 <% } %>
+                <% if(typeof Mentees[1] !='undefined' ){ %>
+
+                  <%= Mentees[1].MentName %>
+    
+                    <div class="col">
+                      <div class="">
+                        <!-- chat button -->
+                        <form action="/MenteeChat" method="post">
+                          <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %> ">
+                          <button>+</button>
+                        </form>
+                      </div>
+                      <div class="">
+                        <!-- remove button -->
+                        <form action="/MenteeRemove" method="post">
+                          <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %>">
+                          <button>-</button>
+                        </form>
+                      </div>
+                    </div>
+    
+                    <% } %>
+                    <% if(typeof Mentees[2] !='undefined' ){ %>
+
+                      <%= Mentees[2].MentName %>
+        
+                        <div class="col">
+                          <div class="">
+                            <!-- chat button -->
+                            <form action="/MenteeChat" method="post">
+                              <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %> ">
+                              <button>+</button>
+                            </form>
+                          </div>
+                          <div class="">
+                            <!-- remove button -->
+                            <form action="/MenteeRemove" method="post">
+                              <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %>">
+                              <button>-</button>
+                            </form>
+                          </div>
+                        </div>
+        
+                        <% } %>
                   
           </div>
 
-          <% }  %>
+          <% } %>
+            
+
+
+         
            
             
 

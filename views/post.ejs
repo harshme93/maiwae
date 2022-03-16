@@ -6,6 +6,7 @@
   <div class="" style="margin-top:10px">
     <form class="" action="/posts" method="post">
       <input type="text" name="quesbtn" class="postBox" size="80" value="" placeholder="Where can I find free study material fro CFA?" required>
+      <input type="hidden" name="WriterId" value="<%=WriterId %> ">
       <button type="submit" class="btn btn-danger postQtnBox" name="">Submit</button>
     </form>
   </div>
@@ -20,6 +21,7 @@
 
 <h5 class="postAns">   <%= Question.ans[i].answer %> </h5>
 <% } %>
+      <input type="hidden" name="ansWriterId" value = "<%=WriterId %> " >      
       <input type="text" name="ansbtn" size="80" class="postBox" value="" placeholder="Enter your comment" required>
       <button type="submit" name="questionId" class="btn btn-sm postAnsBox" value="<%=Question._id %>" name="button">Reply</button>
   </form>
