@@ -83,29 +83,24 @@
       <%= Mentlen %>/3
       <% } %>
       <div class="row card-header">
-        <% if(typeof Mentors !='undefined' ){ %>
-                   
+        <% if(typeof Mentors[0] !='undefined' ){ %>
           <div class="col ">
-            <% if(typeof Mentors[0] !='undefined' ){ %>
-
-              <%= Mentors[0].MentName %>
-
+               <%= Mentors[0].MentName %>
                 <div class="col">
                   <div class="">
-                    <!-- chat button -->
-                    <form action="/MentorChat" method="post">
+                     <form action="/MentorChat" method="post">
                       <input type="hidden" name="MentId" value="<%=Mentors[0].MentId %> ">
                       <button>+</button>
                     </form>
                   </div>
                   <div class="">
-                    <!-- remove button -->
                     <form action="/MentorRemove" method="post">
                       <input type="hidden" name="MentId" value="<%=Mentors[0].MentId %>">
                       <button>-</button>
                     </form>
                   </div>
                 </div>
+              </div>
                 <% } else{ %>
                   <div class="col ">
                     <form class="" action="/mentors" method="post">
@@ -113,71 +108,62 @@
                     </form>
                   </div>
                   <% } %>
-          </div>
 
-          <div class="col ">
-            <% if(typeof Mentors[1] !='undefined' ){ %>
-              <%=Mentors[1].MentName %>
-                <div class="col">
-                  <div class="">
-                    <form action="/MentorChat" method="post">
-                      <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
-                      <button>+</button>
-                    </form>
-                  </div>
-                  <div class="">
-                    <form action="/MentorRemove" method="post">
-                      <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
-                      <button>-</button>
-                    </form>
-                  </div>
-                </div>
-                <% } else{ %>
                   <div class="col ">
-                    <form class="" action="/mentors" method="post">
-                      <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
-                    </form>
+                    <% if(typeof Mentors[1] !='undefined' ){ %>
+                      <%=Mentors[1].MentName %>
+                        <div class="col">
+                          <div class="">
+                            <form action="/MentorChat" method="post">
+                              <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
+                              <button>+</button>
+                            </form>
+                          </div>
+                          <div class="">
+                            <form action="/MentorRemove" method="post">
+                              <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
+                              <button>-</button>
+                            </form>
+                          </div>
+                        </div>
+                        <% } else{ %>
+                          <div class="col ">
+                            <form class="" action="/mentors" method="post">
+                              <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
+                            </form>
+                          </div>
+                          <% } %>
                   </div>
-                  <% } %>
-          </div>
-          <div class="col ">
-            <% if(typeof Mentors[2] !='undefined' ){ %>
-              <%=Mentors[2].MentName %>
-                <div class="col">
-                  <div class="">
-                    <form action="/MentorChat" method="post">
-                      <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
-                      <button>+</button>
-                    </form>
-                  </div>
-                  <div class="">
-                    <form action="/MentorRemove" method="post">
-                      <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
-                      <button>-</button>
-                    </form>
-                  </div>
-                </div>
-                <% } else{ %>
+                
                   <div class="col ">
-                    <form class="" action="/mentors" method="post">
-                      <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
-                    </form>
-                  </div>
-                  <% } %>
+                    <% if(typeof Mentors[2] !='undefined' ){ %>
+                      <%=Mentors[2].MentName %>
+                        <div class="col">
+                          <div class="">
+                            <form action="/MentorChat" method="post">
+                              <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
+                              <button>+</button>
+                            </form>
+                          </div>
+                          <div class="">
+                            <form action="/MentorRemove" method="post">
+                              <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
+                              <button>-</button>
+                            </form>
+                          </div>
+                        </div>
+                        <% } else{ %>
+                          <div class="col ">
+                            <form class="" action="/mentors" method="post">
+                              <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
+                            </form>
+                          </div>
+                          <% } %>
+                  </div>         
           </div>
-
-          <% } else{ %>
-            <div class="col ">
-              <form class="" action="/mentors" method="post">
-                <button type="submit" class="btn btn-lg optbut" name="button">Mentors</button>
-              </form>
-            </div>
-            <% } %>
-
-      </div>
     </div>
   </section>
-<!-- Below are the mentee -->
+<!-- Below are the mentee requests-->
   <section class="mt-4">
     <div class="card">
       
@@ -187,9 +173,11 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
            <% if(typeof MenteeReqs !='undefined'){ %>
-            <!-- pull name, current profile, future profile, if accepted then it will go to mentor request -->
+            
+            <div class="col"> 
             <% if(typeof MenteeReqs[0] != 'undefined' ){ %>
               <a class="dropdown-item" href="#"> 
+                
                 <%= MenteeReqs[0].MentName %></a>
               <div class="col">
                 <div class="">
@@ -207,8 +195,11 @@
                   </form>
                 </div>
               </div>
-            <% } else { %> <a class="dropdown-item">No Notifications</a>  <% } %>
 
+            <% } else { %> <a class="dropdown-item">No Notifications</a>  <% } %>
+          </div>
+
+          <div class="col">
             <% if(typeof MenteeReqs[1] != 'undefined' ){ %>
               <a class="dropdown-item" href="#"> 
                 <%= MenteeReqs[1].MentName %></a>
@@ -228,11 +219,12 @@
                   </form>
                 </div>
               </div>
+
             <% } %>  
             
            
            <% } else{ %>  <% } %> 
-          
+          </div>
 
 
         </div>
@@ -244,87 +236,29 @@
       
       <div class="row card-header">
         <% if(typeof Mentees !='undefined' ){ %>
-          
-          
+          <% Mentees.slice(0,3).forEach(function(Mentee){ %>
           <div class="col ">
-            <% if(typeof Mentees[0] !='undefined' ){ %>
-
-              <%= Mentees[0].MentName %>
-
+              <%= Mentee.MentName %>
                 <div class="col">
                   <div class="">
                     <!-- chat button -->
                     <form action="/MenteeChat" method="post">
-                      <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %> ">
+                      <input type="hidden" name="MentId" value="<%=Mentee.MentId %> ">
                       <button>+</button>
                     </form>
                   </div>
                   <div class="">
                     <!-- remove button -->
                     <form action="/MenteeRemove" method="post">
-                      <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %>">
+                      <input type="hidden" name="MentId" value="<%=Mentee.MentId %>">
                       <button>-</button>
                     </form>
                   </div>
                 </div>
-
-                <% } %>
-                <% if(typeof Mentees[1] !='undefined' ){ %>
-
-                  <%= Mentees[1].MentName %>
-    
-                    <div class="col">
-                      <div class="">
-                        <!-- chat button -->
-                        <form action="/MenteeChat" method="post">
-                          <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %> ">
-                          <button>+</button>
-                        </form>
-                      </div>
-                      <div class="">
-                        <!-- remove button -->
-                        <form action="/MenteeRemove" method="post">
-                          <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %>">
-                          <button>-</button>
-                        </form>
-                      </div>
-                    </div>
-    
-                    <% } %>
-                    <% if(typeof Mentees[2] !='undefined' ){ %>
-
-                      <%= Mentees[2].MentName %>
-        
-                        <div class="col">
-                          <div class="">
-                            <!-- chat button -->
-                            <form action="/MenteeChat" method="post">
-                              <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %> ">
-                              <button>+</button>
-                            </form>
-                          </div>
-                          <div class="">
-                            <!-- remove button -->
-                            <form action="/MenteeRemove" method="post">
-                              <input type="hidden" name="MentId" value="<%=Mentees[0].MentId %>">
-                              <button>-</button>
-                            </form>
-                          </div>
-                        </div>
-        
-                        <% } %>
-                  
-          </div>
-
+              </div>
+                <% }); %> 
           <% } %>
-            
-
-
-         
-           
-            
-
-      </div>
+          </div>
     </div>
   </section>
 
@@ -384,7 +318,7 @@
 
           <div class="card-body">
             <form class="" action="/courses" method="post">
-              <button class="btn btn-lg  optbut" type="submit" id="course"> Courses </button>
+              <button class="btn btn-lg  optbut" type="submit" id="course">Courses</button>
             </form>
             <%= futDeg %> <br>
               <%= futMajor %>

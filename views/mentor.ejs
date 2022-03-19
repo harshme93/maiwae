@@ -97,143 +97,94 @@
         </div>
 <!-- below is useless -->
         <div class="col-10 col-sm-10 col-md-8 pl-0" id="side-2">
-         
-          <div id="chatPanel" class="card " style="display:none;">
-            
-            <div class="card-header">
-              <div class="row" >
-                <div class="col-1 col-sm-1 col-md-1 col-lg-1 mt-2"><i class="fas fa-list" style="border-radius:5px;cursor:pointer;" 
-                  onclick="showChatList()"></i></div>
-                   
-                <div class="col-2 col-sm-2 col-md-2 col-lg-1" >
-                  <img src="profile.jpeg" alt="image is camera shy" class="profile-pic">
-                  
-                </div>
-                <div class="col-5 col-sm-5 col-lg-7 col-md-5">
-                  
-                  <div class="d-none d-md-block mentor">
-                    
-                  </div>    
+          <div>
 
-                  <div class="d-none d-md-block mentor"> Details of selected mentor </div>
-                </div>
-                <div class="col-4 col-sm-4 col-lg-3 col-md-4 icon">
-                  <i class="fas fa-search" style="cursor:pointer;"></i>
-                  <i class="fas fa-paperclip ml-4" style="cursor:pointer;"></i>
-                  <i class="fas fa-ellipsis-v ml-4" style="cursor:pointer;"></i>
-                </div>
-              </div>
-            </div>
-            <div class="card-body" id="messages" style="height: 70vh;">
-              <div class="row">
-                <div class="col-2 col-sm-1 col-md-1">
-                  <img src="profile.jpeg" class="chat-pic" alt="camera shy">
-                </div>
-                <div class="col-6 col-sm-7 col-md-7">
-                  <p class="receive">this is a text that you are sending and you can write a song also
-                  <span class="time float-right">1:28 PM</span></p>
-                </div>
-              </div>
-              <div class="row justify-content-end">
-                <div class="col-6 col-sm-7 col-md-7 ">
-                  <p class="sent float-right">this is a text that you are sending and you can write a song also
-                  <span class="time float-right">1:28 PM</span></p>
-                </div>
-                <div class="col-2 col-sm-1 col-md-1">
-                  <img src="profile.jpeg" class="chat-pic" alt="camera shy">
-                </div>
-              </div>
-              
-            </div>
-            <div class="card-footer">
-              <div class="row">
-                <div class="col-2 col-md-1 ">
-                  <i class="fas fa-grin fa-2x"></i>
-                </div>
-                <div class="col-8 col-md-10" onclick="OnKeyDown()">
-                  
-                  <input  type="text" name="" id="txtMessage" value="" class="form-control form-rounded" placeholder="type here">
-                </div>
-                <div class="col-2 col-md-1">
-                  <i class="fas fa-microphone" style="font-size:30px"></i>
-                </div>
+<% if(typeof SortedUsers[5]!='undefined'){ %>
+<div class="row"> <div class="col"> All-Stars </div>
+<div class="col"> 
+<div class="text-left"> 
+<% SortedUsers.slice(0,2).forEach(function(SortedUser){ %>
+<br> 
+<div class="row"> 
+<div class="col"> 
+<div><%= SortedUser.fName %>  <%= SortedUser.lName %></div>
+<div><%= SortedUser.bDegree %> <%= SortedUser.bMajor %> </div>
+<div> <%= SortedUser.mDegree %> <%= SortedUser.mMajor %> </div> </div>
+<div class="col">
+<div> Score:<%= SortedUser.rating %> </div> 
+<div>Answer-Count:<%= SortedUser.ansCount %> </div> 
+<div>Mentee: <%=SortedUser.Menti.length%>  $Mentee: <%=SortedUser.Menti.length %> $Ment: <%=SortedUser.Ment.length %> Total: <%=SortedUser.rateCount%> </div>
+</div></div>
+<% }); %>
+</div> </div> </div>
+<% } else{ %>
+  <div class="row"> <div class="col"> All-Stars </div>
+  <div class="col"> 
+  <div class="text-left"> 
+  <% SortedUsers.forEach(function(SortedUser){ %>
+  <br> 
+  <div class="row"> 
+  <div class="col"> 
+  <div><%= SortedUser.fName %>  <%= SortedUser.lName %></div>
+  <div><%= SortedUser.bDegree %> <%= SortedUser.bMajor %> </div>
+  <div> <%= SortedUser.mDegree %> <%= SortedUser.mMajor %> </div> </div>
+  <div class="col">
+  <div> Score:<%= SortedUser.rating %> </div> 
+  <div>Answer-Count:<%= SortedUser.ansCount %> </div> 
+  <div>Mentee: <%=SortedUser.Menti.length%>  $Mentee: <%=SortedUser.Menti.length %> $Ment: <%=SortedUser.Ment.length %> Total: <%=SortedUser.rateCount%> </div>
+  </div></div>
+  <% }); %>  </div> </div> </div> <% } %>
 
-              </div>
+<% if(typeof SortedUsers[10] !='undefined'){ %>
+<div class="row"> <div class="col"> Super Stars </div>
+<div class="col"> 
+<div class="text-left"> 
+<% SortedUsers.slice(5,10).forEach(function(SortedUser){ %>
+<br> 
+<div class="row"> <div class="col"> 
+<div><%= SortedUser.fName %>  <%= SortedUser.lName %></div>
+<div><%= SortedUser.bDegree %> <%= SortedUser.bMajor %> </div>
+<div> <%= SortedUser.mDegree %> <%= SortedUser.mMajor %> </div> </div>
+<div class="col">
+<div> Score:<%= SortedUser.rating %> </div> 
+<div>Answer-Count:<%= SortedUser.ansCount %> </div> 
+<div>Mentee: <%=SortedUser.Menti.length%>  $Mentee: <%=SortedUser.Menti.length %> $Ment: <%=SortedUser.Ment.length %> Total: <%=SortedUser.rateCount%> </div>
+</div></div>  <% }); %> </div> </div> </div> <% } %>
 
-            </div>
-          </div>
-       
-          <div id="divStart"  class="text-center">
-            <i class="fas fa-comments mt-5" style="font-size:250px;"></i>
-            <h2 class="mt-3">Select your mentor from the list and start planning</h2>
-            <a href="#" class="d-md-none" onclick="showChatList()">New Chat</a>
-          </div>
+<% if(typeof SortedUsers[15] !='undefined'){ %>
+  <div class="row"> <div class="col"> Hall of Famers </div>
+  <div class="col"> 
+  <div class="text-left"> 
+  <% SortedUsers.slice(10,15).forEach(function(SortedUser){ %>
+  <br> 
+  <div class="row"> <div class="col"> 
+  <div><%= SortedUser.fName %>  <%= SortedUser.lName %></div>
+  <div><%= SortedUser.bDegree %> <%= SortedUser.bMajor %> </div>
+  <div> <%= SortedUser.mDegree %> <%= SortedUser.mMajor %> </div> </div>
+  <div class="col">
+  <div> Score:<%= SortedUser.rating %> </div> 
+  <div>Answer-Count:<%= SortedUser.ansCount %> </div> 
+  <div>Mentee: <%=SortedUser.Menti.length%>  $Mentee: <%=SortedUser.Menti.length %> $Ment: <%=SortedUser.Ment.length %> Total: <%=SortedUser.rateCount%> </div>
+  </div></div>  <% }); %> </div> </div> </div> <% } %>
+  
+
+
+
+
+
+        </div>    
+          
         </div>
       </div>
     </div>
   </section>
  
+  <section>
+    <form action="/complain" method="post">
+    <input type="text" size="50" name="feedback" placeholder="Provide your feedback here">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </section>
  
-<!-- <script>
-  function MyNewMentor(id) {
-    var UserIdPull = id; 
-    document.getElementById('MentorNameDetails').innerText;
-    alert("this is the second alert");
-    console.log(id);
-  }
-
-</script> -->
-  <!-- <script>
-    function showChatList() {
-      document.getElementById('side-1').classList.remove('d-none', 'd-md-block');
-      document.getElementById('side-2').classList.add('d-none');
-      
-    }
-  </script> -->
- 
-  <!-- <script>
-    function StartChat(id) {
-      document.getElementById('chatPanel').removeAttribute('style');
-      document.getElementById('divStart').setAttribute('style', 'display:none');
-      hideChatList();
-      MyNewMentor(id);
-            
-    }
-  </script> -->
-  <!-- <script>
-    function hideChatList() {
-      document.getElementById('side-1').classList.add('d-none', 'd-md-block');
-      document.getElementById('side-2').classList.remove('d-none');
-      
-    }
-  </script> -->
-<!-- <script>
-  function OnKeyDown(){
-    document.addEventListener("keydown", function(key){
-if(key.which == 13){
-SendMessage();
-}
-    });
-  }
-</script>  -->
-<!-- <script>
-  function SendMessage(){
-    var message = ` <div class="row justify-content-end">
-                <div class="col-6 col-sm-7 col-md-7 ">
-                  <p class="sent float-right"> ${document.getElementById('txtMessage').value}
-                  <span class="time float-right">1:28 PM</span></p>
-                </div>
-                <div class="col-2 col-sm-1 col-md-1">
-                  <img src="profile.jpeg" class="chat-pic" alt="camera shy">
-                </div>
-              </div>`;
-    document.getElementById('messages').innerHTML += message;
-    document.getElementById('txtMessage').value = '';
-    document.getElementById('txtMessage').focus();
-    document.getElementById('messages').scrollTo(0, document.getElementById('messages').clientHeight);
-
-  }
-</script> -->
-
 
   <%- include("footer") -%>

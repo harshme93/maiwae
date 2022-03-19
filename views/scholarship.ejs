@@ -10,11 +10,7 @@
       <section >
 
         <div class="row opt-total">
-          <!-- <div class="opt-img col-lg-2">
-            <img
-              src="https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/s150x150/55726586_395510704606682_5123988317334929408_n.jpg?tp=1&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_ohc=lLvVoGqIoKcAX-D-GHL&oh=08531b24760ee5d53eb00282dae4bf16&oe=606CC633"
-              alt="" style="border-radius:100%;">
-          </div> -->
+         
 
 
           <% certNames.forEach(function(Certification){ %>
@@ -44,7 +40,12 @@
 
 
                 </section>
-
+                <section>
+                  <form action="/complain" method="post">
+                  <input type="text" size="50" name="feedback" placeholder="Provide your feedback here">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                  </section>
 
 
 <%- include("footer") -%>

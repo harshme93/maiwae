@@ -81,18 +81,16 @@ const Fprofile = mongoose.model("Fprofile", profileSchema);
 const Scholarship = mongoose.model("Scholarship", scholSchema);
 const Trend = mongoose.model("Trend", trendSchema);
 
-
-
-const ans1 = new Answer({ answer: "this is the test answer" });
-
+// const ans1 = new Answer({ answer: "this is the test answer" });
 const quesSchema = { ques: String,quesWriter: String ,ans: [ansSchema] };
 const Question = mongoose.model("Question", quesSchema);
-
 const messageSchema = { message: String, writer: String };
 const Message = mongoose.model("Message", messageSchema);
-
 const chatSchema = { userOneId: String, userTwoId: String, mess: [messageSchema] };
 const Chat = mongoose.model("Chat", chatSchema);
+const feedSchema = {feed:String, UserId: String};
+const Feedback = mongoose.model("Feedback",feedSchema);
+
 
 // notification: it will be a list where more lists can be added, entire list will be shown in the dropdown menu of the 
 app.get("/", function (req, res) {
@@ -180,7 +178,7 @@ app.post("/profile", function (req, res) {
       foundUser.futMajor = req.body.futMajor; foundUser.futComp = req.body.futComp;
       foundUser.futExam = req.body.futExam; foundUser.futTrend = req.body.futTrend;
       foundUser.rating = 0; foundUser.rateCount = 0; foundUser.quesCount=0; foundUser.ansCount=0; 
-      foundUser.menteeCount=0;foundUser.score=0
+      foundUser.menteeCount=0; foundUser.score=0
       foundUser.save();
 
     };
@@ -493,13 +491,32 @@ app.post("/mentors", function (req, res) {
   User.findById(req.user.id, function (err, foundUser) {
     User.find({}, function (err, foundMentors) {
       console.log(`----------------------`);
-      foundMentors.forEach(element => {
-// count the below values, they have no formula 
-element.score = (element.rating/element.rateCount) + element.Menti.length + element.Ment.length + element.ansCount + element.quesCount;
-    // store the values in a var: sort them in descending order and create the visual changes for the all starts
-console.log(`for ${element.fName} the score is ${element.score}`);
-      });
-      res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length });
+      
+     foundMentors.forEach(element => {
+// if they have a rating and a mentee count
+if(element.rating > 0 && element.rateCount > 0){
+  element.score = (element.rating/element.rateCount) + element.Menti.length + element.Ment.length + element.ansCount + element.quesCount;
+} else{
+  element.score = element.Menti.length + element.Ment.length + element.ansCount + element.quesCount;
+  }
+element.save();
+});
+var SortedUsers = [];
+for (let i = 0; i < foundMentors.length; i++) {
+  SortedUsers.push(foundMentors[i]);
+ }
+
+SortedUsers.sort(function(a,b){
+  return b.score-a.score;
+});
+// right variable is local and left variable is for that page
+
+if (typeof SortedUsers[50] !='undefined') {
+  res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers.slice(0,50) });
+} else {
+ res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers });
+}
+
     })
   })
 });
@@ -982,6 +999,12 @@ app.post("/answer", function (req, res) {
 app.post("/post", function (req, res) {
   res.redirect("post");
 })
+
+app.post("/complain", function(req,res){
+console.log(req.body.feedback);
+  var Userfeedback = new Feedback({feed:req.body.feedback,UserId: req.user.id });
+Userfeedback.save();
+});
 
 app.get("/logout", function (req, res) {
   req.logout();
