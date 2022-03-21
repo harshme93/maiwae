@@ -38,22 +38,23 @@ const mentorSchema = { MentName: String, MentId: String };
 const Mentor = mongoose.model("Mentor", mentorSchema);
 const Mentee = mongoose.model("Mentee", mentorSchema);
 const MenteeReq = mongoose.model("MenteeReq", mentorSchema);
+const PendFeed = mongoose.model("PendFeed", mentorSchema);
 
-const ansSchema = {answer: String, ansWriter: String};
+const ansSchema = { answer: String, ansWriter: String };
 const Answer = mongoose.model("Answer", ansSchema);
-const NotSchema = {info:String};
+const NotSchema = { info: String };
 const Notifi = mongoose.model("Notifi", NotSchema);
 
 // added mongoose schema
 const userInfoSchema = new mongoose.Schema({
-  username: String, password: String, fName: String, lName: String, sName: String, sCourse: String, 
-  bDegree: String, bMajor: String,compName: String, compScore: Number, mDegree: String, mMajor: String, 
-  certification: String, date: Number, month: String, year: Number,city: String, state: String, zip: Number, 
-  futProfile: String, fReq1: String, fReq2: String, fReq3: String, futFellow: String,futCerti: String, 
-  futDeg: String, futMajor: String, futComp: String, futExam: String, futTrend: String, courseRecA: String, 
-  courseRecB: String,  courseRecC: String, courseRecD: String, courseRecE: String, courseCertA: String, 
-  courseCertB: String, courseCertC: String, courseCertD: String,  courseCertE: String, Ment: [mentorSchema], 
-  Menti: [mentorSchema], MentiReq: [mentorSchema],Noti:[NotSchema],rating: Number, rateCount: Number, 
+  username: String, password: String, fName: String, lName: String, sName: String, sCourse: String,
+  bDegree: String, bMajor: String, compName: String, compScore: Number, mDegree: String, mMajor: String,
+  certification: String, date: Number, month: String, year: Number, city: String, state: String, zip: Number,
+  futProfile: String, fReq1: String, fReq2: String, fReq3: String, futFellow: String, futCerti: String,
+  futDeg: String, futMajor: String, futComp: String, futExam: String, futTrend: String, courseRecA: String,
+  courseRecB: String, courseRecC: String, courseRecD: String, courseRecE: String, courseCertA: String,
+  courseCertB: String, courseCertC: String, courseCertD: String, courseCertE: String, Ment: [mentorSchema],
+  Menti: [mentorSchema], MentiReq: [mentorSchema], Noti: [NotSchema], Pend: [mentorSchema], rating: Number, rateCount: Number,
   quesCount: Number, ansCount: Number, menteeCount: Number, score: Number
 });
 
@@ -82,14 +83,14 @@ const Scholarship = mongoose.model("Scholarship", scholSchema);
 const Trend = mongoose.model("Trend", trendSchema);
 
 // const ans1 = new Answer({ answer: "this is the test answer" });
-const quesSchema = { ques: String,quesWriter: String ,ans: [ansSchema] };
+const quesSchema = { ques: String, quesWriter: String, ans: [ansSchema] };
 const Question = mongoose.model("Question", quesSchema);
 const messageSchema = { message: String, writer: String };
 const Message = mongoose.model("Message", messageSchema);
 const chatSchema = { userOneId: String, userTwoId: String, mess: [messageSchema] };
 const Chat = mongoose.model("Chat", chatSchema);
-const feedSchema = {feed:String, UserId: String};
-const Feedback = mongoose.model("Feedback",feedSchema);
+const feedSchema = { feed: String, UserId: String };
+const Feedback = mongoose.model("Feedback", feedSchema);
 
 
 // notification: it will be a list where more lists can be added, entire list will be shown in the dropdown menu of the 
@@ -110,7 +111,7 @@ app.get("/home", function (req, res) {
         fReq1: foundUser.fReq1, fReq2: foundUser.fReq2, fReq3: foundUser.fReq3, futFellow: foundUser.futFellow, futCerti: foundUser.futCerti,
         futDeg: foundUser.futDeg, futMajor: foundUser.futMajor, futComp: foundUser.futComp, futExam: foundUser.futExam,
         futTrend: foundUser.futTrend, Mentors: foundUser.Ment, Mentlen: foundUser.Ment.length, Mentees: foundUser.Menti, Mentilen: foundUser.Menti.length,
-        MenteeReqs: foundUser.MentiReq, Notifis:foundUser.Noti, NotifiLen: foundUser.Noti.length
+        MenteeReqs: foundUser.MentiReq, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, PendFeeds: foundUser.Pend, UserId:foundUser._id 
       });
     })
   } else {
@@ -177,16 +178,16 @@ app.post("/profile", function (req, res) {
       foundUser.futCerti = req.body.futCerti; foundUser.futDeg = req.body.futDeg;
       foundUser.futMajor = req.body.futMajor; foundUser.futComp = req.body.futComp;
       foundUser.futExam = req.body.futExam; foundUser.futTrend = req.body.futTrend;
-      foundUser.rating = 0; foundUser.rateCount = 0; foundUser.quesCount=0; foundUser.ansCount=0; 
-      foundUser.menteeCount=0; foundUser.score=0
+      foundUser.rating = 0; foundUser.rateCount = 0; foundUser.quesCount = 0; foundUser.ansCount = 0;
+      foundUser.menteeCount = 0; foundUser.score = 0
       foundUser.save();
 
     };
-    
+
 
     foundUser.save(function () {
       res.redirect("home");
-  })
+    })
   })
 });
 
@@ -436,33 +437,45 @@ app.post("/future", function (req, res) {
 });
 // chat button from mentors will land them up here which should be visible at the home page
 app.get("/feedback", function (req, res) {
-res.render("feedback",);
+ console.log(`from the get feedback: ${MentId} and ${MenteeId}`);
+  res.render("feedback",{MentId:MentId,MenteeId:MenteeId});
 
 });
 
-app.post("/feedback", function(req,res){
+app.post("/Secondaryfeedback",function(req,res){
 var MentId = req.body.MentId;
 var MenteeId = req.body.MenteeId;
-var rating = req.body.test;
-User.findById(MentId, function (err, foundMent) {
-  User.findById(MenteeId, function(err,foundMentee){
-  if(req.user.id==MentId){
-  // console.log(`here are the rating: ${foundMentee.rating} and the ${foundMentee.rateCount}`);
-  foundMentee.rating += rating;
-  foundMentee.rateCount +=1; 
-  foundMentee.save();
-  console.log(`here are the post rating: ${foundMentee.rating} and the ${foundMentee.rateCount}`);
-
-} else{
-  foundMent.rating += rating;
-  foundMent.rateCount +=1; 
-  foundMent.save();
-  console.log(`here are the post rating: ${foundMent.rating} and the ${foundMent.rateCount}`);
-}
-res.redirect("home");
-  });
+console.log(` Secondary feedback: ${MentId} and ${MenteeId}`);
+res.render("feedback",{MentId:MentId,MenteeId:MenteeId});
 });
-  
+
+app.post("/feedback", function (req, res) {
+  var MentId = req.body.MentId;
+  var MenteeId = req.body.MenteeId;
+  var rating = req.body.test;
+   User.findById(MenteeId, function (err, foundMentee) {
+      if (req.user.id == MentId) {
+        // console.log(`here are the rating: ${foundMentee.rating} and the ${foundMentee.rateCount}`);
+        foundMentee.rating += Number(rating);
+        foundMentee.rateCount += 1;
+        foundMentee.save();
+        console.log(`here are the post rating: ${foundMentee.rating} and the ${foundMentee.rateCount}`);
+        } 
+User.findById(MentId,function(err,foundMent){
+  console.log(`removing the Pend`);
+for (let i = 0; i < foundMent.Pend.length; i++) {
+  if(foundMent.Pend[i].MentId==MenteeId){
+    User.findOneAndUpdate({ _id: foundMent._id }, { $pull: { Pend: { MentId: MenteeId } } }, function (err, foundList) {
+      if (!err) {
+        foundMent.save();
+        console.log(`Removed from the pending list`);
+        }
+    });
+  }
+}
+});
+      res.redirect("home");
+    });
 });
 
 app.post("/mentee", function (req, res) {
@@ -471,12 +484,12 @@ app.post("/mentee", function (req, res) {
     User.findById(req.body.userRequested, function (err, foundUser) {
       if (!err) {
         // send a notification to the user's notification database when the request is submitted
-        var reqNot = new Notifi({info:`Request sent to mentor ${foundMenti.fName}`});
-        var reqNotMent = new Notifi({info:`Mentee request received ${foundUser.fName}`});
+        var reqNot = new Notifi({ info: `Request sent to mentor ${foundMenti.fName}` });
+        var reqNotMent = new Notifi({ info: `Mentee request received ${foundUser.fName}` });
         foundUser.Noti.push(reqNot);
         foundMenti.Noti.push(reqNotMent);
-      console.log(`from mentee: ${foundUser.Noti[0].info}`);
-      console.log(`from mentee: ${foundMenti.Noti[0].info}`);
+        console.log(`from mentee: ${foundUser.Noti[0].info}`);
+        console.log(`from mentee: ${foundMenti.Noti[0].info}`);
         var test = new MenteeReq({ MentName: foundUser.fName, MentId: req.body.userRequested });
         foundMenti.MentiReq.push(test);
         foundMenti.save();
@@ -491,31 +504,31 @@ app.post("/mentors", function (req, res) {
   User.findById(req.user.id, function (err, foundUser) {
     User.find({}, function (err, foundMentors) {
       console.log(`----------------------`);
-      
-     foundMentors.forEach(element => {
-// if they have a rating and a mentee count
-if(element.rating > 0 && element.rateCount > 0){
-  element.score = (element.rating/element.rateCount) + element.Menti.length + element.Ment.length + element.ansCount + element.quesCount;
-} else{
-  element.score = element.Menti.length + element.Ment.length + element.ansCount + element.quesCount;
-  }
-element.save();
-});
-var SortedUsers = [];
-for (let i = 0; i < foundMentors.length; i++) {
-  SortedUsers.push(foundMentors[i]);
- }
 
-SortedUsers.sort(function(a,b){
-  return b.score-a.score;
-});
-// right variable is local and left variable is for that page
+      foundMentors.forEach(element => {
+        // if they have a rating and a mentee count
+        if (element.rating > 0 && element.rateCount > 0) {
+          element.score = Math.round((element.rating / element.rateCount)) + element.Menti.length + element.Ment.length + element.ansCount + element.quesCount;
+        } else {
+          element.score = element.Menti.length + element.Ment.length + element.ansCount + element.quesCount;
+        }
+        element.save();
+      });
+      var SortedUsers = [];
+      for (let i = 0; i < foundMentors.length; i++) {
+        SortedUsers.push(foundMentors[i]);
+      }
 
-if (typeof SortedUsers[50] !='undefined') {
-  res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers.slice(0,50) });
-} else {
- res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers });
-}
+      SortedUsers.sort(function (a, b) {
+        return b.score - a.score;
+      });
+      // right variable is local and left variable is for that page
+
+      if (typeof SortedUsers[50] != 'undefined') {
+        res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers.slice(0, 50) });
+      } else {
+        res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers });
+      }
 
     })
   })
@@ -688,11 +701,11 @@ app.post("/menteeAdd", function (req, res) {
               foundUser.Menti.push(test);
               var adment = new Mentor({ MentName: foundUser.fName, MentId: foundUser._id });
               MentorFound.Ment.push(adment);
-              var reqNot = new Notifi({ info:'Mentor has approved the request'});
+              var reqNot = new Notifi({ info: 'Mentor has approved the request' });
               MentorFound.Noti.push(reqNot);
-              
+
               console.log(`Printing the noti from menteeAdd: ${MentorFound.Noti[0].info}`);
-              
+
               foundUser.save();
               MentorFound.save();
               // send a notification to the mentee's notification database that you have been approved
@@ -793,8 +806,26 @@ app.post("/MentorRemove", function (req, res) {
           User.findOneAndUpdate({ _id: foundUser._id }, { $pull: { Ment: { MentId: MentIdRemove } } }, function (err, foundList) {
             if (!err) {
               console.log("deleted from other lists");
-              // res.redirect("home");
-              res.render("feedback", {MentId:MentIdRemove, MenteeId:foundUser._id} );
+              User.findById(MentIdRemove, function (err, RemovedUser) {
+                // push a notification that submit the feedback
+                if (!err) {
+                 for (let i = 0; i < RemovedUser.Menti.length; i++) {
+                    if (RemovedUser.Menti[i].MentId == foundUser._id) {
+                      User.findOneAndUpdate({ _id: RemovedUser._id }, { $pull: { Menti: { MentId: foundUser._id } } }, function (err, foundList) {
+                        if (!err) {
+                          console.log("deleted mentee (me) from the mentor's list");
+                          var reqNotMentee = new Notifi({ info: 'Submit a feedback for your Mentor' });
+                          RemovedUser.Noti.push(reqNotMentee);
+                          var adment = new PendFeed({ MentName: foundUser.fName, MentId: foundUser._id });
+                          RemovedUser.Pend.push(adment);
+                          RemovedUser.save();
+                          res.render("feedback", { MentId:foundUser._id, MenteeId:MentIdRemove });
+                        }
+                      });
+                    }
+                  }
+                }
+              });
             }
           });
         }
@@ -815,27 +846,25 @@ app.post("/MenteeRemove", function (req, res) {
           User.findOneAndUpdate({ _id: foundUser._id }, { $pull: { Menti: { MentId: MentIdRemove } } }, function (err, foundList) {
             if (!err) {
               console.log("deleted from other lists");
-// pull the mentee and remove the mentor (me) from there
-User.findById(MentIdRemove,function(err,foundMentee){
-  for (let i = 0; i < foundMentee.Ment.length; i++) {
-    if (foundMentee.Ment[i].MentId == foundUser._id) {
-      User.findOneAndUpdate({ _id: foundMentee._id }, { $pull: { Ment: { MentId: foundUser._id } } }, function (err, foundList) {
-        if (!err) {
-          console.log("deleted mentor (me) from the mentee's list");
-          var reqNot = new Notifi({info: 'Mentor removed you'})
-          foundMentee.Noti.push(reqNot);
-// testing goti notifications
-          
-          
-          // res.redirect("home");
-          res.render("feedback", {MentId:foundUser._id, MenteeId:MentIdRemove} );
-        }
-      });
-    }
-  }
-})
 
-              // res.redirect("home");
+              // pull the mentee and remove the mentor (me) from there
+              User.findById(MentIdRemove, function (err, foundMentee) {
+                for (let i = 0; i < foundMentee.Ment.length; i++) {
+                  if (foundMentee.Ment[i].MentId == foundUser._id) {
+                    User.findOneAndUpdate({ _id: foundMentee._id }, { $pull: { Ment: { MentId: foundUser._id } } }, function (err, foundList) {
+                      if (!err) {
+                        console.log("deleted mentor (me) from the mentee's list");
+                        var reqNot = new Notifi({ info: 'Submit feedback for your Mentor' });
+                        foundMentee.Noti.push(reqNot);
+                        var adment = new PendFeed({ MentName: foundUser.fName, MentId: foundUser._id });
+                        foundMentee.Pend.push(adment);
+                        foundMentee.save();
+                        res.render("feedback", { MentId: foundUser._id, MenteeId: MentIdRemove });
+                      }
+                    });
+                  }
+                }
+              })
             }
           });
         }
@@ -846,14 +875,11 @@ User.findById(MentIdRemove,function(err,foundMentee){
             if (!err) {
               console.log("deleted from other lists");
               res.redirect("home");
-              
+
             }
           });
         }
       }
-
-   
-
     }
   });
 });
@@ -932,78 +958,78 @@ app.post("/MessageSent", function (req, res) {
 
 
 app.get("/post", function (req, res) {
-  User.findById(req.user.id,function(err,foundUser){
+  User.findById(req.user.id, function (err, foundUser) {
     if (err) {
       console.log(err);
     } else {
-  
-  Question.find({}, function (err, foundQues) {
-    if (!err) {
-      Answer.find({}, function (err, foundAns) {
-        if (foundAns.length === 0) {
-          Answer.insertMany(ans1, function (err) {
-            if (!err) {
-              console.log("success");
-            } else {
-              console.log("no success");
-            }
-          });
-        } else {
-          res.render("post", {
-            certNames: foundQues,certAns: foundAns, WriterId: foundUser._id
-          });
-        }
-      })
-    }
-  });
 
-}
-})
+      Question.find({}, function (err, foundQues) {
+        if (!err) {
+          Answer.find({}, function (err, foundAns) {
+            if (foundAns.length === 0) {
+              Answer.insertMany(ans1, function (err) {
+                if (!err) {
+                  console.log("success");
+                } else {
+                  console.log("no success");
+                }
+              });
+            } else {
+              res.render("post", {
+                certNames: foundQues, certAns: foundAns, WriterId: foundUser._id
+              });
+            }
+          })
+        }
+      });
+
+    }
+  })
 
 });
 
 app.post("/posts", function (req, res) {
-  User.findById(req.user.id,function(err,foundUser){
-  const newQues = new Question({
-    ques: req.body.quesbtn,
-    quesWriter: req.body.WriterId
+  User.findById(req.user.id, function (err, foundUser) {
+    const newQues = new Question({
+      ques: req.body.quesbtn,
+      quesWriter: req.body.WriterId
+    });
+    newQues.save();
+    foundUser.quesCount += 1;
+    res.redirect("post");
   });
-  newQues.save();
-  foundUser.quesCount += 1;
-  res.redirect("post");
-});
 });
 
 app.post("/answer", function (req, res) {
-  User.findById(req.user.id,function(err,foundUser){
-  
-  const reply = new Answer({
-    answer: req.body.ansbtn,
-    ansWriter: req.body.ansWriterId
-  });
-  const questionId = req.body.questionId;
-  Question.findOne({
-    _id: questionId
-  }, function (err, foundQ) {
-    if (!err) {
-      foundQ.ans.push(reply);
-      foundQ.save();
-      foundUser.ansCount += 1;
-    }
-  });
-  res.redirect("post");
+  User.findById(req.user.id, function (err, foundUser) {
 
-});
+    const reply = new Answer({
+      answer: req.body.ansbtn,
+      ansWriter: req.body.ansWriterId
+    });
+    const questionId = req.body.questionId;
+    Question.findOne({
+      _id: questionId
+    }, function (err, foundQ) {
+      if (!err) {
+        foundQ.ans.push(reply);
+        foundQ.save();
+        foundUser.ansCount += 1;
+      }
+    });
+    res.redirect("post");
+
+  });
 });
 
 app.post("/post", function (req, res) {
   res.redirect("post");
 })
 
-app.post("/complain", function(req,res){
-console.log(req.body.feedback);
-  var Userfeedback = new Feedback({feed:req.body.feedback,UserId: req.user.id });
-Userfeedback.save();
+app.post("/complain", function (req, res) {
+  console.log(req.body.feedback);
+  var Userfeedback = new Feedback({ feed: req.body.feedback, UserId: req.user.id });
+  Userfeedback.save();
 });
 
 app.get("/logout", function (req, res) {
