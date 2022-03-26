@@ -119,6 +119,8 @@ app.get("/home", function (req, res) {
   }
 });
 
+
+
 app.get("/register", function (req, res) {
   res.render("register");
 });
@@ -195,6 +197,7 @@ app.post("/profile", function (req, res) {
 
 var filteredComps = mongoose.model("filteredComps", compSchema);
 app.post("/competitions", function (req, res) {
+  User.findById(req.user.id,function(err,foundUser){
   filteredComps = [];
   if (req.body.srchInput) {
     const searchString = _.lowerCase([req.body.srchInput]);
@@ -206,24 +209,29 @@ app.post("/competitions", function (req, res) {
           }
         });
         res.render("competitions", {
-          certNames: filteredComps
+          certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
   } else {
     Competition.find({}, function (err, foundCerts) {
       if (!err) {
+        // const jscript = spawn('jscript', ['script.ejs', foundCerts]);
+            // jscript.on('close', (code) => {
+            //   console.log(`child process close all stdio with code ${code}`);});
         res.render("competitions", {
-          certNames: foundCerts
+          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
   }
 });
+});
 
 var filteredExams = mongoose.model("filteredExams", examSchema);
 
 app.post("/compexams", function (req, res) {
+  User.findById(req.user.id,function(err,foundUser){
   filteredExams = [];
   if (req.body.srchInput) {
     const searchString = _.lowerCase([req.body.srchInput]);
@@ -235,7 +243,7 @@ app.post("/compexams", function (req, res) {
           }
         });
         res.render("compexams", {
-          certNames: filteredExams
+          certNames: filteredExams,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
@@ -244,11 +252,12 @@ app.post("/compexams", function (req, res) {
     Exam.find({}, function (err, foundCerts) {
       if (!err) {
         res.render("compexams", {
-          certNames: foundCerts
+          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
   }
+});
 });
 
 var filteredCert = mongoose.model("filteredCert", certSchema);
@@ -267,7 +276,8 @@ app.post("/certifications", function (req, res) {
             if (!err) {
               foundCerts.forEach(function (foundCert) { if (_.lowerCase([foundCert.certNam]) === (searchString)) { filteredCert.push(foundCert); } });
               res.render("certifications", {
-                certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE
+                certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
+                courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
               });
             }
           });
@@ -276,7 +286,8 @@ app.post("/certifications", function (req, res) {
           Certification.find({}, function (err, foundCerts) {
             if (!err) {
               res.render("certifications", {
-                certNames: foundCerts, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE
+                certNames: foundCerts, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
+                courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
               });
             }
           });
@@ -325,17 +336,21 @@ app.post("/courses", function (req, res) {
             foundCerts.forEach(function (foundCert) {
               if (_.lowerCase([foundCert.degMjr]) === (searchString)) { filteredCourse.push(foundCert); }
             });
-            res.render("courses", { certNames: filteredCourse });
+           res.render("courses", { certNames: filteredCourse,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length });
           }
         });
       }
       else {
         Course.find({}, function (err, foundCerts) {
           if (!err) {
-            res.render("courses", {
+            var CourseSuggest = [];
+            foundCerts.forEach(element => {
+              CourseSuggest.push(element.degMjr);
+            });
+            res.render("courses", {CourseSuggest:CourseSuggest,
               certNames: foundCerts, courseRecA: foundUser.courseRecA,
               courseRecB: foundUser.courseRecB, courseRecC: foundUser.courseRecC, courseRecD: foundUser.courseRecD,
-              courseRecE: foundUser.courseRecE
+              courseRecE: foundUser.courseRecE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
             });
           }
         });
@@ -348,6 +363,7 @@ app.post("/courses", function (req, res) {
 var filteredSchol = mongoose.model("filteredSchol", scholSchema);
 
 app.post("/scholarship", function (req, res) {
+  User.findById(req.user.id,function(err,foundUser){
   filteredSchol = [];
   if (req.body.srchInput) {
     const searchString = _.lowerCase([req.body.srchInput]);
@@ -359,7 +375,7 @@ app.post("/scholarship", function (req, res) {
           }
         });
         res.render("scholarship", {
-          certNames: filteredSchol
+          certNames: filteredSchol,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
@@ -368,18 +384,20 @@ app.post("/scholarship", function (req, res) {
     Scholarship.find({}, function (err, foundCerts) {
       if (!err) {
         res.render("scholarship", {
-          certNames: foundCerts
+          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
   }
+});
 });
 
 
 var filteredTrends = mongoose.model("filteredTrends", trendSchema);
 
 app.post("/trends", function (req, res) {
-  filteredTrends = [];
+ User.findById(req.user.id,function(err,foundUser){
+ filteredTrends = [];
   if (req.body.srchInput) {
     const searchString = _.lowerCase([req.body.srchInput]);
     Trend.find({}, function (err, foundCerts) {
@@ -390,7 +408,7 @@ app.post("/trends", function (req, res) {
           }
         });
         res.render("trends", {
-          certNames: filteredTrends
+          certNames: filteredTrends,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
@@ -399,16 +417,18 @@ app.post("/trends", function (req, res) {
     Trend.find({}, function (err, foundCerts) {
       if (!err) {
         res.render("trends", {
-          certNames: foundCerts
+          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
   }
 });
+});
 
 var filteredFuture = mongoose.model("filteredFuture", profileSchema);
 
 app.post("/future", function (req, res) {
+ User.findById(req.user.id,function(err,foundUser){
   filteredFuture = [];
   if (req.body.srchInput) {
     const searchString = _.lowerCase([req.body.srchInput]);
@@ -420,7 +440,7 @@ app.post("/future", function (req, res) {
           }
         });
         res.render("future", {
-          certNames: filteredFuture
+          certNames: filteredFuture,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
@@ -429,11 +449,12 @@ app.post("/future", function (req, res) {
     Fprofile.find({}, function (err, foundCerts) {
       if (!err) {
         res.render("future", {
-          certNames: foundCerts
+          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
   }
+});
 });
 // chat button from mentors will land them up here which should be visible at the home page
 app.get("/feedback", function (req, res) {
@@ -1036,6 +1057,8 @@ app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 })
+
+
 
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server running at port 3000");

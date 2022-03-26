@@ -6,12 +6,41 @@
         <div class="wrapper">
           <input type="text" name="srchInput" id="searchCourse" size="70" value="" class="searchInp"
             placeholder="search" autocomplete="chrome-off">
-
           <button type="submit" name="" class="btn btn-sm searchBtn"><i class="fas fa-search"></i></button>
           <div class="results">
             <ul>
             </ul>
-            <script src="script.js"></script>
+            <script>
+const searchable = ['<%=CourseSuggest%>'];
+const searchInput = document.getElementById('searchCourse');
+const searchWrapper = document.querySelector('.wrapper');
+const resultsWrapper = document.querySelector('.results');
+searchInput.addEventListener('keyup', () => {
+  let results = [];
+  let input = searchInput.value;
+  if (input.length) {
+    results = searchable[0].toString().split(',').filter((item) => {
+      return item.toLowerCase().includes(input.toLowerCase());
+    });
+  }
+  renderResults(results);
+});
+
+function renderResults(results) {
+  if (!results.length) {
+    return searchWrapper.classList.remove('show');
+  }
+
+  const content = results
+    .map((item) => {
+      return `<li>${item}</li>`;
+    })
+    .join('');
+
+  searchWrapper.classList.add('show');
+  resultsWrapper.innerHTML = `<ul>${content}</ul>`;
+}
+            </script>
           </div>
         </div>
       </div>

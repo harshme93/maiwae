@@ -1,4 +1,6 @@
 
+// const {searchable} = require('../pest.js');
+// console.log(` from the outside: ${searchable}`);
 
 let searchable = [
   'Electronics and Communication',
@@ -7,8 +9,9 @@ let searchable = [
   'Biochemical Engineering and Biotechnology',
   'Chemical Engineering',
   'Electrical Engineering',
-  'Civil Engineering',
+  'Civil Engineering'
 ];
+
 
 const searchInput = document.getElementById('searchCourse');
 const searchWrapper = document.querySelector('.wrapper');
