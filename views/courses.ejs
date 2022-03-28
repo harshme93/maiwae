@@ -21,22 +21,16 @@ searchInput.addEventListener('keyup', () => {
   if (input.length) {
     results = searchable[0].toString().split(',').filter((item) => {
       return item.toLowerCase().includes(input.toLowerCase());
-    });
-  }
-  renderResults(results);
-});
-
+    });}renderResults(results);});
 function renderResults(results) {
   if (!results.length) {
     return searchWrapper.classList.remove('show');
   }
-
   const content = results
     .map((item) => {
       return `<li>${item}</li>`;
     })
     .join('');
-
   searchWrapper.classList.add('show');
   resultsWrapper.innerHTML = `<ul>${content}</ul>`;
 }

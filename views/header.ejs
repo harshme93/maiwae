@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>maiwae</title>
+    <title>Reco</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" >
     <!-- <script data-main="scripts/app" src="scripts/require.js"></script> -->
     <!-- Google Fonts -->
@@ -14,6 +14,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
     <!-- Bootstrap Scripts -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -26,15 +27,15 @@
 
       <div class="toptions">
 
-        <!-- Nav Bar -->
+        <!-- Nav  Bar   // dropdown-toggle -->
 
         <nav class="navbar navbar-expand-lg navbar">
           <a class="navbar-brand" href="">Reco</a>
           <img src="mylogo.png"  alt="" width="52" height="52" style="border-radius:100%">
           <ul class="navbar-nav ml-auto">
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dro
+              <button class="btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-bell" aria-hidden="true"></i>
               </button>
               
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -56,7 +57,7 @@
                             
               </div>
             </div>
-              <a class="nav-link btn btn-link" href="/home" role="link" id="homelink">Home</a>
+              <a class="nav-link btn btn-link" href="/home" role="link" id="homelink"><i class="fa fa-home" aria-hidden="true"></i></a>
               <a class="nav-link btn btn-link" href="/logout" role="link" id="homelink">Logout</a>
 
           </ul>

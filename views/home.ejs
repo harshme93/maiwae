@@ -90,13 +90,13 @@
                   <div class="">
                      <form action="/MentorChat" method="post">
                       <input type="hidden" name="MentId" value="<%=Mentors[0].MentId %> ">
-                      <button>+</button>
+                      <button><i class='far fa-comments' style='font-size:24px'></i></button>
                     </form>
                   </div>
                   <div class="">
                     <form action="/MentorRemove" method="post">
                       <input type="hidden" name="MentId" value="<%=Mentors[0].MentId %>">
-                      <button>-</button>
+                      <button><i class="fa-solid fa-trash"></i><i class='fa fa-trash-o'></i></button>
                     </form>
                   </div>
                 </div>
@@ -116,13 +116,13 @@
                           <div class="">
                             <form action="/MentorChat" method="post">
                               <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
-                              <button>+</button>
+                              <button><i class='far fa-comments' style='font-size:24px'></i></button>
                             </form>
                           </div>
                           <div class="">
                             <form action="/MentorRemove" method="post">
                               <input type="hidden" name="MentId" value=" <%=Mentors[1].MentId %> ">
-                              <button>-</button>
+                              <button><i class="fa-solid fa-trash"></i></button>
                             </form>
                           </div>
                         </div>
@@ -142,13 +142,13 @@
                           <div class="">
                             <form action="/MentorChat" method="post">
                               <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
-                              <button>+</button>
+                              <button><i class='far fa-comments' style='font-size:24px'></i></button>
                             </form>
                           </div>
                           <div class="">
                             <form action="/MentorRemove" method="post">
                               <input type="hidden" name="MentId" value=" <%=Mentors[2].MentId %> ">
-                              <button>-</button>
+                              <button><i class="fa-solid fa-trash"></i></button>
                             </form>
                           </div>
                         </div>
@@ -191,12 +191,12 @@
                   <!-- remove button -->
                   <form action="/menteeRemove" method="post">
                     <input type="hidden" name="MentId" value="<%=MenteeReqs[0].MentId %>">
-                    <button>-</button>
+                    <button><i class="fa-solid fa-trash"></i></button>
                   </form>
                 </div>
               </div>
 
-            <% } else { %> <a class="dropdown-item">No Notifications</a>  <% } %>
+            <% } else { %> <a class="dropdown-item">No Requests</a>  <% } %>
           </div>
 
           <div class="col">
@@ -215,7 +215,7 @@
                   <!-- remove button -->
                   <form action="/menteeRemove" method="post">
                     <input type="hidden" name="MentId" value="<%=MenteeReqs[0].MentId %>">
-                    <button>-</button>
+                    <button><i class="fa-solid fa-trash"></i></button>
                   </form>
                 </div>
               </div>
@@ -244,14 +244,14 @@
                     <!-- chat button -->
                     <form action="/MenteeChat" method="post">
                       <input type="hidden" name="MentId" value="<%=Mentee.MentId %> ">
-                      <button>+</button>
+                      <button><i class='far fa-comments' style='font-size:24px'></i></button>
                     </form>
                   </div>
                   <div class="">
                     <!-- remove button -->
                     <form action="/MenteeRemove" method="post">
                       <input type="hidden" name="MentId" value="<%=Mentee.MentId %>">
-                      <button>-</button>
+                      <button><i class="fa-solid fa-trash"></i></button>
                     </form>
                   </div>
                 </div>

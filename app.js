@@ -208,19 +208,18 @@ app.post("/competitions", function (req, res) {
             filteredComps.push(foundCert);
           }
         });
-        res.render("competitions", {
-          certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+        res.render("competitions", {certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
   } else {
     Competition.find({}, function (err, foundCerts) {
       if (!err) {
-        // const jscript = spawn('jscript', ['script.ejs', foundCerts]);
-            // jscript.on('close', (code) => {
-            //   console.log(`child process close all stdio with code ${code}`);});
-        res.render("competitions", {
-          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+        var CourseSuggest = [];
+        foundCerts.forEach(element => {
+          CourseSuggest.push(element.cover);
+        });
+        res.render("competitions", {CourseSuggest:CourseSuggest ,certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
     });
@@ -229,7 +228,6 @@ app.post("/competitions", function (req, res) {
 });
 
 var filteredExams = mongoose.model("filteredExams", examSchema);
-
 app.post("/compexams", function (req, res) {
   User.findById(req.user.id,function(err,foundUser){
   filteredExams = [];
@@ -242,7 +240,11 @@ app.post("/compexams", function (req, res) {
             filteredExams.push(foundCert);
           }
         });
-        res.render("compexams", {
+        var CourseSuggest = [];
+        foundCerts.forEach(element => {
+          CourseSuggest.push(element.exNam);
+        });
+        res.render("compexams", {CourseSuggest:CourseSuggest,
           certNames: filteredExams,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
@@ -251,7 +253,11 @@ app.post("/compexams", function (req, res) {
   else {
     Exam.find({}, function (err, foundCerts) {
       if (!err) {
-        res.render("compexams", {
+        var CourseSuggest = [];
+        foundCerts.forEach(element => {
+          CourseSuggest.push(element.exNam);
+        });
+        res.render("compexams", {CourseSuggest:CourseSuggest,
           certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
@@ -268,15 +274,17 @@ app.post("/certifications", function (req, res) {
       console.log(err);
     } else {
       if (foundUser.futProfile) {
-
         filteredCert = [];
         if (req.body.srchInput) {
           const searchString = _.lowerCase([req.body.srchInput]);
           Certification.find({}, function (err, foundCerts) {
             if (!err) {
               foundCerts.forEach(function (foundCert) { if (_.lowerCase([foundCert.certNam]) === (searchString)) { filteredCert.push(foundCert); } });
-              res.render("certifications", {
-                certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
+              var CourseSuggest = [];
+            foundCerts.forEach(element => {
+              CourseSuggest.push(element.certNam);
+            });
+              res.render("certifications", {CourseSuggest:CourseSuggest,certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
                 courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
               });
             }
@@ -285,18 +293,19 @@ app.post("/certifications", function (req, res) {
         else {
           Certification.find({}, function (err, foundCerts) {
             if (!err) {
-              res.render("certifications", {
-                certNames: foundCerts, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
+              var CourseSuggest = [];
+            foundCerts.forEach(element => {
+              CourseSuggest.push(element.certNam);
+            });
+            res.render("certifications", {CourseSuggest:CourseSuggest ,certNames: foundCerts, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
                 courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
               });
             }
           });
         }
-
       }
       else {
         filteredCert = [];
-
         if (req.body.srchInput) {
           const searchString = _.lowerCase([req.body.srchInput]);
           Certification.find({}, function (err, foundCerts) {
@@ -306,19 +315,25 @@ app.post("/certifications", function (req, res) {
                   filteredCert.push(foundCert);
                 }
               });
-              res.render("certifications", { certNames: filteredCert });
+              var CourseSuggest = [];
+            foundCerts.forEach(element => {
+              CourseSuggest.push(element.certNam);
+            });
+              res.render("certifications", {CourseSuggest:CourseSuggest, certNames: filteredCert });
             }
           });
         }
-
         else {
-          Certification.find({}, function (err, foundCerts) { if (!err) { res.render("certifications", { certNames: foundCerts }); } });
+          Certification.find({}, function (err, foundCerts) { if (!err) {
+            var CourseSuggest = [];
+            foundCerts.forEach(element => {
+              CourseSuggest.push(element.certNam);
+            });
+             res.render("certifications", {CourseSuggest:CourseSuggest, certNames: foundCerts }); } });
         }
       }
     }
-
   });
-
 });
 
 var filteredCourse = mongoose.model("filteredCourse", courseSchema);
@@ -609,8 +624,7 @@ app.post("/futhome", function (req, res) {
         foundUser.save(function () {
           // console.log(`certificate save function here`);
         })
-      })
-
+      });
 
 
 
@@ -996,7 +1010,11 @@ app.get("/post", function (req, res) {
                 }
               });
             } else {
-              res.render("post", {
+              var CourseSuggest = [];
+              foundQues.forEach(element => {
+                CourseSuggest.push(element.ques);
+              });
+              res.render("post", {CourseSuggest:CourseSuggest,
                 certNames: foundQues, certAns: foundAns, WriterId: foundUser._id
               });
             }
