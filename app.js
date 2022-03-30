@@ -215,10 +215,12 @@ app.post("/competitions", function (req, res) {
   } else {
     Competition.find({}, function (err, foundCerts) {
       if (!err) {
-        var CourseSuggest = [];
-        foundCerts.forEach(element => {
-          CourseSuggest.push(element.cover);
-        });
+        var AllSuggest = [];
+         foundCerts.forEach(element => {
+          AllSuggest.push(element.cover);
+          AllSuggest.push(element.name);
+              });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i)
         res.render("competitions", {CourseSuggest:CourseSuggest ,certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
@@ -284,6 +286,7 @@ app.post("/certifications", function (req, res) {
             foundCerts.forEach(element => {
               CourseSuggest.push(element.certNam);
             });
+            // only send unique words
               res.render("certifications", {CourseSuggest:CourseSuggest,certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
                 courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
               });
