@@ -220,7 +220,7 @@ app.post("/competitions", function (req, res) {
           AllSuggest.push(element.cover);
           AllSuggest.push(element.name);
               });
-const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i)
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
         res.render("competitions", {CourseSuggest:CourseSuggest ,certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
@@ -282,11 +282,11 @@ app.post("/certifications", function (req, res) {
           Certification.find({}, function (err, foundCerts) {
             if (!err) {
               foundCerts.forEach(function (foundCert) { if (_.lowerCase([foundCert.certNam]) === (searchString)) { filteredCert.push(foundCert); } });
-              var CourseSuggest = [];
-            foundCerts.forEach(element => {
-              CourseSuggest.push(element.certNam);
-            });
-            // only send unique words
+             var AllSuggest = [];
+         foundCerts.forEach(element => {
+          AllSuggest.push(element.certNam);
+              });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
               res.render("certifications", {CourseSuggest:CourseSuggest,certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
                 courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
               });
@@ -296,10 +296,11 @@ app.post("/certifications", function (req, res) {
         else {
           Certification.find({}, function (err, foundCerts) {
             if (!err) {
-              var CourseSuggest = [];
-            foundCerts.forEach(element => {
-              CourseSuggest.push(element.certNam);
-            });
+              var AllSuggest = [];
+         foundCerts.forEach(element => {
+          AllSuggest.push(element.certNam);
+              });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
             res.render("certifications", {CourseSuggest:CourseSuggest ,certNames: foundCerts, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
                 courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
               });
@@ -318,20 +319,22 @@ app.post("/certifications", function (req, res) {
                   filteredCert.push(foundCert);
                 }
               });
-              var CourseSuggest = [];
-            foundCerts.forEach(element => {
-              CourseSuggest.push(element.certNam);
-            });
+              var AllSuggest = [];
+         foundCerts.forEach(element => {
+          AllSuggest.push(element.certNam);
+              });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
               res.render("certifications", {CourseSuggest:CourseSuggest, certNames: filteredCert });
             }
           });
         }
         else {
           Certification.find({}, function (err, foundCerts) { if (!err) {
-            var CourseSuggest = [];
+            var AllSuggest = [];
             foundCerts.forEach(element => {
-              CourseSuggest.push(element.certNam);
-            });
+             AllSuggest.push(element.certNam);
+                 });
+   const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
              res.render("certifications", {CourseSuggest:CourseSuggest, certNames: foundCerts }); } });
         }
       }
@@ -361,10 +364,11 @@ app.post("/courses", function (req, res) {
       else {
         Course.find({}, function (err, foundCerts) {
           if (!err) {
-            var CourseSuggest = [];
-            foundCerts.forEach(element => {
-              CourseSuggest.push(element.degMjr);
-            });
+           var AllSuggest = [];
+         foundCerts.forEach(element => {
+          AllSuggest.push(element.degMjr);
+              });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
             res.render("courses", {CourseSuggest:CourseSuggest,
               certNames: foundCerts, courseRecA: foundUser.courseRecA,
               courseRecB: foundUser.courseRecB, courseRecC: foundUser.courseRecC, courseRecD: foundUser.courseRecD,

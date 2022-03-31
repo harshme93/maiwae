@@ -46,7 +46,9 @@ body{
 }
 
 /* Navigation Bar */
-
+.navbar{
+  width: 100%;
+}
 
 
 /* Buttons */
@@ -60,7 +62,7 @@ body{
 background-color: black;
 font-family: sans-serif;
 font-weight: bold;
-
+width: 100%;
 }
 
 
