@@ -1,6 +1,8 @@
 <%- include("header") -%>
 <section>
-  <form class="" action="/future" method="post">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <form class=""  action="/future" method="post">
     <input type="text" name="srchInput" size="60" value="" class="searchInp" placeholder="search">
     <button type="submit" name="" class="btn btn-sm searchBtn"><i class="fas fa-search"></i></button>
   </form>
@@ -10,7 +12,6 @@
 <div class="opt-img">
 </div>
 <section id="future-profiles">
-
 
   <div class="row opt-total">
 
@@ -29,24 +30,32 @@
       <p><%= Certification.req2 %></p>
       <p><%= Certification.req3 %></p>
     </div>
-    <!-- <div class="opt-button">
-            <button type="button" class="btn btn-lg btn-block strbut"><a href="#"></a>Register and add to profile</button>
-          </div> -->
+           
     <div class="col-lg-2">
-      <form action="/futhome" method="post">
+      <form action="/futhome" id="NewFutProfile" method="post">
 <input type="hidden" name="fprofile" value="<%= Certification.name %>">
 <input type="hidden" name="freq1" value="<%= Certification.req1 %>">
 <input type="hidden" name="freq2" value="<%= Certification.req2 %>">
 <input type="hidden" name="freq3" value="<%= Certification.req3 %>">
-        <button type="submit" class="btn optbut-task" name="button">Add</button>
+        <button type="submit" id="NewFutProfileBut" class="btn optbut-task" name="button">Add</button>
       </form>
+
     </div>
+    <% }); %>
+     </div>
+
+<div class="loader-wrapper d-none">
+<span class="loader"><span class="loader-inner"></span></span>
+</div>
 
 
 
-    <% }) %>
-  </div>
-
+<script>
+$(".optbut-task").click(function(){
+$('.loader-wrapper').removeClass('d-none');
+});
+ 
+</script>
 
 </section>
 

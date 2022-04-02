@@ -478,6 +478,7 @@ app.post("/future", function (req, res) {
   }
 });
 });
+
 // chat button from mentors will land them up here which should be visible at the home page
 app.get("/feedback", function (req, res) {
  console.log(`from the get feedback: ${MentId} and ${MenteeId}`);
@@ -498,7 +499,7 @@ app.post("/feedback", function (req, res) {
   var rating = req.body.test;
    User.findById(MenteeId, function (err, foundMentee) {
       if (req.user.id == MentId) {
-        // console.log(`here are the rating: ${foundMentee.rating} and the ${foundMentee.rateCount}`);
+        
         foundMentee.rating += Number(rating);
         foundMentee.rateCount += 1;
         foundMentee.save();
@@ -547,7 +548,6 @@ app.post("/mentors", function (req, res) {
   User.findById(req.user.id, function (err, foundUser) {
     User.find({}, function (err, foundMentors) {
       console.log(`----------------------`);
-
       foundMentors.forEach(element => {
         // if they have a rating and a mentee count
         if (element.rating > 0 && element.rateCount > 0) {
@@ -561,18 +561,15 @@ app.post("/mentors", function (req, res) {
       for (let i = 0; i < foundMentors.length; i++) {
         SortedUsers.push(foundMentors[i]);
       }
-
       SortedUsers.sort(function (a, b) {
         return b.score - a.score;
       });
       // right variable is local and left variable is for that page
-
       if (typeof SortedUsers[50] != 'undefined') {
         res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers.slice(0, 50) });
       } else {
         res.render("mentor", { foundMentors: foundMentors, currentUser: req.user.id, Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, SortedUsers: SortedUsers });
       }
-
     })
   })
 });
@@ -601,14 +598,8 @@ app.post("/futhome", function (req, res) {
         foundUser.courseRecE = dataToSend.split("|")[4];
         // console.log(`-----3----- future profile after python run: ${foundUser.futProfile}`);
       });
-      python.on('close', (code) => {
-        console.log(`child process close all stdio with code ${code}`);
-
-        foundUser.save(function () {
-          // console.log(`----4----after save ${foundUser.futProfile}`);
-          res.redirect("home");
-        })
-      });
+      
+     
 
 
       var dataToSendCert;
@@ -625,21 +616,34 @@ app.post("/futhome", function (req, res) {
         foundUser.courseCertD = dataToSendCert.split("|")[3];
         foundUser.courseCertE = dataToSendCert.split("|")[4];
       });
-      pythonCert.on('close', (code) => {
-        console.log(`child process close all stdio with code from Certrec ${code}`);
-
+    
+    // this is the part below which takes time.
+      python.on('close', (code) => {
+      console.log(`child process close all stdio with code ${code}`);
         foundUser.save(function () {
-          // console.log(`certificate save function here`);
-        })
-      });
+        res.redirect("home");
+        });
 
+      //   console.log("third");
+      //   pythonCert.on('close', (code) => {
+      //     console.log("fourth");
+      //     console.log(`child process close all stdio with code from Certrec ${code}`);
+      //     foundUser.save(function () {
+      //       console.log("second save");
+      //       res.redirect("home");
+      //     });
+      //  });
+        
+
+
+      });
+      
+      
 
 
     }
   })
 });
-
-
 
 app.post("/felhome", function (req, res) {
   User.findById(req.user.id, function (err, foundUser) {
@@ -718,9 +722,7 @@ app.post("/trendhome", function (req, res) {
   })
 });
 
-
 app.post("/menteeAdd", function (req, res) {
-
   User.findById(req.user.id, function (err, foundUser) {
     if (err) { console.log(err); }
     else {
@@ -745,13 +747,10 @@ app.post("/menteeAdd", function (req, res) {
               MentorFound.Ment.push(adment);
               var reqNot = new Notifi({ info: 'Mentor has approved the request' });
               MentorFound.Noti.push(reqNot);
-
               console.log(`Printing the noti from menteeAdd: ${MentorFound.Noti[0].info}`);
-
               foundUser.save();
               MentorFound.save();
               // send a notification to the mentee's notification database that you have been approved
-
             }
           }
         })
@@ -760,7 +759,6 @@ app.post("/menteeAdd", function (req, res) {
         res.redirect("home");
       }
     }
-
     // remove request
     for (let i = 0; i < foundUser.MentiReq.length; i++) {
       var MentIdRemove = req.body.MentId.split(" ").join("")
@@ -775,7 +773,6 @@ app.post("/menteeAdd", function (req, res) {
     }
   });
 })
-
 
 app.post("/MentorChat", function (req, res) {
   var MentId = req.body.MentId.split(" ").join("");
@@ -888,7 +885,6 @@ app.post("/MenteeRemove", function (req, res) {
           User.findOneAndUpdate({ _id: foundUser._id }, { $pull: { Menti: { MentId: MentIdRemove } } }, function (err, foundList) {
             if (!err) {
               console.log("deleted from other lists");
-
               // pull the mentee and remove the mentor (me) from there
               User.findById(MentIdRemove, function (err, foundMentee) {
                 for (let i = 0; i < foundMentee.Ment.length; i++) {
@@ -917,7 +913,6 @@ app.post("/MenteeRemove", function (req, res) {
             if (!err) {
               console.log("deleted from other lists");
               res.redirect("home");
-
             }
           });
         }
@@ -962,7 +957,6 @@ app.post("/MessageSent", function (req, res) {
           })
         }
       }
-
       for (let i = 0; i < foundUser.Menti.length; i++) {
         if (foundUser.Menti[i].MentId == MentId) {
           Chat.find({}, function (err, foundChat) {
@@ -1004,7 +998,6 @@ app.get("/post", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-
       Question.find({}, function (err, foundQues) {
         if (!err) {
           Answer.find({}, function (err, foundAns) {
@@ -1028,7 +1021,6 @@ app.get("/post", function (req, res) {
           })
         }
       });
-
     }
   })
 
@@ -1048,7 +1040,6 @@ app.post("/posts", function (req, res) {
 
 app.post("/answer", function (req, res) {
   User.findById(req.user.id, function (err, foundUser) {
-
     const reply = new Answer({
       answer: req.body.ansbtn,
       ansWriter: req.body.ansWriterId
@@ -1064,7 +1055,6 @@ app.post("/answer", function (req, res) {
       }
     });
     res.redirect("post");
-
   });
 });
 
@@ -1082,8 +1072,6 @@ app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 })
-
-
 
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server running at port 3000");
