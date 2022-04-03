@@ -584,7 +584,7 @@ app.post("/futhome", function (req, res) {
       // console.log( `-----1----fut profile before course rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const python = spawn('python', ['recommend.py', req.body.fprofile]);
       python.stdout.on('data', function (data) {
-        // console.log(`printing data as it is ----2----\n ${data}`)
+        console.log(`printing data as it is ----2----\n ${data}`)
         // data coming from python looks like a string
         dataToSend = data.toString();
         foundUser.futProfile = req.body.fprofile;
@@ -606,8 +606,9 @@ app.post("/futhome", function (req, res) {
       // console.log( `--------------------fut profile before certificate rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const pythonCert = spawn('python', ['recommendcert.py', req.body.fprofile]);
       pythonCert.stdout.on('data', function (data) {
-        // console.log(`printing data as it is -----1-----\n ${data}`)
+        // console.log(`printing data as it is -----1-----\n ${data}`);
         // data coming from python looks like a string
+        
         dataToSendCert = data.toString();
         foundUser.futProfile = req.body.fprofile;
         foundUser.courseCertA = dataToSendCert.split("|")[0];
@@ -674,7 +675,7 @@ app.post("/courhome", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      foundUser.futDeg = req.body.ftDeg;
+      // foundUser.futDeg = req.body.ftDeg;
       foundUser.futMajor = req.body.ftMajor;
       foundUser.save(function () {
         res.redirect("home");
