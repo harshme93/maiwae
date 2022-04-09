@@ -133,16 +133,9 @@
 
 
     <% certNames.forEach(function(Certification){ %>
-    <div class="col-lg-3 opt-box ">
-      <ul>
-        <div class="opt-head">
-          <h3> <%= Certification.exNam %> </h3>
-        </div>
-
-      </ul>
-    </div>
-    <div class="col-lg-6 opt-why">
-      <p><%= Certification.exPro %></p>
+    
+    <div class="col-lg-6 opt-box ">
+      <h3><%= Certification.exNam %></h3>
     </div>
     <div class="col-lg-2">
       <form action="/examhome" method="post">
@@ -152,7 +145,7 @@
       </form>
     </div>
 
-    <% }) %>
+    <% }); %>
   </div>
 
 

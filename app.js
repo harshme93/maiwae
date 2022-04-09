@@ -53,7 +53,8 @@ const userInfoSchema = new mongoose.Schema({
   futProfile: String, fReq1: String, fReq2: String, fReq3: String, futFellow: String, futCerti: String,
   futDeg: String, futMajor: String, futComp: String, futExam: String, futTrend: String, courseRecA: String,
   courseRecB: String, courseRecC: String, courseRecD: String, courseRecE: String, courseCertA: String,
-  courseCertB: String, courseCertC: String, courseCertD: String, courseCertE: String, Ment: [mentorSchema],
+  courseCertB: String, courseCertC: String, courseCertD: String, courseCertE: String,compRecA: String, 
+  compRecB: String, compRecC: String, compRecD: String, compRecE: String, Ment: [mentorSchema],
   Menti: [mentorSchema], MentiReq: [mentorSchema], Noti: [NotSchema], Pend: [mentorSchema], rating: Number, rateCount: Number,
   quesCount: Number, ansCount: Number, menteeCount: Number, score: Number
 });
@@ -208,7 +209,9 @@ app.post("/competitions", function (req, res) {
             filteredComps.push(foundCert);
           }
         });
-        res.render("competitions", {certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+        res.render("competitions", {certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,
+          compRecA :foundUser.compRecA, compRecB :foundUser.compRecB, compRecC :foundUser.compRecC, 
+          compRecD :foundUser.compRecD, compRecE :foundUser.compRecE
         });
       }
     });
@@ -222,7 +225,8 @@ app.post("/competitions", function (req, res) {
               });
 const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
         res.render("competitions", {CourseSuggest:CourseSuggest ,certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
-        });
+        ,compRecA :foundUser.compRecA, compRecB :foundUser.compRecB, compRecC :foundUser.compRecC, 
+        compRecD :foundUser.compRecD, compRecE :foundUser.compRecE});
       }
     });
   }
@@ -499,7 +503,6 @@ app.post("/feedback", function (req, res) {
   var rating = req.body.test;
    User.findById(MenteeId, function (err, foundMentee) {
       if (req.user.id == MentId) {
-        
         foundMentee.rating += Number(rating);
         foundMentee.rateCount += 1;
         foundMentee.save();
@@ -584,8 +587,8 @@ app.post("/futhome", function (req, res) {
       // console.log( `-----1----fut profile before course rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const python = spawn('python', ['recommend.py', req.body.fprofile]);
       python.stdout.on('data', function (data) {
-        console.log(`printing data as it is ----2----\n ${data}`)
-        // data coming from python looks like a string
+        // console.log(`printing data as it is ----1----\n ${data}`);
+      
         dataToSend = data.toString();
         foundUser.futProfile = req.body.fprofile;
         foundUser.fReq1 = req.body.freq1;
@@ -596,28 +599,44 @@ app.post("/futhome", function (req, res) {
         foundUser.courseRecC = dataToSend.split("|")[2];
         foundUser.courseRecD = dataToSend.split("|")[3];
         foundUser.courseRecE = dataToSend.split("|")[4];
-        // console.log(`-----3----- future profile after python run: ${foundUser.futProfile}`);
+        // foundUser.save();
+      
       });
       
-     
-
 
       var dataToSendCert;
       // console.log( `--------------------fut profile before certificate rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const pythonCert = spawn('python', ['recommendcert.py', req.body.fprofile]);
       pythonCert.stdout.on('data', function (data) {
-        // console.log(`printing data as it is -----1-----\n ${data}`);
+        // console.log(`printing data as it is -----2-----\n ${data}`);
         // data coming from python looks like a string
-        
         dataToSendCert = data.toString();
-        foundUser.futProfile = req.body.fprofile;
-        foundUser.courseCertA = dataToSendCert.split("|")[0];
+        foundUser.courseCertA = dataToSendCert.split("|")[0].replace(req.body.fprofile,"");
         foundUser.courseCertB = dataToSendCert.split("|")[1];
         foundUser.courseCertC = dataToSendCert.split("|")[2];
         foundUser.courseCertD = dataToSendCert.split("|")[3];
         foundUser.courseCertE = dataToSendCert.split("|")[4];
+        // foundUser.save();
+        
       });
     
+      var dataToSendComp;
+      // console.log( `-----1----fut profile before course rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
+      const pythonComp = spawn('python', ['recommendcomp.py', req.body.fprofile]);
+      pythonComp.stdout.on('data', function (data) {
+        // console.log(`printing data as it is ----3----\n ${data}`);
+        // data coming from python looks like a string
+        dataToSendComp = data.toString();
+        foundUser.compRecA = dataToSendComp.split("|")[0].replace(req.body.fprofile,"");
+        foundUser.compRecB = dataToSendComp.split("|")[1];
+        foundUser.compRecC = dataToSendComp.split("|")[2];
+        foundUser.compRecD = dataToSendComp.split("|")[3];
+        foundUser.compRecE = dataToSendComp.split("|")[4];
+        foundUser.save();
+        
+                
+        
+      });
     // this is the part below which takes time.
       python.on('close', (code) => {
       console.log(`child process close all stdio with code ${code}`);
