@@ -211,7 +211,7 @@ app.post("/competitions", function (req, res) {
         });
         res.render("competitions", {certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,
           compRecA :foundUser.compRecA, compRecB :foundUser.compRecB, compRecC :foundUser.compRecC, 
-          compRecD :foundUser.compRecD, compRecE :foundUser.compRecE
+          compRecD :foundUser.compRecD, compRecE :foundUser.compRecE,futProfile: foundUser.futProfile
         });
       }
     });
@@ -226,7 +226,7 @@ app.post("/competitions", function (req, res) {
 const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
         res.render("competitions", {CourseSuggest:CourseSuggest ,certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         ,compRecA :foundUser.compRecA, compRecB :foundUser.compRecB, compRecC :foundUser.compRecC, 
-        compRecD :foundUser.compRecD, compRecE :foundUser.compRecE});
+        compRecD :foundUser.compRecD, compRecE :foundUser.compRecE,futProfile: foundUser.futProfile});
       }
     });
   }
@@ -251,7 +251,7 @@ app.post("/compexams", function (req, res) {
           CourseSuggest.push(element.exNam);
         });
         res.render("compexams", {CourseSuggest:CourseSuggest,
-          certNames: filteredExams,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+          certNames: filteredExams,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
         });
       }
     });
@@ -264,7 +264,7 @@ app.post("/compexams", function (req, res) {
           CourseSuggest.push(element.exNam);
         });
         res.render("compexams", {CourseSuggest:CourseSuggest,
-          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
         });
       }
     });
@@ -292,7 +292,7 @@ app.post("/certifications", function (req, res) {
               });
 const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
               res.render("certifications", {CourseSuggest:CourseSuggest,certNames: filteredCert, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
-                courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+                courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length, futProfile: foundUser.futProfile
               });
             }
           });
@@ -306,7 +306,7 @@ const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
               });
 const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
             res.render("certifications", {CourseSuggest:CourseSuggest ,certNames: foundCerts, courseCertA: foundUser.courseCertA, courseCertB: foundUser.courseCertB, courseCertC: foundUser.courseCertC, 
-                courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+                courseCertD: foundUser.courseCertD, courseCertE: foundUser.courseCertE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
               });
             }
           });
@@ -328,7 +328,7 @@ const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
           AllSuggest.push(element.certNam);
               });
 const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
-              res.render("certifications", {CourseSuggest:CourseSuggest, certNames: filteredCert });
+              res.render("certifications", {CourseSuggest:CourseSuggest, certNames: filteredCert ,futProfile: foundUser.futProfile});
             }
           });
         }
@@ -339,7 +339,7 @@ const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
              AllSuggest.push(element.certNam);
                  });
    const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
-             res.render("certifications", {CourseSuggest:CourseSuggest, certNames: foundCerts }); } });
+             res.render("certifications", {CourseSuggest:CourseSuggest, certNames: foundCerts ,futProfile: foundUser.futProfile}); } });
         }
       }
     }
@@ -361,7 +361,7 @@ app.post("/courses", function (req, res) {
             foundCerts.forEach(function (foundCert) {
               if (_.lowerCase([foundCert.degMjr]) === (searchString)) { filteredCourse.push(foundCert); }
             });
-           res.render("courses", { certNames: filteredCourse,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length });
+           res.render("courses", { certNames: filteredCourse,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile });
           }
         });
       }
@@ -376,7 +376,7 @@ const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
             res.render("courses", {CourseSuggest:CourseSuggest,
               certNames: foundCerts, courseRecA: foundUser.courseRecA,
               courseRecB: foundUser.courseRecB, courseRecC: foundUser.courseRecC, courseRecD: foundUser.courseRecD,
-              courseRecE: foundUser.courseRecE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+              courseRecE: foundUser.courseRecE,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
             });
           }
         });
@@ -401,7 +401,7 @@ app.post("/scholarship", function (req, res) {
           }
         });
         res.render("scholarship", {
-          certNames: filteredSchol,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+          certNames: filteredSchol,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
         });
       }
     });
@@ -410,7 +410,7 @@ app.post("/scholarship", function (req, res) {
     Scholarship.find({}, function (err, foundCerts) {
       if (!err) {
         res.render("scholarship", {
-          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
+          certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
         });
       }
     });
@@ -474,7 +474,12 @@ app.post("/future", function (req, res) {
   else {
     Fprofile.find({}, function (err, foundCerts) {
       if (!err) {
-        res.render("future", {
+        var AllSuggest = [];
+        foundCerts.forEach(element => {
+         AllSuggest.push(element.name);
+             });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
+        res.render("future", {CourseSuggest:CourseSuggest,
           certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
@@ -584,82 +589,127 @@ app.post("/futhome", function (req, res) {
       console.log(err);
     } else {
       var dataToSend;
-      // console.log( `-----1----fut profile before course rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const python = spawn('python', ['recommend.py', req.body.fprofile]);
       python.stdout.on('data', function (data) {
-        // console.log(`printing data as it is ----1----\n ${data}`);
-      
+        
         dataToSend = data.toString();
         foundUser.futProfile = req.body.fprofile;
         foundUser.fReq1 = req.body.freq1;
         foundUser.fReq2 = req.body.freq2;
         foundUser.fReq3 = req.body.freq3;
-        foundUser.courseRecA = dataToSend.split("|")[0];
-        foundUser.courseRecB = dataToSend.split("|")[1];
-        foundUser.courseRecC = dataToSend.split("|")[2];
-        foundUser.courseRecD = dataToSend.split("|")[3];
-        foundUser.courseRecE = dataToSend.split("|")[4];
-        // foundUser.save();
-      
+        console.log(`Courses ----1----\n ${(dataToSend.split("|")).length}`);
+        if ((dataToSend.split("|")).length==5) {
+          foundUser.courseRecA = dataToSend.split("|")[0];
+          foundUser.courseRecB = dataToSend.split("|")[1];
+          foundUser.courseRecC = dataToSend.split("|")[2];
+          foundUser.courseRecD = dataToSend.split("|")[3];
+          foundUser.courseRecE = dataToSend.split("|")[4]; 
+        } else if((dataToSend.split("|")).length==4) {
+          foundUser.courseRecA = dataToSend.split("|")[0];
+          foundUser.courseRecB = dataToSend.split("|")[1];
+          foundUser.courseRecC = dataToSend.split("|")[2];
+          foundUser.courseRecD = dataToSend.split("|")[3];
+        } else if((dataToSend.split("|")).length==3) {
+          foundUser.courseRecA = dataToSend.split("|")[0];
+          foundUser.courseRecB = dataToSend.split("|")[1];
+          foundUser.courseRecC = dataToSend.split("|")[2];          
+        } else if((dataToSend.split("|")).length==2){
+          foundUser.courseRecA = dataToSend.split("|")[0];
+          foundUser.courseRecB = dataToSend.split("|")[1];
+        } else if((dataToSend.split("|")).length==1){
+          foundUser.courseRecA = dataToSend.split("|")[0];
+        }
+        
       });
       
 
       var dataToSendCert;
-      // console.log( `--------------------fut profile before certificate rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const pythonCert = spawn('python', ['recommendcert.py', req.body.fprofile]);
       pythonCert.stdout.on('data', function (data) {
-        // console.log(`printing data as it is -----2-----\n ${data}`);
-        // data coming from python looks like a string
-        dataToSendCert = data.toString();
-        foundUser.courseCertA = dataToSendCert.split("|")[0].replace(req.body.fprofile,"");
-        foundUser.courseCertB = dataToSendCert.split("|")[1];
-        foundUser.courseCertC = dataToSendCert.split("|")[2];
-        foundUser.courseCertD = dataToSendCert.split("|")[3];
-        foundUser.courseCertE = dataToSendCert.split("|")[4];
-        // foundUser.save();
+        console.log(`Certifications -----2-----\n ${data}`);
         
+        dataToSendCert = data.toString();
+    if ((dataToSendCert.split("|")).length==5) {
+    foundUser.courseCertA = dataToSendCert.split("|")[0];
+    foundUser.courseCertB = dataToSendCert.split("|")[1];
+    foundUser.courseCertC = dataToSendCert.split("|")[2];
+    foundUser.courseCertD = dataToSendCert.split("|")[3];
+    foundUser.courseCertE = dataToSendCert.split("|")[4]; 
+  } else if((dataToSendCert.split("|")).length==4) {
+    foundUser.courseCertA = dataToSendCert.split("|")[0];
+    foundUser.courseCertB = dataToSendCert.split("|")[1];
+    foundUser.courseCertC = dataToSendCert.split("|")[2];
+    foundUser.courseCertD = dataToSendCert.split("|")[3];
+  } else if((dataToSendCert.split("|")).length==3) {
+    foundUser.courseCertA = dataToSendCert.split("|")[0];
+    foundUser.courseCertB = dataToSendCert.split("|")[1];
+    foundUser.courseCertC = dataToSendCert.split("|")[2];          
+  } else if((dataToSendCert.split("|")).length==2){
+    foundUser.courseCertA = dataToSendCert.split("|")[0];
+    foundUser.courseCertB = dataToSendCert.split("|")[1];
+  } else if((dataToSendCert.split("|")).length==1){
+    foundUser.courseCertA = dataToSendCert.split("|")[0];
+  }
+ 
       });
     
       var dataToSendComp;
-      // console.log( `-----1----fut profile before course rec ${foundUser.futProfile} \n selecetd profile ${req.body.fprofile}`)
       const pythonComp = spawn('python', ['recommendcomp.py', req.body.fprofile]);
       pythonComp.stdout.on('data', function (data) {
-        // console.log(`printing data as it is ----3----\n ${data}`);
-        // data coming from python looks like a string
+        console.log(`Competitions ----3----\n ${data}`);
+        
         dataToSendComp = data.toString();
-        foundUser.compRecA = dataToSendComp.split("|")[0].replace(req.body.fprofile,"");
-        foundUser.compRecB = dataToSendComp.split("|")[1];
-        foundUser.compRecC = dataToSendComp.split("|")[2];
-        foundUser.compRecD = dataToSendComp.split("|")[3];
-        foundUser.compRecE = dataToSendComp.split("|")[4];
-        foundUser.save();
+       
+        if ((dataToSendComp.split("|")).length==5) {
+          foundUser.compRecA = dataToSendComp.split("|")[0];
+          foundUser.compRecB = dataToSendComp.split("|")[1];
+          foundUser.compRecC = dataToSendComp.split("|")[2];
+          foundUser.compRecD = dataToSendComp.split("|")[3];
+          foundUser.compRecE = dataToSendComp.split("|")[4]; 
+        } else if((dataToSendComp.split("|")).length==4) {
+          foundUser.compRecA = dataToSendComp.split("|")[0];
+          foundUser.compRecB = dataToSendComp.split("|")[1];
+          foundUser.compRecC = dataToSendComp.split("|")[2];
+          foundUser.compRecD = dataToSendComp.split("|")[3];
+        } else if((dataToSendComp.split("|")).length==3) {
+          foundUser.compRecA = dataToSendComp.split("|")[0];
+          foundUser.compRecB = dataToSendComp.split("|")[1];
+          foundUser.compRecC = dataToSendComp.split("|")[2];          
+        } else if((dataToSendComp.split("|")).length==2){
+          foundUser.compRecA = dataToSendComp.split("|")[0];
+          foundUser.compRecB = dataToSendComp.split("|")[1];
+        } else if((dataToSendComp.split("|")).length==1){
+          foundUser.compRecA = dataToSendComp.split("|")[0];
+        }
+       
         
                 
         
       });
     // this is the part below which takes time.
       python.on('close', (code) => {
-      console.log(`child process close all stdio with code ${code}`);
-        foundUser.save(function () {
-        res.redirect("home");
-        });
-
-      //   console.log("third");
-      //   pythonCert.on('close', (code) => {
-      //     console.log("fourth");
-      //     console.log(`child process close all stdio with code from Certrec ${code}`);
-      //     foundUser.save(function () {
-      //       console.log("second save");
-      //       res.redirect("home");
-      //     });
-      //  });
-        
-
-
+      console.log(`child process close all stdio with code from Courses ${code}`);
+      foundUser.save(function () {
+        console.log(`first: ${foundUser.futProfile}`);
+      res.redirect("home");
       });
+        });
       
+    //   pythonCert.on('close', (code) => {
+    //     console.log(`child process close all stdio with code from Certificates ${code}`);
+    //     // foundUser.save(function () {
+    //     //   console.log(`second ${foundUser.futProfile}`);
+    //     //   // res.redirect("home");
+    //     // });
+    //  });
       
-
+        // pythonComp.on('close', (code) => {
+        //   console.log(`child process close all stdio with code from Competitions ${code}`);
+        //   //  foundUser.save(function () {
+        //   //   console.log(`third ${foundUser.futProfile}`);
+        //   //     // res.redirect("home");
+        //   //  });
+        // });
 
     }
   })
@@ -756,11 +806,11 @@ app.post("/menteeAdd", function (req, res) {
             for (var i = 0; i < foundUser.MentiReq.length; i++) {
               if (foundUser.MentiReq[i].MentId == newMentee) {
                 SameCount += 1;
-                console.log(`Count: ${SameCount} match found, cannot be added`)
+                console.log(`Count: ${SameCount} match found, cannot be added`);
               }
             }
             if (SameCount == 1) {
-              console.log(`Count: ${SameCount} match not found, mentee added`)
+              console.log(`Count: ${SameCount} match not found, mentee added`);
               var test = new Mentee({ MentName: MentorFound.fName, MentId: newMentee });
               foundUser.Menti.push(test);
               var adment = new Mentor({ MentName: foundUser.fName, MentId: foundUser._id });

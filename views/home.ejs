@@ -65,10 +65,15 @@
             <button type="submit" class="btn btn-lg optbut" id="futureyou"
               style="background-color: #f8ede3; color:#a20a0a" name="button">Profile</button>
           </form>
+          <% if(futProfile){ %>  
+          
           <%= futProfile %> <br>
             <%= fReq1 %> <br>
               <%= fReq2 %> <br>
                 <%= fReq3 %> <br>
+                <% }else{ %> 
+                <div>Select your future goal here</div> 
+                 <% } %>
         </div>
       </div>
     </div>

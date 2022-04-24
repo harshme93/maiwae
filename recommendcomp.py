@@ -5,7 +5,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 df = pd.read_csv("C:/Users/harsh/Desktop/Study Material/Web Development/maiwae/background/maiwaesetcomp.csv")
-print(sys.argv[1])
 # df['degree'] = df['degree'].str.lower()
 df['title'] = df['title'].str.lower()
 df['simpletags'] = df['simpletags'].str.lower()
@@ -53,9 +52,24 @@ for name in coursedat:
     else:
         course_rec.append(name)
 
+if (len(course_rec)>=5):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}|")
+    print(f"{course_rec[2].title()}|")
+    print(f"{course_rec[3].title()}|")
+    print(f"{course_rec[4].title()}")
+elif(len(course_rec)==4):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}|")
+    print(f"{course_rec[2].title()}|")
+    print(f"{course_rec[3].title()}")
+elif(course_rec[2]):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}|")
+    print(f"{course_rec[2].title()}")
+elif(course_rec[1]):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}")
+elif(course_rec[0]):
+    print(f"{course_rec[0].title()}")
 
-print(f"{course_rec[0].title()}|")
-print(f"{course_rec[1].title()}|")
-print(f"{course_rec[2].title()}|")
-print(f"{course_rec[3].title()}|")
-print(f"{course_rec[4].title()}")
