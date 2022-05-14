@@ -44,7 +44,7 @@ for movie in sorted_similar_movie:
         break
 
 #checking for a few words first
-removeTitleWords = ("engineer","Engineer","writer","examiner","banking")
+removeTitleWords = ("engineer","Engineer","writer","examiner","banking","worker","advisor","researcher","coordinator","imaging","medicine")
 course_rec = []
 for name in coursedat:
     if name.endswith(removeTitleWords):

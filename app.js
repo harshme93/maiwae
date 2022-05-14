@@ -597,7 +597,8 @@ app.post("/futhome", function (req, res) {
         foundUser.fReq1 = req.body.freq1;
         foundUser.fReq2 = req.body.freq2;
         foundUser.fReq3 = req.body.freq3;
-        console.log(`Courses ----1----\n ${(dataToSend.split("|")).length}`);
+        console.log(`Courses ----1---------------------\n ${dataToSend.split("|")}`);
+        console.log(`length of the ${(dataToSend.split("|")).length}`);
         if ((dataToSend.split("|")).length==5) {
           foundUser.courseRecA = dataToSend.split("|")[0];
           foundUser.courseRecB = dataToSend.split("|")[1];
@@ -609,17 +610,27 @@ app.post("/futhome", function (req, res) {
           foundUser.courseRecB = dataToSend.split("|")[1];
           foundUser.courseRecC = dataToSend.split("|")[2];
           foundUser.courseRecD = dataToSend.split("|")[3];
+          foundUser.courseRecE = 0;
         } else if((dataToSend.split("|")).length==3) {
           foundUser.courseRecA = dataToSend.split("|")[0];
           foundUser.courseRecB = dataToSend.split("|")[1];
-          foundUser.courseRecC = dataToSend.split("|")[2];          
+          foundUser.courseRecC = dataToSend.split("|")[2]; 
+          foundUser.courseRecD = 0;
+          foundUser.courseRecE = 0;        
         } else if((dataToSend.split("|")).length==2){
           foundUser.courseRecA = dataToSend.split("|")[0];
           foundUser.courseRecB = dataToSend.split("|")[1];
+          foundUser.courseRecC = 0; 
+          foundUser.courseRecD = 0;
+          foundUser.courseRecE = 0;
         } else if((dataToSend.split("|")).length==1){
           foundUser.courseRecA = dataToSend.split("|")[0];
+          foundUser.courseRecB = 0;
+          foundUser.courseRecC = 0; 
+          foundUser.courseRecD = 0;
+          foundUser.courseRecE = 0;
         }
-        
+        foundUser.save();
       });
       
 
@@ -627,7 +638,6 @@ app.post("/futhome", function (req, res) {
       const pythonCert = spawn('python', ['recommendcert.py', req.body.fprofile]);
       pythonCert.stdout.on('data', function (data) {
         console.log(`Certifications -----2-----\n ${data}`);
-        
         dataToSendCert = data.toString();
     if ((dataToSendCert.split("|")).length==5) {
     foundUser.courseCertA = dataToSendCert.split("|")[0];
@@ -640,15 +650,25 @@ app.post("/futhome", function (req, res) {
     foundUser.courseCertB = dataToSendCert.split("|")[1];
     foundUser.courseCertC = dataToSendCert.split("|")[2];
     foundUser.courseCertD = dataToSendCert.split("|")[3];
+    foundUser.courseRecE = 0;
   } else if((dataToSendCert.split("|")).length==3) {
     foundUser.courseCertA = dataToSendCert.split("|")[0];
     foundUser.courseCertB = dataToSendCert.split("|")[1];
-    foundUser.courseCertC = dataToSendCert.split("|")[2];          
+    foundUser.courseCertC = dataToSendCert.split("|")[2]; 
+    foundUser.courseRecD = 0;
+    foundUser.courseRecE = 0;         
   } else if((dataToSendCert.split("|")).length==2){
     foundUser.courseCertA = dataToSendCert.split("|")[0];
     foundUser.courseCertB = dataToSendCert.split("|")[1];
+    foundUser.courseRecC = 0; 
+    foundUser.courseRecD = 0;
+    foundUser.courseRecE = 0;
   } else if((dataToSendCert.split("|")).length==1){
     foundUser.courseCertA = dataToSendCert.split("|")[0];
+    foundUser.courseRecB = 0;
+    foundUser.courseRecC = 0; 
+    foundUser.courseRecD = 0;
+    foundUser.courseRecE = 0;
   }
  
       });
@@ -671,15 +691,25 @@ app.post("/futhome", function (req, res) {
           foundUser.compRecB = dataToSendComp.split("|")[1];
           foundUser.compRecC = dataToSendComp.split("|")[2];
           foundUser.compRecD = dataToSendComp.split("|")[3];
+          foundUser.courseRecE = 0;
         } else if((dataToSendComp.split("|")).length==3) {
           foundUser.compRecA = dataToSendComp.split("|")[0];
           foundUser.compRecB = dataToSendComp.split("|")[1];
-          foundUser.compRecC = dataToSendComp.split("|")[2];          
+          foundUser.compRecC = dataToSendComp.split("|")[2];  
+          foundUser.courseRecD = 0;
+          foundUser.courseRecE = 0;        
         } else if((dataToSendComp.split("|")).length==2){
           foundUser.compRecA = dataToSendComp.split("|")[0];
           foundUser.compRecB = dataToSendComp.split("|")[1];
+          foundUser.courseRecC = 0; 
+          foundUser.courseRecD = 0;
+          foundUser.courseRecE = 0;
         } else if((dataToSendComp.split("|")).length==1){
           foundUser.compRecA = dataToSendComp.split("|")[0];
+          foundUser.courseRecB = 0;
+          foundUser.courseRecC = 0; 
+          foundUser.courseRecD = 0;
+          foundUser.courseRecE = 0;
         }
        
         
@@ -690,7 +720,7 @@ app.post("/futhome", function (req, res) {
       python.on('close', (code) => {
       console.log(`child process close all stdio with code from Courses ${code}`);
       foundUser.save(function () {
-        console.log(`first: ${foundUser.futProfile}`);
+      
       res.redirect("home");
       });
         });

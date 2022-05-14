@@ -517,6 +517,11 @@ text-transform: capitalize;
   overflow-y: scroll;
   overflow-x: hidden;
 }
+.CourseSuggestStyle{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  /* height: 200px; */
+}
 #messages{
   overflow-y: scroll;
   overflow-x: hidden;

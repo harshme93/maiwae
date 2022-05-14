@@ -6,7 +6,7 @@
       <div class="wrapper">
         <input type="text" name="srchInput" id="searchCertification" size="70" value="" class="searchInp" placeholder="search" autocomplete="chrome-off">
         <button type="submit" name="" class="btn btn-sm searchBtn"><i class="fas fa-search"></i></button>
-        <div class="results">
+        <div class="results CourseSuggestStyle">
           <ul>
           </ul>
           <script>
@@ -48,11 +48,12 @@
 </section>
 
 <section id="CourseRecommend">
-  <% if(typeof courseCertA != 'undefined'){ %>
+  <% if((typeof courseCertA != 'undefined')||(courseCertA !=0)){ %>
   <div style='border-style:inset;'>
     <p>
     <h4 style='color:#f4f9f4'>recommendations here for <%=futProfile %></h4>
     </p>
+    
     <div class="row opt-total">
       <div class="col-lg-6 opt-why">
         <p> <%=courseCertA%> </p>
@@ -61,9 +62,10 @@
        <form action="/certhome" method="post">
         <input type="hidden" name="fCerti" value="<%=courseCertA%>">
         <button type="submit" class="btn optbut-task" name="button">Add</button>
-      </form>
+        </form>
       </div>
     </div>
+    <% if((courseCertB != 'undefined')||(courseCertB !=0)){ %>
     <div class="row opt-total">
       <div class="col-lg-6 opt-why">
         <p> <%=courseCertB%> </p>
@@ -72,9 +74,11 @@
         <form action="/certhome" method="post">
         <input type="hidden" name="fCerti" value="<%=courseCertB%>">
         <button type="submit" class="btn optbut-task" name="button">Add</button>
-      </form>
+        </form>
       </div>
     </div>
+<% } %>
+<% if((courseCertC != 'undefined')||(courseCertC !=0)){ %>
     <div class="row opt-total">
       <div class="col-lg-6 opt-why">
         <p> <%=courseCertC%> </p>
@@ -83,9 +87,11 @@
         <form action="/certhome" method="post">
         <input type="hidden" name="fCerti" value="<%=courseCertC%>">
         <button type="submit" class="btn optbut-task" name="button">Add</button>
-      </form>
+        </form>
       </div>
     </div>
+<% } %>
+<% if((courseCertD != 'undefined')||(courseCertD !=0)){ %>
     <div class="row opt-total">
       <div class="col-lg-6 opt-why">
         <p> <%=courseCertD%> </p>
@@ -94,9 +100,11 @@
         <form action="/certhome" method="post">
         <input type="hidden" name="fCerti" value="<%=courseCertD%>">
         <button type="submit" class="btn optbut-task" name="button">Add</button>
-      </form>
+        </form>
       </div>
     </div>
+<% } %>
+<% if((courseCertE != 'undefined')||(courseCertE !=0)){ %>
     <div class="row opt-total">
       <div class="col-lg-6 opt-why">
         <p> <%=courseCertE%> </p>
@@ -105,10 +113,10 @@
         <form action="/certhome" method="post">
         <input type="hidden" name="fCerti" value="<%=courseCertE%>">
         <button type="submit" class="btn optbut-task" name="button">Add</button>
-      </form>
+        </form>
       </div>
     </div>
-
+<% } %>
     <% }else{ %>
     <div class="col-lg-6 opt-why">
       Select your future profile to get certificate recommendations

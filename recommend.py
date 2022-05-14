@@ -45,7 +45,7 @@ for movie in sorted_similar_movie:
         break
 
 #checking for a few words first
-removeTitleWords = ("engineer","writer","examiner","banking")
+removeTitleWords = ("engineer","writer","examiner","banking","worker","advisor","researcher","coordinator","imaging","medicine")
 course_rec = []
 for name in coursedat:
     if name.endswith(removeTitleWords):
@@ -55,8 +55,24 @@ for name in coursedat:
 
 # print("outside loop"+name)
 # course_rec=(coursedat[:5])
-print(f"{course_rec[0].title()}|")
-print(f"{course_rec[1].title()}|")
-print(f"{course_rec[2].title()}|")
-print(f"{course_rec[3].title()}|")
-print(f"{course_rec[4].title()}")
+if (len(course_rec)>=5):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}|")
+    print(f"{course_rec[2].title()}|")
+    print(f"{course_rec[3].title()}|")
+    print(f"{course_rec[4].title()}")
+elif(len(course_rec)==4):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}|")
+    print(f"{course_rec[2].title()}|")
+    print(f"{course_rec[3].title()}")
+elif(course_rec[2]):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}|")
+    print(f"{course_rec[2].title()}")
+elif(course_rec[1]):
+    print(f"{course_rec[0].title()}|")
+    print(f"{course_rec[1].title()}")
+elif(course_rec[0]):
+    print(f"{course_rec[0].title()}")
+
