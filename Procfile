@@ -1,1 +1,2 @@
-web: gunicorn main:app
+web: python recommend.py 
+web: node app.js
