@@ -1,2 +1,1 @@
-web: python recommend.py 
-web: node app.js
+web: gunicorn main:app.js
