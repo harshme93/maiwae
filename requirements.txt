@@ -18,3 +18,4 @@ pickleshare>=0.7.5
 
 # web: node app.js
 # web: gunicorn node:app.js
+# web: gunicorn main:app

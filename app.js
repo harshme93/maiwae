@@ -584,14 +584,17 @@ app.post("/mentors", function (req, res) {
 
 
 app.post("/futhome", function (req, res) {
+  
   User.findById(req.user.id, function (err, foundUser) {
     if (err) {
       console.log(err);
     } else {
       var dataToSend;
+      
       const python = spawn('python', ['recommend.py', req.body.fprofile]);
+      
       python.stdout.on('data', function (data) {
-        
+        console.log(`here is the fut profile:${req.body.fprofile}`); 
         dataToSend = data.toString();
         foundUser.futProfile = req.body.fprofile;
         foundUser.fReq1 = req.body.freq1;
@@ -717,8 +720,8 @@ app.post("/futhome", function (req, res) {
         
       });
     // this is the part below which takes time.
-      python.on('close', (code) => {
-      console.log(`child process close all stdio with code from Courses ${code}`);
+      python.on('close', (code,signal) => {
+      console.log(`child process close all stdio with code from Courses ${code} and signal is ${signal}`);
       foundUser.save(function () {
       
       res.redirect("home");
