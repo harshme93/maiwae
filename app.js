@@ -30,9 +30,13 @@ app.use(passport.session());
 // connect with tha mongooseDB
 mongoose.connect(process.env.DB_LINK, {
   useUnifiedTopology: true,
-  useNewUrlParser: true, useFindAndModify: false
+  // useNewUrlParser: true, 
+  // useFindAndModify: false
+}, err => {
+  if(err) throw err;
+  console.log('Connected to MongoDB!!!')
 });
-mongoose.set("useCreateIndex", true);
+// mongoose.set("useCreateIndex", true);
 
 const mentorSchema = { MentName: String, MentId: String };
 const Mentor = mongoose.model("Mentor", mentorSchema);
