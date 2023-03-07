@@ -30,7 +30,7 @@ app.use(passport.session());
 // connect with tha mongooseDB
 mongoose.connect(process.env.DB_LINK, {
   useUnifiedTopology: true,
-  useNewUrlParser: true, 
+  // useNewUrlParser: true, 
   // useFindAndModify: false
 }, err => {
   if(err) throw err;
@@ -190,8 +190,6 @@ app.post("/profile", function (req, res) {
       foundUser.save();
 
     };
-
-
     foundUser.save(function () {
       res.redirect("home");
     })
@@ -213,7 +211,13 @@ app.post("/competitions", function (req, res) {
             filteredComps.push(foundCert);
           }
         });
-        res.render("competitions", {certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,
+        var AllSuggest = [];
+        foundCerts.forEach(element => {
+         AllSuggest.push(element.cover);
+         AllSuggest.push(element.name);
+             });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
+        res.render("competitions", {CourseSuggest:CourseSuggest,certNames: filteredComps,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,
           compRecA :foundUser.compRecA, compRecB :foundUser.compRecB, compRecC :foundUser.compRecC, 
           compRecD :foundUser.compRecD, compRecE :foundUser.compRecE,futProfile: foundUser.futProfile
         });
@@ -250,10 +254,11 @@ app.post("/compexams", function (req, res) {
             filteredExams.push(foundCert);
           }
         });
-        var CourseSuggest = [];
+        var AllSuggest = [];
         foundCerts.forEach(element => {
-          CourseSuggest.push(element.exNam);
-        });
+         AllSuggest.push(element.exNam);
+          });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
         res.render("compexams", {CourseSuggest:CourseSuggest,
           certNames: filteredExams,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
         });
@@ -263,10 +268,11 @@ app.post("/compexams", function (req, res) {
   else {
     Exam.find({}, function (err, foundCerts) {
       if (!err) {
-        var CourseSuggest = [];
+        var AllSuggest = [];
         foundCerts.forEach(element => {
-          CourseSuggest.push(element.exNam);
-        });
+         AllSuggest.push(element.exNam);
+          });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
         res.render("compexams", {CourseSuggest:CourseSuggest,
           certNames: foundCerts,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile
         });
@@ -365,7 +371,14 @@ app.post("/courses", function (req, res) {
             foundCerts.forEach(function (foundCert) {
               if (_.lowerCase([foundCert.degMjr]) === (searchString)) { filteredCourse.push(foundCert); }
             });
-           res.render("courses", { certNames: filteredCourse,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile });
+            var AllSuggest = [];
+         foundCerts.forEach(element => {
+          AllSuggest.push(element.degMjr);
+              });
+              const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
+           res.render("courses", { CourseSuggest:CourseSuggest, certNames: foundCerts, courseRecA: foundUser.courseRecA,
+            courseRecB: foundUser.courseRecB, courseRecC: foundUser.courseRecC, courseRecD: foundUser.courseRecD,
+            courseRecE: foundUser.courseRecE,certNames: filteredCourse,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length,futProfile: foundUser.futProfile });
           }
         });
       }
@@ -469,7 +482,12 @@ app.post("/future", function (req, res) {
             filteredFuture.push(foundCert);
           }
         });
-        res.render("future", {
+        var AllSuggest = [];
+        foundCerts.forEach(element => {
+         AllSuggest.push(element.name);
+             });
+const CourseSuggest = AllSuggest.filter((x, i, a) => a.indexOf(x) == i);
+        res.render("future", {CourseSuggest:CourseSuggest,
           certNames: filteredFuture,Notifis: foundUser.Noti, NotifiLen: foundUser.Noti.length
         });
       }
@@ -637,7 +655,7 @@ app.post("/futhome", function (req, res) {
           foundUser.courseRecD = 0;
           foundUser.courseRecE = 0;
         }
-        foundUser.save();
+        // foundUser.save();
       });
       
 
@@ -657,25 +675,25 @@ app.post("/futhome", function (req, res) {
     foundUser.courseCertB = dataToSendCert.split("|")[1];
     foundUser.courseCertC = dataToSendCert.split("|")[2];
     foundUser.courseCertD = dataToSendCert.split("|")[3];
-    foundUser.courseRecE = 0;
+    foundUser.courseCertE = 0;
   } else if((dataToSendCert.split("|")).length==3) {
     foundUser.courseCertA = dataToSendCert.split("|")[0];
     foundUser.courseCertB = dataToSendCert.split("|")[1];
     foundUser.courseCertC = dataToSendCert.split("|")[2]; 
-    foundUser.courseRecD = 0;
-    foundUser.courseRecE = 0;         
+    foundUser.courseCertD = 0;
+    foundUser.courseCertE = 0;         
   } else if((dataToSendCert.split("|")).length==2){
     foundUser.courseCertA = dataToSendCert.split("|")[0];
     foundUser.courseCertB = dataToSendCert.split("|")[1];
-    foundUser.courseRecC = 0; 
-    foundUser.courseRecD = 0;
-    foundUser.courseRecE = 0;
+    foundUser.courseCertC = 0; 
+    foundUser.courseCertD = 0;
+    foundUser.courseCertE = 0;
   } else if((dataToSendCert.split("|")).length==1){
     foundUser.courseCertA = dataToSendCert.split("|")[0];
-    foundUser.courseRecB = 0;
-    foundUser.courseRecC = 0; 
-    foundUser.courseRecD = 0;
-    foundUser.courseRecE = 0;
+    foundUser.courseCertB = 0;
+    foundUser.courseCertC = 0; 
+    foundUser.courseCertD = 0;
+    foundUser.courseCertE = 0;
   }
  
       });
@@ -698,25 +716,25 @@ app.post("/futhome", function (req, res) {
           foundUser.compRecB = dataToSendComp.split("|")[1];
           foundUser.compRecC = dataToSendComp.split("|")[2];
           foundUser.compRecD = dataToSendComp.split("|")[3];
-          foundUser.courseRecE = 0;
+          foundUser.compRecE = 0;
         } else if((dataToSendComp.split("|")).length==3) {
           foundUser.compRecA = dataToSendComp.split("|")[0];
           foundUser.compRecB = dataToSendComp.split("|")[1];
           foundUser.compRecC = dataToSendComp.split("|")[2];  
-          foundUser.courseRecD = 0;
-          foundUser.courseRecE = 0;        
+          foundUser.compRecD = 0;
+          foundUser.compRecE = 0;        
         } else if((dataToSendComp.split("|")).length==2){
           foundUser.compRecA = dataToSendComp.split("|")[0];
           foundUser.compRecB = dataToSendComp.split("|")[1];
-          foundUser.courseRecC = 0; 
-          foundUser.courseRecD = 0;
-          foundUser.courseRecE = 0;
+          foundUser.compRecC = 0; 
+          foundUser.compRecD = 0;
+          foundUser.compRecE = 0;
         } else if((dataToSendComp.split("|")).length==1){
           foundUser.compRecA = dataToSendComp.split("|")[0];
-          foundUser.courseRecB = 0;
-          foundUser.courseRecC = 0; 
-          foundUser.courseRecD = 0;
-          foundUser.courseRecE = 0;
+          foundUser.compRecB = 0;
+          foundUser.compRecC = 0; 
+          foundUser.compRecD = 0;
+          foundUser.compRecE = 0;
         }
        
         
@@ -1027,6 +1045,40 @@ app.post("/MenteeRemove", function (req, res) {
     }
   });
 });
+
+app.post("/RemoveSelected", function(req,res){
+  User.findById(req.user.id,function(err, foundUser){
+  if(!err){
+    if(req.body.RemoveSelected==1){
+      foundUser.futComp=0;
+      
+      foundUser.save();
+      res.redirect("home");
+    }else if(req.body.RemoveSelected==2)  
+    {foundUser.futExam=0;
+      
+      foundUser.save();
+      res.redirect("home"); }
+    else if(req.body.RemoveSelected==3)  
+    {foundUser.futCerti=0;
+      
+      foundUser.save();
+      res.redirect("home");}
+    else if(req.body.RemoveSelected==4)  
+    {foundUser.futMajor=0; 
+    foundUser.save();
+    res.redirect("home"); }
+    else if(req.body.RemoveSelected==5)  
+    {foundUser.futFellow=0;
+    foundUser.save();
+    res.redirect("home"); }
+  
+  }else{
+    console.log(err);
+  }
+});
+});
+
 
 app.post("/MessageSent", function (req, res) {
   var MentId = req.body.mentorId.split(" ").join("");
